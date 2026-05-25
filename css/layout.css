@@ -444,8 +444,8 @@ body { background: #f0f0f2; }
 
 .size-filter-wrap { padding: 0 16px 8px; }
 .size-filter-label {
-  font-size: 10px; font-weight: 800; color: var(--text-muted);
-  text-transform: uppercase; letter-spacing: .8px; margin-bottom: 7px;
+  font-size: 11px; font-weight: 700; color: var(--red);
+  letter-spacing: .5px; margin-bottom: 8px;
 }
 .size-chips-row {
   display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding-bottom: 2px;
@@ -462,8 +462,8 @@ body { background: #f0f0f2; }
 }
 .sz-chip:active { transform: scale(.92); }
 .sz-chip.on {
-  background: var(--text); border-color: var(--text); color: var(--accent-inv);
-  box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+  background: var(--red); border-color: var(--red); color: #fff;
+  box-shadow: 0 3px 14px rgba(155,89,182,0.35);
 }
 .sz-clear {
   min-width: 36px; height: 36px; border-radius: var(--r-sm); flex-shrink: 0;
