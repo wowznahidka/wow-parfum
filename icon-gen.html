@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="UTF-8"><title>Icon Generator</title>
+<style>
+  body { background: #111; display: flex; flex-direction: column;
+         align-items: center; justify-content: center; min-height: 100vh;
+         font-family: -apple-system, sans-serif; color: #fff; gap: 24px; }
+  canvas { border-radius: 22%; box-shadow: 0 8px 40px rgba(0,0,0,.6); }
+  button { background: #ff3352; color: #fff; border: none; border-radius: 12px;
+           padding: 14px 32px; font-size: 16px; font-weight: 800; cursor: pointer; }
+  button:hover { opacity: .85; }
+  p { color: rgba(255,255,255,.5); font-size: 13px; }
+</style>
+</head>
+<body>
+<canvas id="c" width="512" height="512"></canvas>
+<button onclick="download()">⬇️ Скачати іконки (192 + 512px)</button>
+<p>Після скачування — перемісти обидва файли в папку TOP</p>
+
+<script>
+const canvas = document.getElementById('c');
+const ctx    = canvas.getContext('2d');
+const S = 512;
+
+function draw(size) {
+  const c = document.createElement('canvas');
+  c.width = c.height = size;
+  const x = c.getContext('2d');
+  const r = size * 0.18; // border radius reference
+
+  // Background — rich dark with red gradient
+  const bg = x.createLinearGradient(0, 0, size, size);
+  bg.addColorStop(0, '#1a1a1a');
+  bg.addColorStop(1, '#0d0d0d');
+  x.fillStyle = bg;
+  x.beginPath();
+  x.roundRect(0, 0, size, size, size * 0.22);
+  x.fill();
+
+  // Red accent blob top-left
+  const blob = x.createRadialGradient(size * 0.25, size * 0.22, 0, size * 0.25, size * 0.22, size * 0.45);
+  blob.addColorStop(0, 'rgba(255,51,82,0.22)');
+  blob.addColorStop(1, 'rgba(255,51,82,0)');
+  x.fillStyle = blob;
+  x.fillRect(0, 0, size, size);
+
+  // "WOW" text
+  const wowSize = size * 0.35;
+  x.font = `900 ${wowSize}px -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif`;
+  x.textAlign = 'center';
+  x.textBaseline = 'middle';
+  x.fillStyle = '#ffffff';
+  x.fillText('WOW', size / 2, size * 0.42);
+
+  // Red dot separator
+  x.fillStyle = '#ff3352';
+  x.beginPath();
+  x.arc(size / 2, size * 0.60, size * 0.028, 0, Math.PI * 2);
+  x.fill();
+
+  // "ZNAHIDKA" small text
+  const subSize = size * 0.082;
+  x.font = `700 ${subSize}px -apple-system, BlinkMacSystemFont, sans-serif`;
+  x.fillStyle = 'rgba(255,255,255,0.55)';
+  x.letterSpacing = `${size * 0.012}px`;
+  x.fillText('ZNAHIDKA', size / 2, size * 0.76);
+
+  return c;
+}
+
+// Draw preview
+const prev = draw(512);
+ctx.drawImage(prev, 0, 0);
+
+function download() {
+  [512, 192].forEach(size => {
+    const c   = draw(size);
+    const a   = document.createElement('a');
+    a.href     = c.toDataURL('image/png');
+    a.download = `icon-${size}.png`;
+    a.click();
+  });
+}
+</script>
+</body>
+</html>
