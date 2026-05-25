@@ -55,7 +55,7 @@
   /* в”Ђв”Ђ Layout в”Ђв”Ђ */
   --nav-h:       64px;
   --header-h:    58px;
-  --gender-h:    52px;
+  --gender-h:    0px;
   --max-w:       480px;
   --safe-top:    env(safe-area-inset-top, 0px);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
