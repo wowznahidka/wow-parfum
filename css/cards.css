@@ -40,7 +40,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 3 / 2;
-  background: #f8f8fa;
+  background: #F8F4EE;
   overflow: hidden;
 }
 .product-card.grid-card .card-img-wrap { aspect-ratio: 1 / 1; }
@@ -72,6 +72,7 @@
 .card-name {
   font-size: 12px;
   font-weight: var(--fw-bold);
+  font-family: Georgia, 'Times New Roman', serif;
   color: var(--text);
   margin-top: 2px; line-height: 1.25;
   display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
@@ -152,15 +153,11 @@
   letter-spacing: .3px; font-family: monospace;
 }
 
-/* badges */
-.prod-badge {
-  position: absolute; top: 8px; left: 8px;
-  font-size: 9px; font-weight: 900; text-transform: uppercase;
-  padding: 3px 7px; border-radius: var(--r-xs); letter-spacing: .3px;
-}
-.badge-new { background: var(--text); color: var(--accent-inv); }
-.badge-hot { background: var(--red); color: #fff; }
-.badge-low { background: rgba(255,51,82,0.18); color: var(--red); border: 1px solid var(--red-glow); }
+/* badges — hidden for parfum (not relevant) */
+.prod-badge { display: none !important; }
+.badge-new  { display: none !important; }
+.badge-hot  { display: none !important; }
+.badge-low  { display: none !important; }
 
 /* share button */
 .prod-share {
@@ -698,7 +695,7 @@
 /* Hero — image block */
 .pd-hero {
   position: relative; width: 100%;
-  background: var(--bg3);
+  background: #F8F4EE;
   overflow: hidden;
 }
 .pd-img {
@@ -756,8 +753,9 @@
   text-transform: uppercase; letter-spacing: 2px;
 }
 .pd-name {
-  font-size: 23px; font-weight: 900; margin-top: 5px;
-  line-height: 1.15; letter-spacing: -.3px;
+  font-size: 22px; font-weight: 700; margin-top: 5px;
+  font-family: Georgia, 'Times New Roman', serif;
+  line-height: 1.2; letter-spacing: -.2px;
 }
 .pd-price-row {
   display: flex; align-items: baseline; gap: 9px;

@@ -14,7 +14,7 @@
 :root { --half-max: 240px; --half-inset: 228px; } /* 480/2 and (480-24)/2 */
 @media (min-width: 640px) { :root { --half-max: 300px; --half-inset: 288px; } } /* 600/2 */
 
-body { background: #f0f0f2; }
+body { background: #EDE8DF; }
 
 @media (min-width: 481px) {
   body {
@@ -23,9 +23,9 @@ body { background: #f0f0f2; }
   body::before {
     content: ''; position: fixed; inset: 0; z-index: -1;
     background:
-      radial-gradient(ellipse 55% 65% at 20% 40%, rgba(255,69,0,0.04) 0%, transparent 55%),
-      radial-gradient(ellipse 50% 50% at 80% 70%, rgba(0,113,227,0.03) 0%, transparent 50%),
-      #f0f0f2;
+      radial-gradient(ellipse 55% 65% at 20% 40%, rgba(155,89,182,0.05) 0%, transparent 55%),
+      radial-gradient(ellipse 50% 50% at 80% 70%, rgba(155,89,182,0.03) 0%, transparent 50%),
+      #EDE8DF;
   }
   #app-root {
     max-width: var(--max-w); width: 100%; min-height: 100vh;
@@ -87,13 +87,13 @@ body { background: #f0f0f2; }
 .nav-icon { font-size: 22px; line-height: 1; }
 .nav-item.active { color: var(--text); }
 .nav-item.active .nav-icon {
-  filter: drop-shadow(0 0 7px rgba(255,51,82,.55));
+  filter: drop-shadow(0 0 7px rgba(155,89,182,.55));
 }
 .nav-item.active::before {
   content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
   width: 28px; height: 2.5px; background: var(--red);
   border-radius: 0 0 3px 3px;
-  box-shadow: 0 0 8px rgba(255,51,82,.5);
+  box-shadow: 0 0 8px rgba(155,89,182,.5);
 }
 
 /* ── GENDER TOGGLE — Apple Segmented Control ───── */
@@ -193,12 +193,12 @@ body { background: #f0f0f2; }
   position: relative; overflow: hidden;
   background: linear-gradient(180deg, var(--bg2) 0%, transparent 100%);
 }
-/* Ambient colour orbs — give the hero a living, breathing feel */
+/* Ambient lavender orbs — luxury parfum feel */
 .home-hero::before {
   content: '';
   position: absolute; top: -80px; left: -60px;
   width: 260px; height: 260px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,51,82,.07) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(155,89,182,.08) 0%, transparent 70%);
   animation: heroOrbA 10s ease-in-out infinite;
   pointer-events: none;
 }
@@ -206,15 +206,16 @@ body { background: #f0f0f2; }
   content: '';
   position: absolute; top: 0; right: -50px;
   width: 200px; height: 200px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(0,113,227,.055) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(155,89,182,.05) 0%, transparent 70%);
   animation: heroOrbB 14s ease-in-out infinite;
   pointer-events: none;
 }
 .home-greeting { font-size: 13px; color: var(--text-muted); margin-bottom: 6px; position: relative; z-index: 1; }
 .home-title {
-  font-size: clamp(26px, 8vw, 36px); font-weight: 900; line-height: 1.12; letter-spacing: -.4px;
+  font-size: clamp(24px, 7vw, 32px); font-weight: 700; line-height: 1.18; letter-spacing: -.3px;
+  font-family: Georgia, 'Times New Roman', serif;
   position: relative; z-index: 1;
-  background: linear-gradient(135deg, #1d1d1f 0%, #1d1d1f 50%, #d42840 100%);
+  background: linear-gradient(135deg, #1d1d1f 0%, #4a1a6b 100%);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
 }
