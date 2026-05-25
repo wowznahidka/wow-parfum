@@ -205,7 +205,7 @@ function openProductDetail(product) {
     <div class="pd-hero">
       ${product.image && product.image.startsWith('http')
         ? `<img class="pd-img" src="${esc(product.image)}" alt="${esc(product.brand)} ${esc(product.name)}" loading="lazy" decoding="async" onload="this.classList.add('loaded')">`
-        : `<div class="pd-img-ph" aria-hidden="true">👟</div>`}
+        : `<div class="pd-img-ph" aria-hidden="true">🌸</div>`}
       <div class="pd-hero-vignette" aria-hidden="true"></div>
       <button class="pd-fav-float ${faved ? 'on' : ''}" id="pd-fav-btn"
         onclick="togglePdFav()" aria-label="${faved ? 'Видалити з улюблених' : 'Додати в улюблені'}">
@@ -219,6 +219,7 @@ function openProductDetail(product) {
       <h2 class="pd-name">${esc(product.name)}</h2>
       <div class="pd-price-row">${priceHtml}</div>
       ${sizeChips}
+      ${product.description ? `<p class="pd-desc">${esc(product.description)}</p>` : ''}
       <div class="pd-trust">
         <span class="pd-trust-item">✅ Без передоплати</span>
         <span class="pd-trust-sep">·</span>
