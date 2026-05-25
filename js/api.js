@@ -109,7 +109,8 @@ function normalizeProduct(p) {
     })(),
     price,
     oldPrice,
-    image:    String(p['Фото']   || p['фото']   || p.image  || p.img   || p.photo || ''),
+    image:       String(p['Фото']   || p['фото']   || p.image  || p.img   || p.photo || ''),
+    description: String(p['Опис']   || p['опис']   || p.description || ''),
     sizes,
     sizeQty,  // { 40: 2, 41: 1, 42: 3 } — кількість по кожному розміру
     isNew:    Boolean(p['Нове']  || p['нове']   || p.is_new || p.isNew),

@@ -787,6 +787,15 @@
   color: var(--text-muted); border-style: dashed;
 }
 
+/* Description — scent notes, perfume story */
+.pd-desc {
+  font-size: 13px; color: var(--text-dim); line-height: 1.65;
+  margin-top: 14px;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  white-space: pre-line;
+}
+
 /* Trust line */
 .pd-trust {
   margin-top: 12px;
