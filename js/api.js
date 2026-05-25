@@ -46,10 +46,16 @@ function normalizeProduct(p) {
       sizes = ['ONE SIZE'];
     } else {
       sizesRaw.forEach(s => {
-        const n = Number(s);
-        if (n >= 30 && n <= 55) { sizes.push(n); sizeQty[n] = sizeQty[n] || 1; }
+        const str = String(s).trim();
+        if (!str) return;
+        const n = Number(str);
+        if (!isNaN(n) && n >= 30 && n <= 55) {
+          sizes.push(n); sizeQty[n] = sizeQty[n] || 1;
+        } else {
+          // рядкові розміри: "100 мл", "XS", "S", "M" тощо
+          sizes.push(str); sizeQty[str] = sizeQty[str] || 1;
+        }
       });
-      sizes = [...new Set(sizes)].sort((a, b) => a - b);
     }
   } else {
     const str = String(sizesRaw).trim();
@@ -92,8 +98,15 @@ function normalizeProduct(p) {
 
   return {
     id:       String(p['ID'] || p['id'] || p['Артикул'] || Math.random().toString(36).slice(2)),
-    brand:    String(p['Бренд']  || p['бренд']  || p.brand  || p.Brand  || 'Unknown'),
     name:     String(p['Назва']  || p['назва']  || p['Модель'] || p.name || p.model || ''),
+    brand:    String(p['Бренд']  || p['бренд']  || p.brand  || p.Brand  || '') || (() => {
+      const nm = String(p['Назва'] || p.name || '');
+      const compound = ['Louis Vuitton','Tom Ford','Hugo Boss','Calvin Klein',
+        'Carolina Herrera','Marc Jacobs','Narciso Rodriguez','Issey Miyake',
+        'Antonio Banderas','Jean Paul Gaultier','Dolce Gabbana','Viktor Rolf'];
+      for (const c of compound) { if (nm.toLowerCase().startsWith(c.toLowerCase())) return c; }
+      return nm.split(' ')[0] || 'Parfum';
+    })(),
     price,
     oldPrice,
     image:    String(p['Фото']   || p['фото']   || p.image  || p.img   || p.photo || ''),
