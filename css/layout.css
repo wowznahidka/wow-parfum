@@ -97,17 +97,7 @@ body { background: #f0f0f2; }
 }
 
 /* ── GENDER TOGGLE — Apple Segmented Control ───── */
-#gender-toggle {
-  position: fixed; bottom: 0; z-index: 201;
-  left: max(0px, calc(50% - var(--half-max)));
-  right: max(0px, calc(50% - var(--half-max)));
-  height: calc(var(--gender-h) + var(--safe-bottom));
-  padding-bottom: var(--safe-bottom);
-  background: var(--bg-glass);
-  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-  border-top: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-}
+#gender-toggle { display: none; }
 .gender-pill {
   position: relative; display: flex;
   background: var(--bg3);
