@@ -1,0 +1,870 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Олена & Максим — 14.09.2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        cream:   '#FAF6F1',
+        champagne: '#D4AF8C',
+        blush:   '#E8C5B5',
+        rose:    '#C09090',
+        sage:    '#9BAF8E',
+        wine:    '#7D3F4E',
+        charcoal:'#3D3535',
+      }
+    }
+  }
+}
+</script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body { background: #FAF6F1; color: #3D3535; font-family: 'Jost', sans-serif; }
+
+  .font-corm { font-family: 'Cormorant Garamond', serif; }
+
+  /* ── Hero ── */
+  #hero {
+    min-height: 100svh;
+    background:
+      linear-gradient(to bottom, rgba(250,246,241,.15) 0%, rgba(250,246,241,.55) 55%, #FAF6F1 100%),
+      url('https://images.unsplash.com/photo-1519741497674-611481863552?w=1600&q=80') center/cover no-repeat;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 5rem 1.5rem 8rem;
+    position: relative;
+  }
+
+  /* ── Label ── */
+  .lbl {
+    font-family: 'Jost', sans-serif;
+    font-size: .68rem; font-weight: 400;
+    letter-spacing: .22em; text-transform: uppercase; color: #C09090;
+  }
+
+  /* ── Divider ── */
+  .divider {
+    display: flex; align-items: center; gap: 1rem; width: 100%; max-width: 280px; margin: 0 auto;
+  }
+  .divider::before, .divider::after {
+    content: ''; flex: 1; height: 1px;
+    background: linear-gradient(to right, transparent, #D4AF8C, transparent);
+  }
+
+  /* ── Glass card ── */
+  .glass {
+    background: rgba(255,255,255,.55);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,.85);
+    border-radius: 20px;
+  }
+
+  /* ── Timer card ── */
+  .t-card {
+    background: rgba(255,255,255,.7);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(212,175,140,.3);
+    border-radius: 16px;
+    padding: 1.5rem .75rem;
+    min-width: 74px; text-align: center;
+  }
+
+  /* ── Timeline ── */
+  .tl-item { position: relative; padding-left: 3rem; }
+  .tl-item:not(:last-child)::after {
+    content: ''; position: absolute; left: 11px; top: 28px; bottom: -2.5rem;
+    width: 1px; background: linear-gradient(to bottom, #D4AF8C 60%, transparent);
+  }
+  .tl-dot {
+    position: absolute; left: 0; top: 4px;
+    width: 24px; height: 24px; border-radius: 50%;
+    border: 3px solid #FAF6F1; box-shadow: 0 0 0 1.5px #D4AF8C;
+  }
+
+  /* ── Swatch ── */
+  .swatch {
+    width: 60px; height: 60px; border-radius: 50%; margin: 0 auto .5rem;
+    box-shadow: 0 4px 16px rgba(0,0,0,.1);
+    transition: transform .3s ease;
+  }
+  .swatch:hover { transform: scale(1.12); }
+
+  /* ── Form inputs ── */
+  .fi {
+    width: 100%; padding: .85rem 1.2rem;
+    background: rgba(255,255,255,.8);
+    border: 1px solid rgba(212,175,140,.35);
+    border-radius: 12px;
+    font-family: 'Jost', sans-serif; font-size: .95rem; color: #3D3535;
+    outline: none; transition: all .25s;
+  }
+  .fi:focus { border-color: #D4AF8C; background: #fff; box-shadow: 0 0 0 3px rgba(212,175,140,.15); }
+  select.fi {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%23D4AF8C' d='M5.3 7.3a1 1 0 011.4 0L10 10.6l3.3-3.3a1 1 0 111.4 1.4l-4 4a1 1 0 01-1.4 0l-4-4a1 1 0 010-1.4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat; background-position: right 1rem center; background-size: 1.2rem;
+    padding-right: 2.8rem;
+  }
+
+  /* ── Custom radio / checkbox ── */
+  .cr { appearance: none; width: 20px; height: 20px; border: 2px solid #D4AF8C; border-radius: 50%; cursor: pointer; transition: all .2s; flex-shrink: 0; }
+  .cr:checked { background: #D4AF8C; }
+  .cc { appearance: none; width: 20px; height: 20px; border: 2px solid #D4AF8C; border-radius: 6px; cursor: pointer; transition: all .2s; flex-shrink: 0; position: relative; }
+  .cc:checked { background: #D4AF8C; }
+  .cc:checked::after { content: '✓'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #fff; font-size: .75rem; font-weight: 700; display: block; text-align: center; line-height: 16px; }
+
+  /* ── Submit button ── */
+  .btn-send {
+    background: linear-gradient(135deg, #C09090, #D4AF8C);
+    color: #fff; padding: 1rem 3rem; border-radius: 50px;
+    font-family: 'Jost', sans-serif; font-size: .9rem; font-weight: 500;
+    letter-spacing: .15em; text-transform: uppercase; border: none; cursor: pointer;
+    transition: all .3s; box-shadow: 0 4px 22px rgba(192,144,144,.3);
+  }
+  .btn-send:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(192,144,144,.4); }
+
+  /* ── Modal ── */
+  .modal-bg {
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(61,53,53,.55); backdrop-filter: blur(8px);
+    display: flex; align-items: center; justify-content: center; padding: 1.5rem;
+    opacity: 0; pointer-events: none; transition: opacity .4s ease;
+  }
+  .modal-bg.on { opacity: 1; pointer-events: all; }
+  .modal-box {
+    background: #FAF6F1; border-radius: 24px;
+    padding: 3rem 2rem; max-width: 420px; width: 100%; text-align: center;
+    transform: scale(.9) translateY(20px); transition: transform .4s ease;
+    box-shadow: 0 30px 80px rgba(61,53,53,.2);
+  }
+  .modal-bg.on .modal-box { transform: scale(1) translateY(0); }
+
+  /* ── Scroll reveal ── */
+  .rv { opacity: 0; transform: translateY(28px); transition: opacity .75s ease, transform .75s ease; }
+  .rv.d1 { transition-delay: .1s; }
+  .rv.d2 { transition-delay: .2s; }
+  .rv.d3 { transition-delay: .3s; }
+  .rv.d4 { transition-delay: .4s; }
+  .rv.show { opacity: 1; transform: none; }
+
+  /* ── Animations ── */
+  @keyframes float { 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-9px);} }
+  .float { animation: float 4s ease-in-out infinite; }
+
+  @keyframes ripple { 0%{transform:scale(1);opacity:.5;} 100%{transform:scale(1.35);opacity:0;} }
+  .ripple { animation: ripple 3s ease-out infinite; }
+
+  @keyframes mouse-scroll { 0%,100%{transform:translateY(0);opacity:.8;} 50%{transform:translateY(7px);opacity:.3;} }
+  .mouse-scroll { animation: mouse-scroll 2s ease-in-out infinite; }
+
+  /* ── Nav dots (hidden on small mobile) ── */
+  #nav-dots { position:fixed; right:1.25rem; top:50%; transform:translateY(-50%); z-index:200; display:flex; flex-direction:column; gap:.65rem; }
+  .nd { width:8px; height:8px; border-radius:50%; background:rgba(212,175,140,.35); cursor:pointer; transition:all .3s; }
+  .nd.on { background:#D4AF8C; transform:scale(1.5); }
+  @media(max-width:640px){ #nav-dots{ display:none; } }
+
+  /* ── Photo frame ── */
+  .frame { position:relative; }
+  .frame::before { content:''; position:absolute; inset:-8px; border:1px solid rgba(212,175,140,.35); border-radius:inherit; pointer-events:none; }
+  .frame::after  { content:''; position:absolute; inset:-16px; border:1px solid rgba(212,175,140,.18); border-radius:inherit; pointer-events:none; }
+
+  /* ── Section thin rule ── */
+  .hr-gold { height:1px; background:linear-gradient(to right, transparent, #D4AF8C 40%, #D4AF8C 60%, transparent); }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════
+     NAV DOTS
+════════════════════════════════ -->
+<nav id="nav-dots" aria-label="Навігація">
+  <div class="nd on"  data-sec="hero"      title="Головна"></div>
+  <div class="nd"     data-sec="countdown" title="Відлік"></div>
+  <div class="nd"     data-sec="story"     title="Наша Історія"></div>
+  <div class="nd"     data-sec="timeline"  title="Таймінг дня"></div>
+  <div class="nd"     data-sec="dresscode" title="Дрес-код"></div>
+  <div class="nd"     data-sec="rsvp"      title="RSVP"></div>
+</nav>
+
+<!-- ════════════════════════════════
+     1. HERO
+════════════════════════════════ -->
+<section id="hero">
+
+  <div class="rv mb-6">
+    <p class="lbl">Ми раді запросити вас</p>
+  </div>
+
+  <!-- monogram ring -->
+  <div class="rv d1 float mb-8">
+    <svg width="110" height="110" viewBox="0 0 110 110">
+      <circle cx="55" cy="55" r="48" fill="none" stroke="#D4AF8C" stroke-width=".8" opacity=".35" class="ripple"/>
+      <circle cx="55" cy="55" r="40" fill="none" stroke="#D4AF8C" stroke-width=".6" opacity=".6"/>
+      <circle cx="55" cy="55" r="32" fill="none" stroke="#D4AF8C" stroke-width=".4" opacity=".4"/>
+      <text x="55" y="62" text-anchor="middle" fill="#C09090"
+            font-family="Cormorant Garamond,serif" font-size="22" font-style="italic">О &amp; М</text>
+    </svg>
+  </div>
+
+  <!-- names -->
+  <div class="rv d1">
+    <h1 class="font-corm font-light leading-none" style="font-size:clamp(3.5rem,12vw,8rem); color:#3D3535;">
+      Олена
+    </h1>
+    <p class="lbl my-3" style="letter-spacing:.35em; font-size:.8rem; color:#D4AF8C;">✦ &amp; ✦</p>
+    <h1 class="font-corm font-light leading-none" style="font-size:clamp(3.5rem,12vw,8rem); color:#3D3535;">
+      Максим
+    </h1>
+  </div>
+
+  <!-- divider + date -->
+  <div class="rv d2 mt-8 w-full max-w-xs">
+    <div class="divider">
+      <svg width="16" height="16" viewBox="0 0 16 16"><path d="M8 1l1.5 4.5H14l-3.7 2.7 1.4 4.3L8 10 4.3 12.5l1.4-4.3L2 5.5h4.5z" fill="#D4AF8C" opacity=".7"/></svg>
+    </div>
+  </div>
+
+  <div class="rv d2 mt-5 text-center">
+    <p class="font-corm font-light tracking-widest" style="font-size:clamp(1.1rem,4vw,1.6rem); color:#3D3535;">
+      14 Вересня 2026
+    </p>
+    <p class="lbl mt-2" style="color:#9BAF8E;">Villa Floresta · Київ</p>
+  </div>
+
+  <!-- CTA -->
+  <div class="rv d3 mt-10">
+    <a href="#rsvp"
+       class="inline-block px-9 py-3.5 border border-champagne text-charcoal rounded-full text-xs tracking-widest uppercase hover:bg-champagne hover:text-white transition-all duration-300"
+       style="font-family:'Jost';letter-spacing:.18em;">
+      Підтвердити участь
+    </a>
+  </div>
+
+  <!-- scroll mouse -->
+  <div class="absolute bottom-7 left-1/2 -translate-x-1/2 mouse-scroll opacity-60">
+    <svg width="22" height="36" viewBox="0 0 22 36" fill="none">
+      <rect x="1" y="1" width="20" height="34" rx="10" stroke="#D4AF8C" stroke-width="1.4"/>
+      <circle cx="11" cy="10" r="2.5" fill="#D4AF8C">
+        <animate attributeName="cy" values="10;22;10" dur="2.2s" repeatCount="indefinite"/>
+        <animate attributeName="opacity" values=".8;0;.8" dur="2.2s" repeatCount="indefinite"/>
+      </circle>
+    </svg>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     2. COUNTDOWN
+════════════════════════════════ -->
+<section id="countdown" class="py-24 px-5" style="background:linear-gradient(to bottom,#FAF6F1,#F5EDE6);">
+  <div class="max-w-3xl mx-auto text-center">
+
+    <div class="rv">
+      <p class="lbl mb-3">До особливого дня</p>
+      <h2 class="font-corm font-light text-charcoal" style="font-size:clamp(2rem,6vw,3rem);">
+        Залишилось зовсім небагато
+      </h2>
+    </div>
+
+    <!-- timer -->
+    <div class="rv d1 mt-12 flex justify-center items-end gap-3 flex-wrap">
+      <div class="t-card">
+        <div id="t-days"  class="font-corm font-light text-charcoal" style="font-size:clamp(2.5rem,8vw,4rem);">00</div>
+        <div class="lbl mt-1" style="font-size:.62rem;">Днів</div>
+      </div>
+      <span class="font-corm text-champagne pb-5" style="font-size:2.5rem; line-height:1;">:</span>
+      <div class="t-card">
+        <div id="t-hours" class="font-corm font-light text-charcoal" style="font-size:clamp(2.5rem,8vw,4rem);">00</div>
+        <div class="lbl mt-1" style="font-size:.62rem;">Годин</div>
+      </div>
+      <span class="font-corm text-champagne pb-5" style="font-size:2.5rem; line-height:1;">:</span>
+      <div class="t-card">
+        <div id="t-min"   class="font-corm font-light text-charcoal" style="font-size:clamp(2.5rem,8vw,4rem);">00</div>
+        <div class="lbl mt-1" style="font-size:.62rem;">Хвилин</div>
+      </div>
+      <span class="font-corm text-champagne pb-5" style="font-size:2.5rem; line-height:1;">:</span>
+      <div class="t-card">
+        <div id="t-sec"   class="font-corm font-light text-charcoal" style="font-size:clamp(2.5rem,8vw,4rem);">00</div>
+        <div class="lbl mt-1" style="font-size:.62rem;">Секунд</div>
+      </div>
+    </div>
+
+    <!-- info cards -->
+    <div class="rv d2 mt-14 grid grid-cols-1 sm:grid-cols-3 gap-5">
+      <div class="glass p-6">
+        <svg class="mx-auto mb-3" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF8C" stroke-width="1.5">
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        <p class="lbl mb-1">Дата</p>
+        <p class="font-corm text-lg font-light">14 Вересня 2026</p>
+        <p class="text-xs text-gray-400 mt-1">Неділя</p>
+      </div>
+      <div class="glass p-6">
+        <svg class="mx-auto mb-3" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF8C" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        <p class="lbl mb-1">Час</p>
+        <p class="font-corm text-lg font-light">16:00</p>
+        <p class="text-xs text-gray-400 mt-1">Початок церемонії</p>
+      </div>
+      <div class="glass p-6">
+        <svg class="mx-auto mb-3" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#D4AF8C" stroke-width="1.5">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+        </svg>
+        <p class="lbl mb-1">Місце</p>
+        <p class="font-corm text-lg font-light">Villa Floresta</p>
+        <p class="text-xs text-gray-400 mt-1">вул. Квіткова 12, Київ</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     3. LOVE STORY
+════════════════════════════════ -->
+<section id="story" class="py-24 px-5" style="background:linear-gradient(135deg,rgba(232,197,181,.18),rgba(155,175,142,.1));">
+  <div class="max-w-4xl mx-auto">
+
+    <div class="rv text-center mb-16">
+      <p class="lbl mb-3">Про нас</p>
+      <h2 class="font-corm font-light text-charcoal" style="font-size:clamp(2rem,6vw,3rem);">Наша Історія</h2>
+      <div class="hr-gold mt-6 mx-auto" style="width:100px;"></div>
+    </div>
+
+    <!-- block 1 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center mb-16">
+      <div class="rv">
+        <div class="frame rounded-2xl overflow-hidden" style="aspect-ratio:4/5;">
+          <img src="https://images.unsplash.com/photo-1606216794074-735e91aa2c92?w=700&q=80"
+               alt="Олена і Максим" class="w-full h-full object-cover"
+               loading="lazy"/>
+        </div>
+      </div>
+      <div class="rv d1">
+        <p class="lbl mb-3" style="color:#C09090;">Як це почалось</p>
+        <h3 class="font-corm font-light text-charcoal leading-snug mb-5" style="font-size:clamp(1.5rem,4vw,2.2rem);">
+          Перша зустріч<br/><em>на вершині світу</em>
+        </h3>
+        <p class="text-sm leading-relaxed text-gray-500" style="font-weight:300;">
+          Ми зустрілись одним осіннім вечором у 2021 році на спільній вечірці друзів.
+          Першим, що я помітила — його посмішка та погляд, наповнений теплом.
+          Ми проговорили до самого ранку і зрозуміли: це щось особливе.
+        </p>
+        <div class="mt-5 flex items-center gap-3">
+          <div style="width:28px;height:1px;background:#D4AF8C;"></div>
+          <span class="font-corm italic" style="font-size:1.05rem;color:#C09090;">Олена</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- block 2 -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
+      <div class="rv d1 order-2 md:order-1">
+        <p class="lbl mb-3" style="color:#C09090;">Пропозиція</p>
+        <h3 class="font-corm font-light text-charcoal leading-snug mb-5" style="font-size:clamp(1.5rem,4vw,2.2rem);">
+          Одне слово,<br/><em>що змінило все</em>
+        </h3>
+        <p class="text-sm leading-relaxed text-gray-500" style="font-weight:300;">
+          Через три роки стосунків, наповнених подорожами та безкінечними розмовами,
+          я зробив пропозицію на березі озера Комо під вечірніми зорями.
+          Вона сказала «так» — і цей момент я буду пам'ятати вічно.
+        </p>
+        <div class="mt-5 flex items-center gap-3">
+          <div style="width:28px;height:1px;background:#D4AF8C;"></div>
+          <span class="font-corm italic" style="font-size:1.05rem;color:#C09090;">Максим</span>
+        </div>
+      </div>
+      <div class="rv order-1 md:order-2">
+        <div class="frame rounded-2xl overflow-hidden" style="aspect-ratio:4/5;">
+          <img src="https://images.unsplash.com/photo-1591604466107-ec97de577aff?w=700&q=80"
+               alt="Пропозиція" class="w-full h-full object-cover"
+               loading="lazy"/>
+        </div>
+      </div>
+    </div>
+
+    <!-- quote -->
+    <div class="rv mt-20 text-center">
+      <div class="glass rounded-3xl p-10 max-w-2xl mx-auto">
+        <p class="text-champagne mb-3 font-corm" style="font-size:4rem;line-height:1;">"</p>
+        <p class="font-corm font-light italic text-charcoal leading-relaxed"
+           style="font-size:clamp(1.3rem,3.5vw,1.8rem);">
+          Ти — мій дім, мій спокій і моя найбільша пригода
+        </p>
+        <p class="lbl mt-6" style="color:#C09090;">Максим для Олени</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     4. TIMELINE
+════════════════════════════════ -->
+<section id="timeline" class="py-24 px-5" style="background:#FAF6F1;">
+  <div class="max-w-xl mx-auto">
+
+    <div class="rv text-center mb-16">
+      <p class="lbl mb-3">Програма свята</p>
+      <h2 class="font-corm font-light text-charcoal" style="font-size:clamp(2rem,6vw,3rem);">День Одруження</h2>
+      <div class="hr-gold mt-6 mx-auto" style="width:100px;"></div>
+    </div>
+
+    <div class="space-y-10">
+
+      <!-- 14:30 -->
+      <div class="tl-item rv">
+        <div class="tl-dot" style="background:#D4AF8C;"></div>
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex gap-4 items-start">
+            <p class="font-corm text-champagne font-light flex-shrink-0 w-14 text-xl pt-0.5">14:30</p>
+            <div class="w-px self-stretch bg-champagne opacity-25 mx-1"></div>
+            <div>
+              <div class="flex items-center gap-2 mb-1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AF8C" stroke-width="1.6">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87m-4-12a4 4 0 0 1 0 7.75"/>
+                </svg>
+                <h3 class="font-corm text-charcoal font-light text-lg">Збір гостей</h3>
+              </div>
+              <p class="text-xs text-gray-400 leading-relaxed" style="font-weight:300;">
+                Шампанське та легкі закуски у садовому патіо Villa Floresta
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16:00 -->
+      <div class="tl-item rv d1">
+        <div class="tl-dot" style="background:#C09090; box-shadow:0 0 0 1.5px #C09090;"></div>
+        <div class="glass p-5 rounded-2xl" style="border-color:rgba(192,144,144,.3);">
+          <div class="flex gap-4 items-start">
+            <p class="font-corm text-champagne font-light flex-shrink-0 w-14 text-xl pt-0.5">16:00</p>
+            <div class="w-px self-stretch bg-champagne opacity-25 mx-1"></div>
+            <div>
+              <div class="flex items-center gap-2 mb-1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#C09090" stroke-width="1.6">
+                  <path d="M12 2a10 10 0 1 0 0 20A10 10 0 0 0 12 2m0 0v10l5 3"/>
+                </svg>
+                <h3 class="font-corm text-charcoal font-light text-lg">Виїзна Церемонія</h3>
+              </div>
+              <p class="text-xs text-gray-400 leading-relaxed" style="font-weight:300;">
+                Офіційна церемонія одруження під живою квітковою аркою у саду
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 17:30 -->
+      <div class="tl-item rv d2">
+        <div class="tl-dot" style="background:#9BAF8E; box-shadow:0 0 0 1.5px #9BAF8E;"></div>
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex gap-4 items-start">
+            <p class="font-corm text-champagne font-light flex-shrink-0 w-14 text-xl pt-0.5">17:30</p>
+            <div class="w-px self-stretch bg-champagne opacity-25 mx-1"></div>
+            <div>
+              <div class="flex items-center gap-2 mb-1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BAF8E" stroke-width="1.6">
+                  <path d="M18 8h1a4 4 0 0 1 0 8h-1"/><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"/>
+                  <line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/>
+                </svg>
+                <h3 class="font-corm text-charcoal font-light text-lg">Фуршет та Коктейль-час</h3>
+              </div>
+              <p class="text-xs text-gray-400 leading-relaxed" style="font-weight:300;">
+                Авторські коктейлі, живий джаз-квартет та панорамні фото у саду
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 19:00 -->
+      <div class="tl-item rv d3">
+        <div class="tl-dot" style="background:#D4AF8C;"></div>
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex gap-4 items-start">
+            <p class="font-corm text-champagne font-light flex-shrink-0 w-14 text-xl pt-0.5">19:00</p>
+            <div class="w-px self-stretch bg-champagne opacity-25 mx-1"></div>
+            <div>
+              <div class="flex items-center gap-2 mb-1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#D4AF8C" stroke-width="1.6">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                  <polyline points="9 22 9 12 15 12 15 22"/>
+                </svg>
+                <h3 class="font-corm text-charcoal font-light text-lg">Урочиста Вечеря</h3>
+              </div>
+              <p class="text-xs text-gray-400 leading-relaxed" style="font-weight:300;">
+                Вишукана вечеря від шеф-кухаря, тости за молодят та жива музика
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 22:00 -->
+      <div class="tl-item rv d4">
+        <div class="tl-dot" style="background:#7D3F4E; box-shadow:0 0 0 1.5px #7D3F4E;"></div>
+        <div class="glass p-5 rounded-2xl">
+          <div class="flex gap-4 items-start">
+            <p class="font-corm text-champagne font-light flex-shrink-0 w-14 text-xl pt-0.5">22:00</p>
+            <div class="w-px self-stretch bg-champagne opacity-25 mx-1"></div>
+            <div>
+              <div class="flex items-center gap-2 mb-1.5">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7D3F4E" stroke-width="1.6">
+                  <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                </svg>
+                <h3 class="font-corm text-charcoal font-light text-lg">Торт та Танці</h3>
+              </div>
+              <p class="text-xs text-gray-400 leading-relaxed" style="font-weight:300;">
+                Перший танець молодят, розрізання весільного торту та нічна дискотека
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     5. DRESS CODE
+════════════════════════════════ -->
+<section id="dresscode" class="py-24 px-5" style="background:linear-gradient(to bottom,#F5EDE6,#FAF6F1);">
+  <div class="max-w-2xl mx-auto text-center">
+
+    <div class="rv">
+      <p class="lbl mb-3">Стиль свята</p>
+      <h2 class="font-corm font-light text-charcoal" style="font-size:clamp(2rem,6vw,3rem);">Дрес-Код</h2>
+      <div class="hr-gold mt-6 mx-auto mb-8" style="width:100px;"></div>
+      <p class="text-sm text-gray-500 leading-relaxed max-w-md mx-auto" style="font-weight:300;">
+        Ми мріємо про гармонійну кольорову гамму нашого свята.
+        Будемо вдячні, якщо ви оберете вбрання у відтінках нашої палітри.
+      </p>
+    </div>
+
+    <!-- swatches -->
+    <div class="rv d1 grid grid-cols-3 sm:grid-cols-6 gap-5 mt-14 mb-12">
+      <div><div class="swatch" style="background:#E8C5B5;"></div><p class="lbl" style="font-size:.6rem;">Blush</p></div>
+      <div><div class="swatch" style="background:#D4AF8C;"></div><p class="lbl" style="font-size:.6rem;">Champagne</p></div>
+      <div><div class="swatch" style="background:#C2B280;"></div><p class="lbl" style="font-size:.6rem;">Sand</p></div>
+      <div><div class="swatch" style="background:#9BAF8E;"></div><p class="lbl" style="font-size:.6rem;">Sage</p></div>
+      <div><div class="swatch" style="background:#C09090;"></div><p class="lbl" style="font-size:.6rem;">Dusty Rose</p></div>
+      <div><div class="swatch" style="background:#7D6E6E;"></div><p class="lbl" style="font-size:.6rem;">Mauve</p></div>
+    </div>
+
+    <!-- dress code card -->
+    <div class="rv d2 glass rounded-2xl p-8">
+      <p class="lbl mb-5">Прохання уникати</p>
+      <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 text-sm text-gray-500">
+        <span class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center text-xs" style="background:rgba(125,63,78,.1);color:#7D3F4E;">✕</span>
+          Яскраво-червоний
+        </span>
+        <span class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center text-xs" style="background:rgba(125,63,78,.1);color:#7D3F4E;">✕</span>
+          Чорний колір
+        </span>
+        <span class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center text-xs" style="background:rgba(125,63,78,.1);color:#7D3F4E;">✕</span>
+          Білий (для нареченої)
+        </span>
+        <span class="flex items-center gap-2">
+          <span class="w-5 h-5 rounded-full flex items-center justify-center text-xs" style="background:rgba(125,63,78,.1);color:#7D3F4E;">✕</span>
+          Яскраві принти
+        </span>
+      </div>
+      <div class="mt-6 pt-5 border-t" style="border-color:rgba(212,175,140,.25);">
+        <p class="font-corm italic text-gray-400" style="font-size:1.05rem;">
+          Dress code: Formal Elegance — костюми, вечірні або коктейльні сукні
+        </p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     6. RSVP
+════════════════════════════════ -->
+<section id="rsvp" class="py-24 px-5" style="background:#FAF6F1;">
+  <div class="max-w-lg mx-auto">
+
+    <div class="rv text-center mb-12">
+      <p class="lbl mb-3">Підтвердження участі</p>
+      <h2 class="font-corm font-light text-charcoal" style="font-size:clamp(2rem,6vw,3rem);">RSVP</h2>
+      <div class="hr-gold mt-6 mx-auto mb-5" style="width:100px;"></div>
+      <p class="text-sm text-gray-500" style="font-weight:300;">
+        Будь ласка, підтвердіть участь до
+        <strong style="color:#C09090;">1 серпня 2026</strong>
+      </p>
+    </div>
+
+    <form id="rsvpForm" class="rv d1 space-y-7" novalidate>
+
+      <!-- name -->
+      <div>
+        <label class="lbl block mb-2.5" style="font-size:.68rem;">Ваше ім'я та прізвище *</label>
+        <input id="f-name" type="text" class="fi" placeholder="Наприклад: Анна Коваленко"/>
+        <p id="err-name" class="hidden text-xs mt-1.5" style="color:#C09090;">Будь ласка, вкажіть ваше ім'я</p>
+      </div>
+
+      <!-- attendance -->
+      <div>
+        <label class="lbl block mb-2.5" style="font-size:.68rem;">Чи зможете відвідати? *</label>
+        <div class="space-y-2.5">
+          <label class="flex items-center gap-4 glass p-4 rounded-xl cursor-pointer hover:border-champagne transition-all" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="radio" name="attend" value="yes" class="cr"/>
+            <div>
+              <p class="text-sm font-medium text-charcoal">Так, з радістю прийду!</p>
+              <p class="text-xs text-gray-400">Чекаю на цей особливий день</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-4 glass p-4 rounded-xl cursor-pointer hover:border-champagne transition-all" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="radio" name="attend" value="no" class="cr"/>
+            <div>
+              <p class="text-sm font-medium text-charcoal">На жаль, не зможу</p>
+              <p class="text-xs text-gray-400">Буду думати про вас</p>
+            </div>
+          </label>
+        </div>
+        <p id="err-attend" class="hidden text-xs mt-1.5" style="color:#C09090;">Будь ласка, оберіть варіант</p>
+      </div>
+
+      <!-- guest count -->
+      <div>
+        <label class="lbl block mb-2.5" style="font-size:.68rem;">Кількість гостей</label>
+        <select id="f-count" class="fi">
+          <option value="1">Тільки я</option>
+          <option value="2">Я + 1 (пара)</option>
+          <option value="3">Я + 2</option>
+          <option value="4">Я + 3</option>
+        </select>
+      </div>
+
+      <!-- drinks -->
+      <div>
+        <label class="lbl block mb-2.5" style="font-size:.68rem;">Що бажаєте пити?</label>
+        <div class="grid grid-cols-2 gap-2.5">
+          <label class="flex items-center gap-3 glass p-3 rounded-xl cursor-pointer" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="checkbox" name="drinks" value="wine"      class="cc"/> <span class="text-sm text-charcoal">🍷 Вино</span>
+          </label>
+          <label class="flex items-center gap-3 glass p-3 rounded-xl cursor-pointer" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="checkbox" name="drinks" value="champagne" class="cc"/> <span class="text-sm text-charcoal">🥂 Шампанське</span>
+          </label>
+          <label class="flex items-center gap-3 glass p-3 rounded-xl cursor-pointer" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="checkbox" name="drinks" value="whiskey"   class="cc"/> <span class="text-sm text-charcoal">🥃 Whisky/Cognac</span>
+          </label>
+          <label class="flex items-center gap-3 glass p-3 rounded-xl cursor-pointer" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="checkbox" name="drinks" value="vodka"     class="cc"/> <span class="text-sm text-charcoal">🍸 Горілка</span>
+          </label>
+          <label class="flex items-center gap-3 glass p-3 rounded-xl cursor-pointer" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="checkbox" name="drinks" value="beer"      class="cc"/> <span class="text-sm text-charcoal">🍺 Пиво</span>
+          </label>
+          <label class="flex items-center gap-3 glass p-3 rounded-xl cursor-pointer" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="checkbox" name="drinks" value="soft"      class="cc"/> <span class="text-sm text-charcoal">🧃 Безалкогольне</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- transfer -->
+      <div>
+        <label class="lbl block mb-2.5" style="font-size:.68rem;">Потрібен трансфер?</label>
+        <div class="space-y-2.5">
+          <label class="flex items-center gap-4 glass p-4 rounded-xl cursor-pointer" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="radio" name="transfer" value="yes" class="cr"/>
+            <div>
+              <p class="text-sm font-medium text-charcoal">Так, потрібен трансфер</p>
+              <p class="text-xs text-gray-400">Відправлення від ст. м. Хрещатик о 15:00</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-4 glass p-4 rounded-xl cursor-pointer" style="border:1px solid rgba(212,175,140,.2);">
+            <input type="radio" name="transfer" value="no" class="cr"/>
+            <p class="text-sm font-medium text-charcoal">Ні, дістанусь самостійно</p>
+          </label>
+        </div>
+      </div>
+
+      <!-- dietary -->
+      <div>
+        <label class="lbl block mb-2.5" style="font-size:.68rem;">Харчові обмеження / побажання</label>
+        <textarea id="f-diet" class="fi resize-none" rows="3"
+                  placeholder="Напр.: вегетаріанське меню, алергія на горіхи..."></textarea>
+      </div>
+
+      <!-- submit -->
+      <div class="text-center pt-2">
+        <button type="submit" class="btn-send">Надіслати відповідь</button>
+      </div>
+
+    </form>
+  </div>
+</section>
+
+<!-- ════════════════════════════════
+     FOOTER
+════════════════════════════════ -->
+<footer class="py-16 px-5 text-center" style="background:#3D3535;">
+  <p class="font-corm font-light text-white" style="font-size:2.2rem;">Олена &amp; Максим</p>
+  <p class="lbl mt-1 mb-8" style="color:rgba(255,255,255,.35); letter-spacing:.3em;">14 · 09 · 2026</p>
+  <div class="hr-gold opacity-10 max-w-xs mx-auto mb-8"></div>
+  <p class="text-sm text-gray-500 leading-relaxed" style="font-weight:300;">
+    З нетерпінням чекаємо зустрічі з вами на найважливішому дні нашого життя.<br/>
+    З любов'ю, Олена &amp; Максим
+  </p>
+  <svg class="mx-auto mt-8" width="36" height="36" viewBox="0 0 36 36" fill="none">
+    <path d="M18 32C8 25,4 17,4 12A9 9 0 0 1 18 8A9 9 0 0 1 32 12C32 17 28 25 18 32Z"
+          fill="#C09090" opacity=".4"/>
+  </svg>
+</footer>
+
+<!-- ════════════════════════════════
+     THANK YOU MODAL
+════════════════════════════════ -->
+<div id="modal" class="modal-bg" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+  <div class="modal-box">
+    <div class="float mb-5">
+      <svg class="mx-auto" width="56" height="56" viewBox="0 0 56 56" fill="none">
+        <path d="M28 49C14 39,6 28,6 20A11 11 0 0 1 28 13A11 11 0 0 1 50 20C50 28 42 39 28 49Z"
+              fill="#E8C5B5"/>
+        <path d="M28 44C16 35,9 25,9 20A8 8 0 0 1 28 17A8 8 0 0 1 47 20C47 25 40 35 28 44Z"
+              fill="#C09090" opacity=".55"/>
+      </svg>
+    </div>
+    <p class="lbl mb-2" style="color:#C09090;">Дякуємо!</p>
+    <h3 id="modal-title" class="font-corm font-light text-charcoal" style="font-size:1.9rem;">
+      Відповідь збережено
+    </h3>
+    <div class="hr-gold mx-auto my-5" style="width:80px;"></div>
+    <p class="text-sm text-gray-500 leading-relaxed mb-7" style="font-weight:300;">
+      Ми дуже вдячні за вашу відповідь!<br/>
+      Чекаємо вас <strong style="color:#C09090;">14 вересня 2026</strong> 🤍
+    </p>
+    <button onclick="closeModal()" class="btn-send">Чудово!</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════ -->
+<script>
+/* ── Countdown ── */
+function tick() {
+  const target = new Date('2026-09-14T16:00:00');
+  const now    = new Date();
+  let   diff   = Math.max(0, target - now);
+
+  const d  = Math.floor(diff / 864e5);       diff -= d  * 864e5;
+  const h  = Math.floor(diff / 36e5);        diff -= h  * 36e5;
+  const m  = Math.floor(diff / 6e4);         diff -= m  * 6e4;
+  const s  = Math.floor(diff / 1e3);
+
+  const pad = n => String(n).padStart(2,'0');
+  document.getElementById('t-days').textContent  = pad(d);
+  document.getElementById('t-hours').textContent = pad(h);
+  document.getElementById('t-min').textContent   = pad(m);
+  document.getElementById('t-sec').textContent   = pad(s);
+}
+tick();
+setInterval(tick, 1000);
+
+/* ── Scroll reveal ── */
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+}, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv').forEach(el => ro.observe(el));
+
+/* ── Hero reveal on load ── */
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.querySelectorAll('#hero .rv').forEach((el, i) => {
+      setTimeout(() => el.classList.add('show'), i * 220);
+    });
+  }, 250);
+});
+
+/* ── Nav dots ── */
+const SECTIONS = ['hero','countdown','story','timeline','dresscode','rsvp'];
+const dots = document.querySelectorAll('.nd');
+
+const so = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      dots.forEach(d => d.classList.remove('on'));
+      const active = document.querySelector(`[data-sec="${e.target.id}"]`);
+      if (active) active.classList.add('on');
+    }
+  });
+}, { threshold: 0.45 });
+SECTIONS.forEach(id => { const el = document.getElementById(id); if(el) so.observe(el); });
+
+dots.forEach(d => {
+  d.addEventListener('click', () => {
+    document.getElementById(d.dataset.sec)?.scrollIntoView({ behavior:'smooth' });
+  });
+});
+
+/* ── Smooth anchor links ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    document.querySelector(a.getAttribute('href'))?.scrollIntoView({ behavior:'smooth' });
+  });
+});
+
+/* ── RSVP validation & submit ── */
+document.getElementById('rsvpForm').addEventListener('submit', function(e) {
+  e.preventDefault();
+
+  const name   = document.getElementById('f-name').value.trim();
+  const attend = document.querySelector('input[name="attend"]:checked');
+  let   valid  = true;
+
+  const errName   = document.getElementById('err-name');
+  const errAttend = document.getElementById('err-attend');
+
+  if (!name) {
+    errName.classList.remove('hidden'); valid = false;
+  } else {
+    errName.classList.add('hidden');
+  }
+
+  if (!attend) {
+    errAttend.classList.remove('hidden'); valid = false;
+  } else {
+    errAttend.classList.add('hidden');
+  }
+
+  if (!valid) return;
+
+  showModal();
+  this.reset();
+});
+
+/* ── Modal ── */
+function showModal() {
+  document.getElementById('modal').classList.add('on');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('modal').classList.remove('on');
+  document.body.style.overflow = '';
+}
+document.getElementById('modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+</script>
+
+</body>
+</html>
