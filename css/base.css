@@ -5,13 +5,13 @@
 
 :root {
   /* в”Ђв”Ђ Backgrounds (Luxury Light вЂ” Farfetch / Apple Store) в”Ђв”Ђ */
-  --bg:        #ffffff;
-  --bg2:       #f5f5f7;
-  --bg3:       #ebebed;
-  --bg4:       #e0e0e2;
-  --bg5:       #d5d5d7;
-  --bg-glass:  rgba(255,255,255,0.92);
-  --bg-card:   #ffffff;
+  --bg:        #FAF7F2;
+  --bg2:       #F5F0E8;
+  --bg3:       #EDE8DF;
+  --bg4:       #E3DDD3;
+  --bg5:       #D8D2C8;
+  --bg-glass:  rgba(250,247,242,0.94);
+  --bg-card:   #FFFFFF;
 
   /* в”Ђв”Ђ Text (Apple Ink) в”Ђв”Ђ */
   --text:        #1d1d1f;
