@@ -47,7 +47,7 @@ function prodCardHtml(p, opts = {}) {
   const imgPart = p.image && p.image.startsWith('http')
     ? `<img class="card-img" src="${esc(p.image)}" alt="${esc(p.brand)} ${esc(p.name)}"
          loading="${eager ? 'eager' : 'lazy'}" decoding="async" onload="this.classList.add('loaded')">`
-    : `<div class="card-img-placeholder" aria-hidden="true">👟</div>`;
+    : `<div class="card-img-placeholder" aria-hidden="true">🌸</div>`;
 
   const badgePart = p.isNew
     ? `<div class="prod-badge badge-new">NEW</div>`
