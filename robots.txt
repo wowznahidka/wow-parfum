@@ -1,4 +1,8 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wowznahidka.github.io/sitemap.xml
+# Sitemap
+Sitemap: https://wow-parfum.github.io/sitemap.xml
+
+# Block admin paths
+Disallow: /admin/

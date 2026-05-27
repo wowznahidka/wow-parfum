@@ -327,7 +327,7 @@ function _setupScrollNudge(total) {
     const nudge = document.createElement('div');
     nudge.className = 'scroll-nudge';
     nudge.onclick = () => { nudge.remove(); changeTab('match'); };
-    nudge.innerHTML = `<p>👟 Ти переглянув ${total} пар</p><small>Свайпай у Match — знайди ідеальну 🔥</small>`;
+    nudge.innerHTML = `<p>🌸 Ти переглянув ${total} ароматів</p><small>Свайпай у Match — знайди свій аромат 🌸</small>`;
     sentinel.parentNode?.insertBefore(nudge, sentinel);
   }, { rootMargin: '0px', threshold: 0.5 });
   _scrollNudgeObserver.observe(sentinel);

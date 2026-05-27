@@ -1,0 +1,295 @@
+/* ============================================================
+   WOW.PARFUM — NICHE THEME
+   Mood: Dark Luxury Boutique
+   Ref:  Byredo · Le Labo · Comme des Garçons Parfums
+   ============================================================ */
+
+/* ── FONT ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── DARK LUXURY PALETTE ─────────────────────────────────── */
+:root {
+  --bg:        #0a0806;
+  --bg2:       #100d09;
+  --bg3:       #161209;
+  --bg4:       #1c170e;
+  --bg5:       #231d13;
+  --bg-glass:  rgba(10,8,6,0.93);
+  --bg-card:   #110f0b;
+
+  --text:       #f0ece6;
+  --text-dim:   rgba(240,236,230,0.60);
+  --text-muted: rgba(240,236,230,0.32);
+
+  --accent:      #c9a96e;
+  --accent-inv:  #0a0806;
+  --red:         #c9a96e;
+  --red-dim:     rgba(201,169,110,0.10);
+  --red-glow:    rgba(201,169,110,0.22);
+  --orange:      #d4875a;
+  --green:       #8aae7c;
+  --gold:        #c9a96e;
+
+  --border:        rgba(255,255,255,0.06);
+  --border-hover:  rgba(255,255,255,0.12);
+  --border-accent: rgba(201,169,110,0.20);
+
+  --shadow-sm:   0 1px 6px  rgba(0,0,0,0.50);
+  --shadow:      0 4px 24px rgba(0,0,0,0.60);
+  --shadow-lg:   0 8px 56px rgba(0,0,0,0.72);
+  --shadow-red:  0 6px 28px rgba(201,169,110,0.22);
+  --shadow-card: 0 2px 16px rgba(0,0,0,0.55);
+  --shadow-card-hover: 0 8px 40px rgba(0,0,0,0.70), 0 0 0 1px rgba(201,169,110,0.14);
+  --shadow-glow: 0 0 0 1px rgba(255,255,255,0.04);
+
+  --niche-font:      'Cormorant Garamond', Georgia, serif;
+  --niche-font-body: 'Inter', -apple-system, sans-serif;
+  --grain-opacity: 0.035;
+}
+
+/* ── BASE OVERRIDES ──────────────────────────────────────── */
+body {
+  background: var(--bg) !important;
+  font-family: var(--niche-font-body);
+}
+
+/* Desktop ambient background */
+@media (min-width: 481px) {
+  body::before {
+    background:
+      radial-gradient(ellipse 55% 60% at 18% 30%, rgba(201,169,110,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 55% at 82% 80%, rgba(155,89,182,0.04) 0%, transparent 55%),
+      #06050300 !important;
+    background-color: #080603 !important;
+  }
+  #app-root {
+    background: var(--bg) !important;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 40px 120px rgba(0,0,0,0.65) !important;
+  }
+}
+
+/* ── HERO SECTION ─────────────────────────────────────────── */
+.home-hero {
+  background: linear-gradient(170deg,
+    rgba(201,169,110,0.07) 0%,
+    rgba(201,169,110,0.02) 50%,
+    transparent 100%) !important;
+  padding: 28px 16px 22px !important;
+  min-height: 160px !important;
+}
+.home-hero::before {
+  background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 68%) !important;
+  width: 280px !important; height: 280px !important;
+}
+.home-hero::after {
+  background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 65%) !important;
+  width: 220px !important; height: 220px !important;
+}
+
+/* Greeting → small uppercase spaced label */
+.home-greeting {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2.5px !important;
+  text-transform: uppercase !important;
+  color: var(--accent) !important;
+  opacity: 0.9 !important;
+  margin-bottom: 10px !important;
+}
+
+/* Title → editorial serif */
+.home-title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 300 !important;
+  font-style: italic !important;
+  font-size: clamp(30px, 8.5vw, 44px) !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.12 !important;
+  background: linear-gradient(135deg, #f0ece6 30%, #c9a96e 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: #f0ece6 !important;  /* fallback */
+}
+
+/* Counter chip */
+.home-counter-chip {
+  background: rgba(201,169,110,0.08) !important;
+  border: 1px solid rgba(201,169,110,0.18) !important;
+  color: var(--text-dim) !important;
+}
+.live-dot { background: var(--accent) !important; }
+
+/* ── SECTION TITLES ───────────────────────────────────────── */
+.sec-title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+  font-size: 21px !important;
+  letter-spacing: 0.015em !important;
+}
+
+/* ── HEADER & NAV ─────────────────────────────────────────── */
+#header {
+  background: rgba(10,8,6,0.93) !important;
+  border-bottom-color: rgba(255,255,255,0.05) !important;
+}
+.header-logo .dot { color: var(--accent) !important; }
+
+#bottom-nav {
+  background: rgba(10,8,6,0.93) !important;
+  border-top-color: rgba(255,255,255,0.05) !important;
+}
+.nav-item.active {
+  color: var(--accent) !important;
+}
+.nav-item.active .nav-icon::after {
+  background: var(--accent) !important;
+}
+
+/* ── PRODUCT CARDS ────────────────────────────────────────── */
+.product-card {
+  background: var(--bg-card) !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+.product-card:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+  border-color: rgba(201,169,110,0.16) !important;
+}
+.product-card:active { transform: scale(0.97) !important; }
+
+.card-img-wrap { background: #160f09 !important; }
+
+.card-brand { color: var(--accent) !important; }
+
+.card-price {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* ── NICHE FAMILY CHIPS ───────────────────────────────────── */
+.niche-fam-chip {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  color: var(--text-dim) !important;
+}
+.niche-fam-chip:active,
+.niche-fam-chip.active {
+  background: rgba(201,169,110,0.14) !important;
+  border-color: rgba(201,169,110,0.35) !important;
+  color: var(--accent) !important;
+}
+
+/* ── CART & CHECKOUT ──────────────────────────────────────── */
+.cart-checkout-btn {
+  background: linear-gradient(135deg, #c9a96e 0%, #a8843f 100%) !important;
+  color: #0a0806 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+}
+.cart-checkout-btn:active { opacity: 0.88 !important; }
+
+#cart-sticky-bar {
+  background: linear-gradient(135deg, #c9a96e 0%, #9e7830 100%) !important;
+  color: #0a0806 !important;
+}
+
+.cod-banner {
+  background: rgba(201,169,110,0.10) !important;
+  border-color: rgba(201,169,110,0.22) !important;
+  color: var(--accent) !important;
+}
+
+/* ── PRICE SLIDER ─────────────────────────────────────────── */
+.range-track-fill,
+.size-chip.active { background: var(--accent) !important; }
+.price-range-thumb { background: var(--accent) !important; }
+
+/* ── SHEET (bottom drawer) ────────────────────────────────── */
+.sheet {
+  background: var(--bg2) !important;
+  border-top: 1px solid rgba(255,255,255,0.06) !important;
+}
+.sh-handle { background: rgba(255,255,255,0.10) !important; }
+
+/* ── MATCH SWIPE CARDS ────────────────────────────────────── */
+.m-card { background: var(--bg-card) !important; }
+.m-card-img-wrap { background: #160f09 !important; }
+
+/* ── HOT BADGE ────────────────────────────────────────────── */
+.badge-hot  { background: #c9a96e !important; color: #0a0806 !important; }
+.badge-new  { background: rgba(138,174,124,0.20) !important; color: #8aae7c !important; }
+.badge-sale { background: rgba(212,135,90,0.20) !important; color: #d4875a !important; }
+
+/* ── BRANDS GRID ──────────────────────────────────────────── */
+.brand-chip {
+  background: var(--bg3) !important;
+  border-color: rgba(255,255,255,0.05) !important;
+  color: var(--text-dim) !important;
+}
+.brand-chip:active { border-color: rgba(201,169,110,0.25) !important; }
+
+/* ── REVIEW CARD ──────────────────────────────────────────── */
+.review-card {
+  background: var(--bg2) !important;
+  border-color: rgba(255,255,255,0.05) !important;
+}
+
+/* ── SPLASH SCREEN ────────────────────────────────────────── */
+#splash {
+  background: #0a0806 !important;
+}
+.splash-logo {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-style: italic !important;
+  color: var(--accent) !important;
+}
+
+/* ── TRUST ITEMS (premium.css component) ─────────────────── */
+.trust-item {
+  background: rgba(201,169,110,0.05) !important;
+  border-color: rgba(201,169,110,0.12) !important;
+}
+
+/* ── MARQUEE TINT ─────────────────────────────────────────── */
+.wow-marquee-item { color: rgba(201,169,110,0.40) !important; }
+
+/* ── DAILY DEAL ───────────────────────────────────────────── */
+.dd-header { border-color: rgba(255,255,255,0.05) !important; }
+.dd-card {
+  background: var(--bg-card) !important;
+  border-color: rgba(255,255,255,0.04) !important;
+}
+
+/* ── CONTACTS PAGE ────────────────────────────────────────── */
+.contact-tg-btn {
+  background: linear-gradient(135deg, #c9a96e, #a8843f) !important;
+  color: #0a0806 !important;
+}
+
+/* ── FORM INPUTS ──────────────────────────────────────────── */
+.form-inp, .checkout-input {
+  background: var(--bg3) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  color: var(--text) !important;
+}
+.form-inp:focus, .checkout-input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.15) !important;
+}
+
+/* ── SIZE PICKER ──────────────────────────────────────────── */
+.size-btn.active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #0a0806 !important;
+}
+.size-btn:hover { border-color: rgba(201,169,110,0.40) !important; }
+
+/* ── PREMIUM HERO ADD-ONS ─────────────────────────────────── */
+.niche-hero-badge { color: var(--accent) !important; }
+.niche-hero-badge::before { background: var(--accent) !important; }
