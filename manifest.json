@@ -1,15 +1,37 @@
 {
   "name": "WOW.PARFUM — Преміум парфуми",
   "short_name": "WOW.PARFUM",
-  "description": "Преміум парфуми без передоплати. Dior, Tom Ford, Jo Malone. Оплата після отримання на Новій Пошті.",
+  "description": "Преміум парфуми без передоплати. Dior, Tom Ford, Byredo. Оплата після отримання.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#0a0806",
-  "theme_color": "#c9a96e",
+  "background_color": "#0d0d0d",
+  "theme_color": "#9B59B6",
   "orientation": "portrait-primary",
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
   ],
   "shortcuts": [
     {
@@ -17,14 +39,24 @@
       "short_name": "Каталог",
       "description": "Переглянути всі аромати",
       "url": "./?tab=catalog",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     },
     {
       "name": "Match",
       "short_name": "Match",
       "description": "Знайди свій аромат",
       "url": "./?tab=match",
-      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+      "icons": [
+        {
+          "src": "icon-192.png",
+          "sizes": "192x192"
+        }
+      ]
     }
   ]
 }
