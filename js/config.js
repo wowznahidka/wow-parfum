@@ -1,5 +1,5 @@
 ﻿const CFG = {
-  GAS_URL:  'https://script.google.com/macros/s/AKfycbw9zB-WUX85ZnIUyzlA-tvdFAT-f6mrPyose3MOdScitYj9YZmYf6kXJwUPP6bkKxXr/exec',
+  GAS_URL:  'https://script.google.com/macros/s/AKfycbw9dpHT1ZP24gluFQFsh6fQ9pS3IgEzsGPkQL_0HMGuuPRotOSQt5hgcMUIv3xRotTEUw/exec',
   // Після генерації VAPID в адмінці (/api/push/vapid-keygen) → скопіюй public key сюди
   VAPID_PUBLIC_KEY: '',
   TG_URL:   'https://t.me/wowparfum',
