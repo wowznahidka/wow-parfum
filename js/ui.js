@@ -95,10 +95,11 @@ function changeTab(tab) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + tab)?.classList.add('active');
   document.querySelector(`.nav-item[data-tab="${tab}"]`)?.classList.add('active');
-  // Scroll to top
+  document.querySelectorAll('.dsk-nav-btn').forEach(b => b.classList.remove('active'));
+  const tabMap = { home:'dsk-btn-home', catalog:'dsk-btn-catalog', match:'dsk-btn-match', contacts:'dsk-btn-contacts' };
+  document.getElementById(tabMap[tab])?.classList.add('active');
   document.getElementById('pages').scrollTop = 0;
   window.scrollTo(0, 0);
-  // Init tab
   if (tab === 'home')    renderHome();
   if (tab === 'match')   initMatch();
   if (tab === 'catalog') renderCatalog();

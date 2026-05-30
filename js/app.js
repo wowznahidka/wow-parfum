@@ -27,6 +27,8 @@ window.addEventListener('DOMContentLoaded', () => {
   _injectPixel();
   _injectTTPixel();
 
+  try { REF.captureIncoming(); REF.initBlock(); } catch(_) {}
+
   // ── UTM ATTRIBUTION ──────────────────────────── */
   (function() {
     const p = new URLSearchParams(location.search);

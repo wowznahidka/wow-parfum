@@ -1,4 +1,4 @@
-const C = 'wow-v6';
+const C = 'wow-parfum-v7';
 const SHELL = ['/'];
 
 self.addEventListener('install', e => {
@@ -53,19 +53,57 @@ function _staleWhileRevalidate(e) {
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   const url = e.request.url;
-
-  // Navigation or GAS API → network-first with 2.5s timeout
   if (e.request.mode === 'navigate' || url.includes('script.google.com')) {
     e.respondWith(_networkFirst(e, 2500));
     return;
   }
-
-  // Static assets (CSS / JS / images) → stale-while-revalidate
   if (/\.(css|js|png|jpg|jpeg|webp|svg|ico|woff2?)(\?|$)/.test(url)) {
     e.respondWith(_staleWhileRevalidate(e));
     return;
   }
-
-  // Everything else → network-first
   e.respondWith(_networkFirst(e, 2500));
+});
+
+/* ── PUSH NOTIFICATIONS ─────────────────────────────────────── */
+
+self.addEventListener('push', e => {
+  let data = { title: 'WOW.PARFUM', body: 'Нові аромати вже в каталозі 🌸', icon: '/icon-192.png', badge: '/icon-192.png', tag: 'wow-parfum', url: '/' };
+  try {
+    if (e.data) {
+      const d = e.data.json();
+      data = { ...data, ...d };
+    }
+  } catch {}
+
+  e.waitUntil(
+    self.registration.showNotification(data.title, {
+      body:    data.body,
+      icon:    data.icon  || '/icon-192.png',
+      badge:   data.badge || '/icon-192.png',
+      tag:     data.tag   || 'wow-parfum',
+      data:  { url: data.url || '/' },
+      vibrate: [100, 50, 100],
+      actions: [
+        { action: 'open',    title: '🌸 Переглянути' },
+        { action: 'dismiss', title: 'Закрити' },
+      ],
+    })
+  );
+});
+
+self.addEventListener('notificationclick', e => {
+  e.notification.close();
+  if (e.action === 'dismiss') return;
+  const url = (e.notification.data && e.notification.data.url) || '/';
+  e.waitUntil(
+    clients.matchAll({ type: 'window', includeUncontrolled: true }).then(list => {
+      for (const c of list) {
+        if (c.url.includes(self.location.origin) && 'focus' in c) {
+          c.navigate(url);
+          return c.focus();
+        }
+      }
+      if (clients.openWindow) return clients.openWindow(url);
+    })
+  );
 });
