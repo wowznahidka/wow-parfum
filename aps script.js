@@ -818,17 +818,10 @@ function updateMasterDB() {
     const masterSS =
       SpreadsheetApp.getActiveSpreadsheet();
 
-    const masterSheet =
-      masterSS.getSheetByName("Товари");
+    let masterSheet = masterSS.getSheetByName("Товари");
+    if (!masterSheet) masterSheet = masterSS.insertSheet("Товари");
 
-    masterSheet
-      .getRange(
-        1,
-        1,
-        1,
-        HEADERS.length
-      )
-      .setValues([HEADERS]);
+    masterSheet.getRange(1, 1, 1, HEADERS.length).setValues([HEADERS]);
 
     let products = [];
     // P0-10: Track how many suppliers responded successfully
