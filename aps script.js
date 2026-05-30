@@ -1,7 +1,3 @@
-const SUPPLIERS = [
-  { id: "1WjRRBuZWCp6QnNzrJQMX5NUREhFEbXyRQ9Uk_Oi6LiI", gender: "Чоловік" },
-  { id: "14x32aRMF4G_45DweNKx3nMQlxsYIeZdwxJDrK8d1N5k", gender: "Жінка" }
-];
 
 const HEADERS = [
   "ID",
