@@ -607,7 +607,11 @@ function doPost(e) {
     const ss = SpreadsheetApp.getActiveSpreadsheet();
 
     if (data.action === "new_order") {
-      const sheet = ss.getSheetByName("Orders");
+      let sheet = ss.getSheetByName("Orders");
+      if (!sheet) {
+        sheet = ss.insertSheet("Orders");
+        sheet.appendRow(["Дата","ПІБ","Телефон","Місто","Доставка","Товари","Сума","Промокод","Статус","UTM Source","UTM Campaign","UTM Video"]);
+      }
 
       const totalFormatted = typeof data.total === "number"
         ? data.total + " ₴"
