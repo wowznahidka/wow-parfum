@@ -153,11 +153,12 @@
   letter-spacing: .3px; font-family: monospace;
 }
 
-/* badges — hidden for parfum (not relevant) */
-.prod-badge { display: none !important; }
-.badge-new  { display: none !important; }
-.badge-hot  { display: none !important; }
-.badge-low  { display: none !important; }
+/* badges */
+.prod-badge {
+  position: absolute; top: 8px; left: 8px;
+  font-size: 9px; font-weight: 900; text-transform: uppercase;
+  padding: 3px 7px; border-radius: var(--r-xs); letter-spacing: .3px;
+}
 
 /* share button */
 .prod-share {

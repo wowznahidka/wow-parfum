@@ -49,11 +49,20 @@ function prodCardHtml(p, opts = {}) {
          loading="${eager ? 'eager' : 'lazy'}" decoding="async" onload="this.classList.add('loaded')">`
     : `<div class="card-img-placeholder" aria-hidden="true">🌸</div>`;
 
+  const NICHE_BRANDS = ['Orto Parisi','Initio','Kilian','BDK','Amouage','Clive Christian',
+    'Roja','Xerjoff','Nishane','Memo','Mancera','Tiziana Terenzi','Boadicea','Parfums de Marly'];
+  const isNiche  = NICHE_BRANDS.some(b => (p.brand || '').toLowerCase().startsWith(b.toLowerCase())
+                                       || (p.name  || '').toLowerCase().includes(b.toLowerCase()));
+  const hasSale  = p.oldPrice && p.oldPrice > p.price && pct >= 10;
   const badgePart = p.isNew
-    ? `<div class="prod-badge badge-new">NEW</div>`
-    : low
-      ? `<div class="prod-badge badge-low">LAST</div>`
-      : '';
+    ? `<div class="prod-badge badge-new">✨ НОВЕ</div>`
+    : hasSale
+      ? `<div class="prod-badge badge-sale">🔥 -${pct}%</div>`
+      : isNiche
+        ? `<div class="prod-badge badge-hot">💎 НІШЕВА</div>`
+        : low
+          ? `<div class="prod-badge badge-low">⚡ LAST</div>`
+          : '';
 
   const pricePart = p.oldPrice && p.oldPrice > p.price
     ? `${p.price}₴<span class="prod-card-old">${p.oldPrice}₴</span>${pct > 0 ? `<span class="prod-card-disc">-${pct}%</span>` : ''}`
