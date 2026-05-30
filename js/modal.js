@@ -107,11 +107,12 @@ function selectSize(sz) {
 function requestPhoto() {
   if (!S.spProduct) return;
   const p = S.spProduct;
-  const szText = S.spSelectedSize ? `Розмір: ${S.spSelectedSize}` : 'Розмір: уточнимо';
+  if (p.tgLink) { openTgLink(p.tgLink); return; }
+  const szText = S.spSelectedSize ? `Об'єм: ${S.spSelectedSize}` : '';
   const productUrl = `${location.origin}${location.pathname}?product=${p.id}`;
-  const msg = `Привіт! 👋 Хочу побачити більше фото 📸\n👟 ${p.brand} ${p.name}\n${szText}\n💰 ${p.price}₴\n🔗 ${productUrl}`;
+  const msg = `Привіт! 👋 Хочу замовити парфум 🌸\n${p.brand} ${p.name}\n${szText}\n💰 ${p.price}₴\n🔗 ${productUrl}`;
   postData({ action: 'photo_request', product: p, size: S.spSelectedSize });
-  openTgLink(`https://t.me/znahidkawow?text=${encodeURIComponent(msg)}`);
+  openTgLink(`${CFG.TG_URL}?text=${encodeURIComponent(msg)}`);
 }
 
 function confirmSize() {
@@ -149,10 +150,11 @@ function confirmSize() {
 function _pdPhotoTg() {
   const p = S.pdProduct;
   if (!p) return;
+  if (p.tgLink) { openTgLink(p.tgLink); return; }
   const productUrl = `${location.origin}${location.pathname}?product=${p.id}`;
-  const msg = `Привіт! 👋 Хочу побачити більше фото 📸\n👟 ${p.brand} ${p.name}\n💰 ${p.price}₴\n🔗 ${productUrl}`;
+  const msg = `Привіт! 👋 Хочу замовити парфум 🌸\n${p.brand} ${p.name}\n💰 ${p.price}₴\n🔗 ${productUrl}`;
   postData({ action: 'photo_request', product: p, size: null });
-  openTgLink(`https://t.me/znahidkawow?text=${encodeURIComponent(msg)}`);
+  openTgLink(`${CFG.TG_URL}?text=${encodeURIComponent(msg)}`);
 }
 
 function openProductDetail(product) {
