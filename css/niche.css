@@ -1,0 +1,553 @@
+/* ============================================================
+   WOW.PARFUM — NICHE THEME
+   Mood: Dark Luxury Boutique
+   Ref:  Byredo · Le Labo · Comme des Garçons Parfums
+   ============================================================ */
+
+/* ── FONT ─────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ── DARK LUXURY PALETTE ─────────────────────────────────── */
+:root {
+  --bg:        #0a0806;
+  --bg2:       #100d09;
+  --bg3:       #161209;
+  --bg4:       #1c170e;
+  --bg5:       #231d13;
+  --bg-glass:  rgba(10,8,6,0.93);
+  --bg-card:   #110f0b;
+
+  --text:       #f0ece6;
+  --text-dim:   rgba(240,236,230,0.60);
+  --text-muted: rgba(240,236,230,0.32);
+
+  --accent:      #c9a96e;
+  --accent-inv:  #0a0806;
+  --red:         #c9a96e;
+  --red-dim:     rgba(201,169,110,0.10);
+  --red-glow:    rgba(201,169,110,0.22);
+  --orange:      #d4875a;
+  --green:       #8aae7c;
+  --gold:        #c9a96e;
+
+  --border:        rgba(255,255,255,0.06);
+  --border-hover:  rgba(255,255,255,0.12);
+  --border-accent: rgba(201,169,110,0.20);
+
+  --shadow-sm:   0 1px 6px  rgba(0,0,0,0.50);
+  --shadow:      0 4px 24px rgba(0,0,0,0.60);
+  --shadow-lg:   0 8px 56px rgba(0,0,0,0.72);
+  --shadow-red:  0 6px 28px rgba(201,169,110,0.22);
+  --shadow-card: 0 2px 16px rgba(0,0,0,0.55);
+  --shadow-card-hover: 0 8px 40px rgba(0,0,0,0.70), 0 0 0 1px rgba(201,169,110,0.14);
+  --shadow-glow: 0 0 0 1px rgba(255,255,255,0.04);
+
+  --niche-font:      'Cormorant Garamond', Georgia, serif;
+  --niche-font-body: 'Inter', -apple-system, sans-serif;
+  --grain-opacity: 0.035;
+}
+
+/* ── BASE OVERRIDES ──────────────────────────────────────── */
+body {
+  background: var(--bg) !important;
+  font-family: var(--niche-font-body);
+}
+
+/* Desktop ambient background */
+@media (min-width: 481px) {
+  body::before {
+    background:
+      radial-gradient(ellipse 55% 60% at 18% 30%, rgba(201,169,110,0.07) 0%, transparent 60%),
+      radial-gradient(ellipse 45% 55% at 82% 80%, rgba(155,89,182,0.04) 0%, transparent 55%),
+      #06050300 !important;
+    background-color: #080603 !important;
+  }
+  #app-root {
+    background: var(--bg) !important;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 40px 120px rgba(0,0,0,0.65) !important;
+  }
+}
+
+/* ── HERO SECTION ─────────────────────────────────────────── */
+.home-hero {
+  background: linear-gradient(170deg,
+    rgba(201,169,110,0.07) 0%,
+    rgba(201,169,110,0.02) 50%,
+    transparent 100%) !important;
+  padding: 28px 16px 22px !important;
+  min-height: 160px !important;
+}
+.home-hero::before {
+  background: radial-gradient(circle, rgba(201,169,110,0.12) 0%, transparent 68%) !important;
+  width: 280px !important; height: 280px !important;
+}
+.home-hero::after {
+  background: radial-gradient(circle, rgba(201,169,110,0.06) 0%, transparent 65%) !important;
+  width: 220px !important; height: 220px !important;
+}
+
+/* Greeting → small uppercase spaced label */
+.home-greeting {
+  font-family: 'Inter', sans-serif !important;
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  letter-spacing: 2.5px !important;
+  text-transform: uppercase !important;
+  color: var(--accent) !important;
+  opacity: 0.9 !important;
+  margin-bottom: 10px !important;
+}
+
+/* Title → editorial serif */
+.home-title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 300 !important;
+  font-style: italic !important;
+  font-size: clamp(30px, 8.5vw, 44px) !important;
+  letter-spacing: 0.01em !important;
+  line-height: 1.12 !important;
+  background: linear-gradient(135deg, #f0ece6 30%, #c9a96e 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+  color: #f0ece6 !important;  /* fallback */
+}
+
+/* Counter chip */
+.home-counter-chip {
+  background: rgba(201,169,110,0.08) !important;
+  border: 1px solid rgba(201,169,110,0.18) !important;
+  color: var(--text-dim) !important;
+}
+.live-dot { background: var(--accent) !important; }
+
+/* ── SECTION TITLES ───────────────────────────────────────── */
+.sec-title {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-weight: 400 !important;
+  font-style: italic !important;
+  font-size: 21px !important;
+  letter-spacing: 0.015em !important;
+}
+
+/* ── HEADER & NAV ─────────────────────────────────────────── */
+#header {
+  background: rgba(10,8,6,0.93) !important;
+  border-bottom-color: rgba(255,255,255,0.05) !important;
+}
+.header-logo .dot { color: var(--accent) !important; }
+
+#bottom-nav {
+  background: rgba(10,8,6,0.93) !important;
+  border-top-color: rgba(255,255,255,0.05) !important;
+}
+.nav-item.active {
+  color: var(--accent) !important;
+}
+.nav-item.active .nav-icon::after {
+  background: var(--accent) !important;
+}
+
+/* ── PRODUCT CARDS ────────────────────────────────────────── */
+.product-card {
+  background: var(--bg-card) !important;
+  border: 1px solid rgba(255,255,255,0.04) !important;
+  box-shadow: var(--shadow-card) !important;
+}
+.product-card:hover {
+  box-shadow: var(--shadow-card-hover) !important;
+  border-color: rgba(201,169,110,0.16) !important;
+}
+.product-card:active { transform: scale(0.97) !important; }
+
+.card-img-wrap { background: #160f09 !important; }
+
+.card-brand { color: var(--accent) !important; }
+
+.card-price {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 17px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.01em !important;
+}
+
+/* ── NICHE FAMILY CHIPS ───────────────────────────────────── */
+.niche-fam-chip {
+  background: rgba(255,255,255,0.04) !important;
+  border: 1px solid rgba(255,255,255,0.07) !important;
+  color: var(--text-dim) !important;
+}
+.niche-fam-chip:active,
+.niche-fam-chip.active {
+  background: rgba(201,169,110,0.14) !important;
+  border-color: rgba(201,169,110,0.35) !important;
+  color: var(--accent) !important;
+}
+
+/* ── CART & CHECKOUT ──────────────────────────────────────── */
+.cart-checkout-btn {
+  background: linear-gradient(135deg, #c9a96e 0%, #a8843f 100%) !important;
+  color: #0a0806 !important;
+  font-family: 'Inter', sans-serif !important;
+  font-weight: 700 !important;
+}
+.cart-checkout-btn:active { opacity: 0.88 !important; }
+
+#cart-sticky-bar {
+  background: linear-gradient(135deg, #c9a96e 0%, #9e7830 100%) !important;
+  color: #0a0806 !important;
+}
+
+.cod-banner {
+  background: rgba(201,169,110,0.10) !important;
+  border-color: rgba(201,169,110,0.22) !important;
+  color: var(--accent) !important;
+}
+
+/* ── PRICE SLIDER ─────────────────────────────────────────── */
+.range-track-fill,
+.size-chip.active { background: var(--accent) !important; }
+.price-range-thumb { background: var(--accent) !important; }
+
+/* ── SHEET (bottom drawer) ────────────────────────────────── */
+.sheet {
+  background: var(--bg2) !important;
+  border-top: 1px solid rgba(255,255,255,0.06) !important;
+}
+.sh-handle { background: rgba(255,255,255,0.10) !important; }
+
+/* ── MATCH SWIPE CARDS ────────────────────────────────────── */
+.m-card { background: var(--bg-card) !important; }
+.m-card-img-wrap { background: #160f09 !important; }
+
+/* ── HOT BADGE ────────────────────────────────────────────── */
+.badge-hot  { background: #c9a96e !important; color: #0a0806 !important; }
+.badge-new  { background: rgba(138,174,124,0.20) !important; color: #8aae7c !important; }
+.badge-sale { background: rgba(212,135,90,0.20) !important; color: #d4875a !important; }
+
+/* ── BRANDS GRID ──────────────────────────────────────────── */
+.brand-chip {
+  background: var(--bg3) !important;
+  border-color: rgba(255,255,255,0.05) !important;
+  color: var(--text-dim) !important;
+}
+.brand-chip:active { border-color: rgba(201,169,110,0.25) !important; }
+
+/* ── REVIEW CARD ──────────────────────────────────────────── */
+.review-card {
+  background: var(--bg2) !important;
+  border-color: rgba(255,255,255,0.05) !important;
+}
+
+/* ── SPLASH SCREEN ────────────────────────────────────────── */
+#splash {
+  background: #0a0806 !important;
+}
+.splash-logo {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-style: italic !important;
+  color: var(--accent) !important;
+}
+
+/* ── TRUST ITEMS (premium.css component) ─────────────────── */
+.trust-item {
+  background: rgba(201,169,110,0.05) !important;
+  border-color: rgba(201,169,110,0.12) !important;
+}
+
+/* ── MARQUEE TINT ─────────────────────────────────────────── */
+.wow-marquee-item { color: rgba(201,169,110,0.40) !important; }
+
+/* ── DAILY DEAL ───────────────────────────────────────────── */
+.dd-header { border-color: rgba(255,255,255,0.05) !important; }
+.dd-card {
+  background: var(--bg-card) !important;
+  border-color: rgba(255,255,255,0.04) !important;
+}
+
+/* ── CONTACTS PAGE ────────────────────────────────────────── */
+.contact-tg-btn {
+  background: linear-gradient(135deg, #c9a96e, #a8843f) !important;
+  color: #0a0806 !important;
+}
+
+/* ── FORM INPUTS ──────────────────────────────────────────── */
+.form-inp, .checkout-input {
+  background: var(--bg3) !important;
+  border-color: rgba(255,255,255,0.08) !important;
+  color: var(--text) !important;
+}
+.form-inp:focus, .checkout-input:focus {
+  border-color: var(--accent) !important;
+  box-shadow: 0 0 0 3px rgba(201,169,110,0.15) !important;
+}
+
+/* ── SIZE PICKER ──────────────────────────────────────────── */
+.size-btn.active {
+  background: var(--accent) !important;
+  border-color: var(--accent) !important;
+  color: #0a0806 !important;
+}
+.size-btn:hover { border-color: rgba(201,169,110,0.40) !important; }
+
+/* ── PREMIUM HERO ADD-ONS ─────────────────────────────────── */
+.niche-hero-badge { color: var(--accent) !important; }
+.niche-hero-badge::before { background: var(--accent) !important; }
+
+/* ══════════════════════════════════════════════════════════════
+   DESKTOP LAYOUT — WOW.PARFUM (1024px+)
+   Luxury boutique experience for wide screens
+   ══════════════════════════════════════════════════════════════ */
+
+#desktop-nav { display: none; }
+
+@media (min-width: 1024px) {
+  :root {
+    --max-w:    1280px;
+    --half-max: 640px;
+    --half-inset: 616px;
+    --header-h: 76px;
+    --nav-h:    0px;
+  }
+
+  /* ── Body & container ── */
+  body::before {
+    background:
+      radial-gradient(ellipse 50% 70% at 8%  20%, rgba(201,169,110,0.09) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 60% at 92% 75%, rgba(155,89,182,0.06) 0%, transparent 55%),
+      radial-gradient(ellipse 60% 35% at 50% 100%,rgba(201,169,110,0.04) 0%, transparent 60%),
+      #050402 !important;
+  }
+  #app-root {
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.04), 0 48px 140px rgba(0,0,0,0.75) !important;
+  }
+
+  /* ── Desktop header ── */
+  #header {
+    display: grid !important;
+    grid-template-columns: 200px 1fr auto !important;
+    gap: 0 40px !important;
+    padding: 0 48px !important;
+    height: 76px !important;
+    align-items: center !important;
+  }
+  .header-logo { font-size: 22px !important; }
+  .header-logo small { font-size: 8px !important; letter-spacing: 2.5px !important; }
+
+  /* ── Desktop nav (shown in header on 1024px+) ── */
+  #desktop-nav {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .dsk-nav-btn {
+    padding: 8px 18px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: rgba(240,236,230,0.55);
+    background: transparent;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all .18s;
+    font-family: var(--niche-font-body);
+  }
+  .dsk-nav-btn:hover {
+    color: var(--text);
+    background: rgba(255,255,255,0.06);
+    border-color: rgba(255,255,255,0.08);
+  }
+  .dsk-nav-btn.active {
+    color: var(--accent);
+    background: rgba(201,169,110,0.10);
+    border-color: rgba(201,169,110,0.22);
+  }
+
+  /* ── Hide mobile bottom nav ── */
+  #bottom-nav { display: none !important; }
+
+  /* ── Main pages padding ── */
+  #pages { padding-bottom: 60px !important; }
+
+  /* ── Hero section: wider & taller ── */
+  .home-hero {
+    padding: 60px 48px 48px !important;
+    min-height: 240px !important;
+    position: relative;
+  }
+  .home-title {
+    font-size: clamp(44px, 4.5vw, 64px) !important;
+    max-width: 580px;
+  }
+
+  /* ── Section padding ── */
+  .section { padding-left: 48px !important; padding-right: 48px !important; }
+  .niche-fam-section { padding: 20px 48px 12px !important; }
+  .niche-fam-scroll { gap: 8px !important; }
+  .niche-fam-chip { padding: 8px 18px !important; font-size: 13px !important; }
+
+  /* ── Horizontal scroll rows → desktop grid ── */
+  .h-scroll {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 16px !important;
+    overflow: visible !important;
+    padding: 0 48px !important;
+    scroll-snap-type: none !important;
+  }
+  .h-scroll .product-card {
+    min-width: unset !important;
+    width:     100%  !important;
+    flex-shrink: unset !important;
+  }
+
+  /* ── Main product grid: 4 columns ── */
+  .prods-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+    padding: 0 48px !important;
+    gap: 18px !important;
+  }
+  .product-card.grid-card { border-radius: 16px !important; }
+
+  /* ── Catalog page: filter sidebar + grid ── */
+  #page-catalog {
+    display: grid !important;
+    grid-template-columns: 220px 1fr !important;
+    grid-template-rows: auto auto 1fr !important;
+    column-gap: 24px;
+    padding: 0 !important;
+  }
+  .cat-search-wrap {
+    grid-column: 2 !important;
+    padding: 0 48px 12px !important;
+  }
+  .search-sugg { grid-column: 2 !important; padding-left: 48px; }
+  .size-filter-wrap, #price-filter-wrap, .update-ts {
+    grid-column: 2 !important;
+    padding-left: 48px !important;
+    padding-right: 48px !important;
+  }
+  #catalog-view { grid-column: 2 !important; padding-right: 48px !important; }
+
+  /* Desktop filter sidebar */
+  #desktop-filter-sidebar {
+    display: block !important;
+    grid-column: 1 !important;
+    grid-row: 1 / -1 !important;
+    padding: 24px 0 24px 48px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    position: sticky;
+    top: 76px;
+    max-height: calc(100vh - 76px);
+    overflow-y: auto;
+    scrollbar-width: none;
+  }
+  #desktop-filter-sidebar::-webkit-scrollbar { display: none; }
+  .dsf-title {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .dsf-section { margin-bottom: 24px; }
+  .dsf-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: rgba(240,236,230,0.4);
+    margin-bottom: 8px;
+  }
+  .dsf-chip {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    background: transparent;
+    text-align: left;
+    font-family: var(--niche-font-body);
+    font-size: 13px;
+    color: rgba(240,236,230,0.6);
+    cursor: pointer;
+    transition: all .15s;
+    margin-bottom: 2px;
+  }
+  .dsf-chip:hover { background: rgba(255,255,255,0.05); color: var(--text); }
+  .dsf-chip.active {
+    background: rgba(201,169,110,0.12);
+    border-color: rgba(201,169,110,0.25);
+    color: var(--accent);
+  }
+
+  /* ── Brands grid: 4 cols ── */
+  .brands-grid {
+    padding: 0 48px !important;
+  }
+
+  /* ── Reviews row: grid ── */
+  #reviews-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    overflow: visible !important;
+    padding: 0 48px !important;
+    gap: 12px !important;
+  }
+  #reviews-row > * { min-width: unset !important; width: 100% !important; }
+
+  /* ── Cart & Checkout sheet: centered modal on desktop ── */
+  .sheet {
+    left: max(0px, calc(50% - 320px)) !important;
+    right: max(0px, calc(50% - 320px)) !important;
+    border-radius: 24px 24px 0 0 !important;
+  }
+
+  /* ── Push notification permission banner ── */
+  #push-banner {
+    margin: 16px 48px !important;
+    border-radius: 14px !important;
+  }
+}
+
+/* ── PUSH PERMISSION BANNER ─────────────────────────────────── */
+#push-banner {
+  display: none;
+  margin: 12px 16px;
+  padding: 14px 16px;
+  background: rgba(201,169,110,0.08);
+  border: 1px solid rgba(201,169,110,0.20);
+  border-radius: 12px;
+  align-items: center;
+  gap: 12px;
+}
+#push-banner.visible { display: flex; }
+.push-banner-ico { font-size: 22px; flex-shrink: 0; }
+.push-banner-text { flex: 1; }
+.push-banner-title {
+  font-size: 13px; font-weight: 700; color: var(--text);
+  margin-bottom: 2px;
+}
+.push-banner-sub { font-size: 11px; color: var(--text-muted); }
+.push-banner-btn {
+  padding: 8px 16px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: #0a0806;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  border: none;
+  font-family: var(--niche-font-body);
+  flex-shrink: 0;
+  transition: opacity .15s;
+}
+.push-banner-btn:active { opacity: .8; }
+.push-banner-close {
+  background: none; border: none; color: var(--text-muted);
+  font-size: 18px; cursor: pointer; padding: 4px; flex-shrink: 0;
+}
+

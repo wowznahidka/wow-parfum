@@ -13,7 +13,9 @@ const HEADERS = [
   "Розміри",
   "Нове",
   "Стать",
-  "Постачальник"
+  "Постачальник",
+  "Опис",
+  "TG"
 ];
 
 const SKIP_KEYWORDS = [
@@ -353,7 +355,9 @@ function parseSupplierSheet(rows, formulas, sheetName, gender) {
         sizes.join(","),
         "",
         gender,
-        supplierType
+        supplierType,
+        "",
+        "",
       ]);
     }
   }
@@ -715,6 +719,52 @@ function doPost(e) {
         "👤 <b>Автор:</b> " + (data.author || "Анонім") + "\n" +
         "💬 " + (data.text || "—")
       );
+    }
+
+    if (data.action === "upsert_product") {
+      const sheet = ss.getSheetByName("Товари") || ss.insertSheet("Товари");
+      if (sheet.getLastRow() === 0) sheet.appendRow(HEADERS);
+
+      const nameCol  = HEADERS.indexOf("Назва")     + 1;
+      const idCol    = HEADERS.indexOf("ID")         + 1;
+      const photoCol = HEADERS.indexOf("Фото")       + 1;
+      const descCol  = HEADERS.indexOf("Опис")       + 1;
+      const tgCol    = HEADERS.indexOf("TG")         + 1;
+      const lastRow  = sheet.getLastRow();
+
+      // Пошук існуючого рядка по ID (артикул) або назві
+      let found = -1;
+      if (lastRow > 1) {
+        const ids   = sheet.getRange(2, idCol,   lastRow - 1, 1).getValues();
+        const names = sheet.getRange(2, nameCol, lastRow - 1, 1).getValues();
+        const inId  = String(data.article || '').toLowerCase();
+        const inNm  = String(data.name    || '').toLowerCase().substring(0, 20);
+        for (let i = 0; i < ids.length; i++) {
+          if ((inId && String(ids[i][0]).toLowerCase().includes(inId)) ||
+              (inNm && String(names[i][0]).toLowerCase().substring(0, 20) === inNm)) {
+            found = i + 2; break;
+          }
+        }
+      }
+
+      if (found > 0) {
+        if (data.photo)       sheet.getRange(found, photoCol).setValue(data.photo);
+        if (data.description) sheet.getRange(found, descCol).setValue(data.description);
+        if (data.tg_link)     sheet.getRange(found, tgCol).setValue(data.tg_link);
+      } else {
+        const row = new Array(HEADERS.length).fill('');
+        row[HEADERS.indexOf("ID")]         = data.article || ('p_' + Date.now());
+        row[HEADERS.indexOf("Назва")]      = data.name    || '';
+        row[HEADERS.indexOf("Ціна")]       = data.price   || 0;
+        row[HEADERS.indexOf("Стара ціна")] = data.oldPrice || 0;
+        row[HEADERS.indexOf("Фото")]       = data.photo   || '';
+        row[HEADERS.indexOf("Розміри")]    = data.sizes   || '';
+        row[HEADERS.indexOf("Стать")]      = data.gender  || '';
+        row[HEADERS.indexOf("Нове")]       = '1';
+        row[HEADERS.indexOf("Опис")]       = data.description || '';
+        row[HEADERS.indexOf("TG")]         = data.tg_link || '';
+        sheet.appendRow(row);
+      }
     }
 
     if (data.action === "photo_request") {

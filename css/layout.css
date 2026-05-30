@@ -11,8 +11,9 @@
      • >0px when viewport  > 480px → element auto-centers at 480px (desktop)
    No transform needed, so no conflict with translateY animations on sheets.
 */
-:root { --half-max: 240px; --half-inset: 228px; } /* 480/2 and (480-24)/2 */
-@media (min-width: 640px) { :root { --half-max: 300px; --half-inset: 288px; } } /* 600/2 */
+:root { --half-max: 240px; --half-inset: 228px; }
+@media (min-width: 640px)  { :root { --half-max: 300px; --half-inset: 288px; } }
+@media (min-width: 1024px) { :root { --half-max: 640px; --half-inset: 616px; } }
 
 body { background: #EDE8DF; }
 

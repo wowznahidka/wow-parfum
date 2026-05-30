@@ -232,7 +232,7 @@ function _showSearchSuggestions(q) {
   const models = [...modelSet].slice(0, 3);
   if (!brands.length && !models.length) { _hideSuggestions(); return; }
   box.innerHTML = [
-    ...brands.map(b => `<button class="sugg-item sugg-brand" onclick="_pickSugg('${esc(b)}')" ><span class="sugg-ico">👟</span>${esc(b)}</button>`),
+    ...brands.map(b => `<button class="sugg-item sugg-brand" onclick="_pickSugg('${esc(b)}')" ><span class="sugg-ico">🌸</span>${esc(b)}</button>`),
     ...models.map(m => `<button class="sugg-item" onclick="_pickSugg('${esc(m)}')"><span class="sugg-ico">🔍</span>${esc(m)}</button>`),
   ].join('');
   box.classList.add('vis');
@@ -255,7 +255,7 @@ function _pickSugg(text) {
 function renderSearchResults(data) {
   const el = document.getElementById('catalog-view');
   if (!el) return;
-  const results = filterByPrice(filterBySize(data)).filter(p =>
+  const results = filterByNiche(filterByPrice(filterBySize(data))).filter(p =>
     p.brand.toLowerCase().includes(S.searchQ) ||
     p.name.toLowerCase().includes(S.searchQ)
   );
@@ -349,7 +349,7 @@ function _renderCatGridBatch(grid, gen) {
 function _renderUnifiedCatalog(data) {
   const el = document.getElementById('catalog-view');
   if (!el) return;
-  const filtered     = filterByPrice(filterBySize(data));
+  const filtered     = filterByNiche(filterByPrice(filterBySize(data)));
   const brandEntries = _buildBrandMap(data);
   const activeBrand  = S.catBrand;
   const products     = activeBrand ? filtered.filter(p => p.brand === activeBrand) : filtered;
@@ -359,7 +359,7 @@ function _renderUnifiedCatalog(data) {
     style="--sc1:#1a2a1a;--sc2:#284028">
     <div class="cat-story-ring ${!activeBrand ? 'active' : ''}">
       <div class="cat-story-inner">
-        <span class="cat-story-ph">👟</span>
+        <span class="cat-story-ph">🌸</span>
       </div>
     </div>
     <div class="cat-story-lbl">Всі</div>
@@ -384,7 +384,7 @@ function _renderUnifiedCatalog(data) {
   const salt = activeBrand ? (activeBrand.charCodeAt(0) * 31 + activeBrand.length) | 0 : 99;
   el.innerHTML = `
     <div class="cat-stories-hdr">
-      <span class="cat-vibe-line">Знайди свою пару</span>
+      <span class="cat-vibe-line">Знайди свій аромат</span>
       <span class="cat-vibe-fire">🔥</span>
       ${activeBrand ? `<button class="cat-story-reset" onclick="_selectBrandStory(null)">× ${esc(activeBrand)}</button>` : ''}
     </div>
@@ -396,7 +396,7 @@ function _renderUnifiedCatalog(data) {
 }
 
 function _updateCatalogGrid(data) {
-  const filtered = filterByPrice(filterBySize(data));
+  const filtered = filterByNiche(filterByPrice(filterBySize(data)));
   const products  = S.catBrand ? filtered.filter(p => p.brand === S.catBrand) : filtered;
   const gw = document.getElementById('cat-grid-wrap');
   if (!gw) return;
@@ -440,4 +440,32 @@ function openBrand(brand) {
 
 function backToBrands() {
   _selectBrandStory(null);
+}
+
+// ── NICHE FILTER ─────────────────────────────────── */
+let _nicheFilter = '';
+
+document.addEventListener('click', function(e) {
+  const chip = e.target.closest('.niche-fam-chip');
+  if (!chip) return;
+  const key = chip.dataset.cat || chip.dataset.style || '';
+  filterNiche(key === 'all' ? '' : key);
+});
+
+function filterNiche(key) {
+  _nicheFilter = (key == null || key === 'all') ? '' : key;
+  document.querySelectorAll('.niche-fam-chip').forEach(function(btn) {
+    const bk = btn.dataset.cat || btn.dataset.style || '';
+    const isActive = (!_nicheFilter && (!bk || bk === 'all')) || bk === _nicheFilter;
+    btn.classList.toggle('active', isActive);
+  });
+  _applyFilters();
+}
+
+function filterByNiche(products) {
+  if (!_nicheFilter) return products;
+  return products.filter(function(p) {
+    const fields = [p.category, p.tags, p.name, p.type].filter(Boolean).join(' ').toLowerCase();
+    return fields.includes(_nicheFilter.toLowerCase());
+  });
 }

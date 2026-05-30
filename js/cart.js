@@ -47,7 +47,7 @@ function renderFavSheet() {
     return `<div class="fav-item">
       ${p.image && p.image.startsWith('http')
         ? `<img class="fav-img" src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onload="this.classList.add('loaded')">`
-        : `<div class="fav-img-ph" aria-hidden="true">👟</div>`}
+        : `<div class="fav-img-ph" aria-hidden="true">🌸</div>`}
       <div class="fav-body">
         <div class="fav-brand">${esc(p.brand)}</div>
         <div class="fav-name">${esc(p.name)}</div>
@@ -64,7 +64,7 @@ function renderFavSheet() {
   const remaining = S.matchPool.length > 0 ? S.matchPool.length - S.matchIdx : 0;
   if (remaining > 0) {
     el.innerHTML += `<div class="fav-resume-match" onclick="closeAllSheets();changeTab('match')">
-      <div><span>🔥 Ще ${remaining} пар чекають</span><br><small>Свайпай далі — знайди свою пару</small></div>
+      <div><span>🔥 Ще ${remaining} ароматів чекають</span><br><small>Свайпай далі — знайди свій аромат</small></div>
       <span class="i-arr" style="width:8px;height:8px;border-width:2px" aria-hidden="true"></span>
     </div>`;
   }
@@ -335,6 +335,7 @@ async function submitOrder() {
     promo:    document.getElementById('f-promo')?.value.trim() || '',
     cart:     S.cart.map(c => ({ id: c.id, brand: c.brand || '', name: c.name || '', price: Number(c.price) || 0, size: String(c.size), qty: c.qty || 1, supplier: c.supplier || 0 })),
     utm:      S.utm || null,
+    ref:      REF.getReferrerLabel(),
   };
 
   // Зберігаємо замовлення локально ДО відправки — страховка
@@ -410,17 +411,14 @@ function goHome() {
 // ── SIZE MEMORY (localStorage) ────────────────────── */
 function getRememberedSize() {
   try {
-    const raw = localStorage.getItem('wow_my_size');
-    if (!raw) return null;
-    const n = parseInt(raw, 10);
-    return (Number.isFinite(n) && n >= 30 && n <= 55) ? n : null;
+    return localStorage.getItem('wow_my_size') || null;
   } catch(e) { return null; }
 }
 
 function rememberSize(sz) {
   try {
-    const n = Number(sz);
-    if (Number.isFinite(n) && n >= 30 && n <= 55) localStorage.setItem('wow_my_size', String(n));
+    const s = String(sz).trim();
+    if (s && s !== 'undefined' && s !== 'null') localStorage.setItem('wow_my_size', s);
   } catch(e) {}
 }
 

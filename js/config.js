@@ -1,5 +1,7 @@
 ﻿const CFG = {
   GAS_URL:  'https://script.google.com/macros/s/AKfycbw9zB-WUX85ZnIUyzlA-tvdFAT-f6mrPyose3MOdScitYj9YZmYf6kXJwUPP6bkKxXr/exec',
+  // Після генерації VAPID в адмінці (/api/push/vapid-keygen) → скопіюй public key сюди
+  VAPID_PUBLIC_KEY: '',
   TG_URL:   'https://t.me/wowparfum',
   IG_URL:   'https://instagram.com/wow.parfum',
   TT_URL:   'https://www.tiktok.com/@wowparfum',
