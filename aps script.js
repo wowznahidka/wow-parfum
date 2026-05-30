@@ -14,6 +14,9 @@ const HEADERS = [
   "TG"
 ];
 
+// Для парфумів каталог заповнює grabber через upsert_product — постачальники не потрібні
+const SUPPLIERS = [];
+
 const SKIP_KEYWORDS = [
   "одяг",
   "барсетк",
@@ -826,6 +829,9 @@ function updateMasterDB() {
     let products = [];
     // P0-10: Track how many suppliers responded successfully
     let successfulSuppliers = 0;
+
+    // Якщо постачальників немає — каталог веде grabber, нічого не очищувати
+    if (SUPPLIERS.length === 0) return 0;
 
     for (const supplier of SUPPLIERS) {
       try {
