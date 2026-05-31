@@ -551,3 +551,51 @@ body {
   font-size: 18px; cursor: pointer; padding: 4px; flex-shrink: 0;
 }
 
+.wow-stores-block {
+  margin: 20px 16px 4px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px;
+}
+.wow-stores-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-dim);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.wow-stores-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+.wow-store-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 4px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  text-decoration: none;
+  transition: background .15s, border-color .15s;
+  cursor: pointer;
+}
+.wow-store-card:active { background: var(--bg4); border-color: var(--border-accent); }
+.ws-ico  { font-size: 22px; line-height: 1; }
+.ws-name { font-size: 11px; color: var(--text-dim); font-weight: 500; text-align: center; }
+
+.success-stores {
+  margin-top: 20px;
+  width: 100%;
+}
+.success-stores-lbl {
+  font-size: 13px;
+  color: var(--text-dim);
+  text-align: center;
+  margin-bottom: 10px;
+}
+

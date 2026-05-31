@@ -87,7 +87,7 @@ function _dealCardHtml(p) {
   const img = p.image && p.image.startsWith('http')
     ? `<img class="card-img" src="${esc(p.image)}" alt="${esc(p.brand)} ${esc(p.name)}"
          loading="lazy" decoding="async" onload="this.classList.add('loaded')">`
-    : `<div class="card-img-placeholder" aria-hidden="true">👟</div>`;
+    : `<div class="card-img-placeholder" aria-hidden="true">🌸</div>`;
 
   const szList = p.sizes[0] === 'ONE SIZE'
     ? '<span>ONE SIZE</span>'

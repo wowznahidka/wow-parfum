@@ -5,21 +5,26 @@
 
 // ── BRAND ACCENT COLORS ──────────────────────────── */
 const BRAND_CLR = {
-  'Nike':        ['#c01010','#e83030'],
-  'Adidas':      ['#181818','#323232'],
-  'New Balance': ['#0e2278','#1a3ab8'],
-  'Jordan':      ['#1a1a1a','#3a3a3a'],
-  'Puma':        ['#b80000','#e01818'],
-  'Asics':       ['#102090','#1e38c8'],
-  'Reebok':      ['#1a1a38','#2a2a5a'],
-  'Vans':        ['#1a1a1a','#383838'],
-  'Salomon':     ['#b84000','#e06000'],
-  'Converse':    ['#141414','#2e2e2e'],
-  'Fila':        ['#002880','#0044c8'],
-  'Saucony':     ['#1a3888','#2a52c0'],
-  'On':          ['#1a2e1a','#2e4a2e'],
-  'DC Shoes':    ['#181828','#282840'],
-  'Hoka':        ['#c84000','#e86000'],
+  'Dior':              ['#1a1028','#2e1a40'],
+  'Chanel':            ['#1a1a1a','#2e2e2e'],
+  'Tom Ford':          ['#2a1408','#3e200e'],
+  'Byredo':            ['#0e1e22','#1a3038'],
+  'Jo Malone':         ['#28220e','#3e3418'],
+  'Versace':           ['#1e1400','#342400'],
+  'Paco Rabanne':      ['#181010','#2a1818'],
+  'YSL':               ['#1a1800','#2c2a00'],
+  'Hugo Boss':         ['#0e0e18','#181828'],
+  'Guerlain':          ['#1e1408','#2e2010'],
+  'Givenchy':          ['#181020','#241830'],
+  'Armani':            ['#141414','#202020'],
+  'Calvin Klein':      ['#0e1820','#182432'],
+  'Narciso Rodriguez': ['#200e18','#301828'],
+  'Burberry':          ['#121e12','#1c2e1c'],
+  'Mancera':           ['#1a0e20','#28183a'],
+  'Xerjoff':           ['#1a1400','#2e2400'],
+  'Amouage':           ['#200a0a','#340e0e'],
+  'Kilian':            ['#0e0e0e','#1e1818'],
+  'Initio':            ['#1a1000','#2e1c00'],
 };
 
 function _brandGrad(brand) {
@@ -163,7 +168,7 @@ function _resetPriceSlider() {
 
 function filterByPrice(products) {
   const min = S.priceMin || 0;
-  const max = (S.priceMax !== undefined && S.priceMax < PRICE_MAX) ? S.priceMax : PRICE_MAX;
+  const max = (S.priceMax !== undefined && S.priceMax <= PRICE_MAX) ? S.priceMax : PRICE_MAX;
   if (min <= 0 && max >= PRICE_MAX) return products;
   return products.filter(p => {
     const price = Number(p.price) || 0;
@@ -275,10 +280,11 @@ function renderSearchResults(data) {
 // ── UNIFIED CATALOG (Stories + Grid) ─────────────── */
 
 const _BRAND_ABBR = {
-  'Nike':'NK','Adidas':'AD','New Balance':'NB','Jordan':'JB',
-  'Puma':'PM','Asics':'AS','Reebok':'RBK','Vans':'VNS',
-  'Converse':'CVS','Salomon':'SLM','Fila':'FLA','Saucony':'SAU',
-  'On':'ON','DC Shoes':'DC','Hoka':'HOK',
+  'Dior':'DR','Chanel':'CH','Tom Ford':'TF','Byredo':'BYR',
+  'Jo Malone':'JM','Versace':'VRS','Paco Rabanne':'PR','YSL':'YSL',
+  'Hugo Boss':'HB','Guerlain':'GRL','Givenchy':'GVN','Armani':'ARM',
+  'Calvin Klein':'CK','Narciso Rodriguez':'NR','Burberry':'BBR',
+  'Mancera':'MNC','Xerjoff':'XRJ','Amouage':'AMG','Kilian':'KLN','Initio':'INT',
 };
 function _brandAbbr(brand) {
   return _BRAND_ABBR[brand] || brand.replace(/\s+/g,'').slice(0,3).toUpperCase();

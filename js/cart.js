@@ -197,7 +197,7 @@ function _renderCheckoutSummary() {
     <div class="co-item">
       ${c.image && c.image.startsWith('http')
         ? `<img class="co-img" src="${esc(c.image)}" alt="${esc(c.name)}" loading="lazy" onload="this.classList.add('loaded')">`
-        : `<div class="co-img-ph">👟</div>`}
+        : `<div class="co-img-ph">🌸</div>`}
       <div class="co-body">
         <div class="co-name">${esc(c.brand)} ${esc(c.name)}</div>
         <div class="co-meta">Розмір ${c.size}${(c.qty||1) > 1 ? ` · ${c.qty} пари` : ''} · ${(Number(c.price)||0) * (c.qty||1)}₴${c.isFreeShipping ? ' · <span style="color:var(--green);font-weight:700">🚚 Безкоштовна доставка</span>' : ''}</div>
@@ -335,7 +335,7 @@ async function submitOrder() {
     promo:    document.getElementById('f-promo')?.value.trim() || '',
     cart:     S.cart.map(c => ({ id: c.id, brand: c.brand || '', name: c.name || '', price: Number(c.price) || 0, size: String(c.size), qty: c.qty || 1, supplier: c.supplier || 0 })),
     utm:      S.utm || null,
-    ref:      REF.getReferrerLabel(),
+    ref:      (typeof REF !== 'undefined' ? REF.getReferrerLabel() : null),
   };
 
   // Зберігаємо замовлення локально ДО відправки — страховка

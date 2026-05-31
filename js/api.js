@@ -249,33 +249,34 @@ function _injectTTPixel() {
 function getDemoProducts(gender) {
   const gLabel = gender === 'female' ? 'Жінка' : 'Чоловік';
   const brands = gender === 'female'
-    ? ['Nike','Adidas','New Balance','Puma','Vans']
-    : ['Nike','Adidas','New Balance','Asics','Jordan'];
+    ? ['Dior','Chanel','Jo Malone','Byredo','YSL']
+    : ['Dior','Tom Ford','Versace','Paco Rabanne','Hugo Boss'];
   const models = {
-    Nike:          ['Air Max 270','Air Force 1','React Infinity','Pegasus 40'],
-    Adidas:        ['Samba OG','Forum Low','Gazelle','Stan Smith'],
-    'New Balance': ['9060','574','530','2002R'],
-    Asics:         ['Gel-NYC','Gel-Kayano','Gel-1090','Nimbus 26'],
-    Jordan:        ['Air Jordan 1','Jordan 4','Jordan 11','Jordan 3'],
-    Puma:          ['Suede Classic','RS-X','Mayze','Cali'],
-    Vans:          ['Old Skool','Sk8-Hi','Era','Authentic'],
+    Dior:          ['Sauvage EDP','Miss Dior EDP','J\'adore EDP','Homme Intense'],
+    Chanel:        ['Chance Eau Tendre','Coco Mademoiselle','N°5 EDP','Bleu de Chanel'],
+    'Jo Malone':   ['Peony & Blush Suede','Wood Sage & Sea Salt','Lime Basil & Mandarin','Velvet Rose & Oud'],
+    Byredo:        ['Gypsy Water','Mojave Ghost','Bal d\'Afrique','Blanche'],
+    YSL:           ['Black Opium EDP','Mon Paris EDP','Libre EDP','Y EDP'],
+    'Tom Ford':    ['Black Orchid','Oud Wood','Tobacco Vanille','Lost Cherry'],
+    Versace:       ['Eros EDP','Dylan Blue','Bright Crystal','Eros Pour Femme'],
+    'Paco Rabanne':['1 Million','Olympéa','Lady Million','Invictus'],
+    'Hugo Boss':   ['Boss Bottled','The Scent','Hugo Man','Boss Nuit'],
   };
-  const sizeBase = gender === 'female'
-    ? [36,37,38,39,40,41]
-    : [40,41,42,43,44,45];
+  const volBase = [30, 50, 75, 100];
   const prods = [];
   let idNum = 1;
   brands.forEach(brand => {
     (models[brand] || []).forEach(model => {
-      const avail = sizeBase.filter(() => Math.random() > .3).slice(0, Math.floor(Math.random()*5)+1);
-      if (!avail.length) avail.push(sizeBase[0]);
+      const avail = volBase.filter(() => Math.random() > .3).slice(0, Math.floor(Math.random()*3)+1);
+      if (!avail.length) avail.push(50);
       prods.push({
         id:       `demo_${idNum++}`,
         brand,    name: model,
-        price:    Math.round((Math.random()*2000+1500)/50)*50,
-        oldPrice: Math.random() > .5 ? Math.round((Math.random()*2500+2000)/50)*50 : 0,
+        price:    Math.round((Math.random()*800+350)/50)*50,
+        oldPrice: Math.random() > .5 ? Math.round((Math.random()*1000+600)/50)*50 : 0,
         image:    '',
         sizes:    avail,
+        sizeQty:  Object.fromEntries(avail.map(v => [v, 1])),
         isNew:    Math.random() > .7,
         gender:   gLabel,
       });

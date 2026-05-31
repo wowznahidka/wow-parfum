@@ -51,7 +51,7 @@ function renderMatchCard() {
       ${p.image && p.image.startsWith('http')
         ? `<img class="m-card-img" src="${esc(p.image)}" alt="${esc(p.brand)} ${esc(p.name)}"
              loading="lazy" onload="this.classList.add('loaded')">`
-        : `<div class="m-card-img-ph" aria-hidden="true">👟</div>`}
+        : `<div class="m-card-img-ph" aria-hidden="true">🌸</div>`}
       ${faved ? `<div class="m-card-fav-badge" aria-hidden="true">❤️</div>` : ''}
       <div class="swipe-label like" id="sw-like">${L.matchLike}</div>
       <div class="swipe-label nope" id="sw-nope">${L.matchNope}</div>

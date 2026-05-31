@@ -31,13 +31,13 @@ async function isPushSubscribed() {
 
 async function askPushPermission() {
   if (!('Notification' in window) || !('PushManager' in window)) {
-    showToast && showToast('Ваш браузер не підтримує push', 'err');
+    toast('Ваш браузер не підтримує push');
     return;
   }
 
   const perm = await Notification.requestPermission();
   if (perm !== 'granted') {
-    showToast && showToast('Сповіщення вимкнено в налаштуваннях браузера', 'err');
+    toast('Сповіщення вимкнено в налаштуваннях браузера');
     return;
   }
 
@@ -50,11 +50,11 @@ async function askPushPermission() {
     });
     await _savePushSubscription(sub);
     dismissPushBanner();
-    showToast && showToast('🔔 Підписка активована — будеш першим про знижки!', 'ok');
+    toast('🔔 Підписка активована — будеш першим про знижки!');
     const dsf = document.getElementById('dsf-push-btn');
     if (dsf) { dsf.textContent = '✅ Підписано'; dsf.disabled = true; }
   } catch (e) {
-    showToast && showToast('Не вдалось підписатись: ' + e.message, 'err');
+    toast('Не вдалось підписатись: ' + e.message);
   }
 }
 
