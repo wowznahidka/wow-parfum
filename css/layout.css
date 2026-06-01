@@ -923,3 +923,33 @@ body { background: #EDE8DF; }
   .brd-card { width: 155px; height: 220px; }
   .dd-row { padding: 0 16px 20px; gap: 12px; grid-template-columns: repeat(3, 1fr); }
 }
+
+/* ── REAL DESKTOP (≥1100px) — full grid ───── */
+@media (min-width: 1100px) {
+  :root { --max-w: 1180px; }
+  body { padding: 24px 0; align-items: flex-start; }
+  #app-root {
+    border-radius: 24px;
+    box-shadow:
+      0 0 0 1px rgba(0,0,0,0.06),
+      0 30px 80px rgba(0,0,0,0.12),
+      0 80px 160px rgba(0,0,0,0.08);
+    padding-bottom: 80px;
+  }
+  .section { padding: 24px 40px 12px; }
+  .h-scroll { padding: 0 40px 16px; margin: 0 -40px; }
+  .prods-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  .dd-row { padding: 0 32px 24px; gap: 18px; grid-template-columns: repeat(3, 1fr); }
+  #bottom-nav {
+    left: 50% !important; right: auto !important;
+    transform: translateX(-50%);
+    width: auto !important; max-width: 540px;
+    border-radius: 26px; bottom: 24px; padding: 0 20px;
+    box-shadow: 0 12px 40px rgba(0,0,0,0.18), 0 0 0 1px rgba(0,0,0,0.05);
+  }
+  .gender-tabs { max-width: 520px; margin-left: auto; margin-right: auto; }
+}
+@media (min-width: 1440px) {
+  :root { --max-w: 1320px; }
+  .prods-grid { grid-template-columns: repeat(5, 1fr); }
+}
