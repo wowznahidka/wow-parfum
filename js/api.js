@@ -67,13 +67,12 @@ function normalizeProduct(p) {
       if (ml) {
         const lbl = ml[1] + ' мл';
         sizes = [lbl]; sizeQty[lbl] = 1;
-        return _afterSizes();
       }
       // ── Спроба 1: формат з к-вом ─────────────────────────
       // Babylon:       "36(є) 37(0) 42(є)"  — є = є в наяв., 0 = нема
       // General Stores:"40(2) 41(3) 42(0)"  — число = к-сть пар
       // Також:         "40-2, 41-3" / "40:2 41:1"
-      const pairs = [...str.matchAll(/\b(\d{2})\b\s*[\s\-:(]\s*([єЄeE]|\d+)\s*\)?/g)];
+      const pairs = sizes.length ? [] : [...str.matchAll(/\b(\d{2})\b\s*[\s\-:(]\s*([єЄeE]|\d+)\s*\)?/g)];
       if (pairs.length) {
         pairs.forEach(m => {
           const sz  = Number(m[1]);
