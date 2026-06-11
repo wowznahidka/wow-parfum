@@ -46,7 +46,8 @@ function renderFavSheet() {
     }
     return `<div class="fav-item">
       ${p.image && p.image.startsWith('http')
-        ? `<img class="fav-img" src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onload="this.classList.add('loaded')">`
+        ? `<img class="fav-img" src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onload="this.classList.add('loaded')"
+             onclick="event.stopPropagation();openImageZoom('${esc(p.image)}','${esc(p.brand)} ${esc(p.name)}')" style="cursor:zoom-in">`
         : `<div class="fav-img-ph" aria-hidden="true">🌸</div>`}
       <div class="fav-body">
         <div class="fav-brand">${esc(p.brand)}</div>
@@ -109,21 +110,26 @@ function renderCartSheet() {
     sumBlock?.classList.add('hidden');
     return;
   }
- const total = S.cart.reduce((s, p) => s + (Number(p.price) || 0) * (p.qty || 1), 0);
+  const subtotal = S.cart.reduce((s, p) => s + (Number(p.price) || 0) * (p.qty || 1), 0);
+  const promoAmt = _calcPromoAmt(subtotal);
+  const total    = Math.max(0, subtotal - promoAmt);
+
   el.innerHTML = S.cart.map(p => {
-    const sid = esc(p.id);
-    const ssz = String(p.size).replace(/'/g, "\\'");
+    const sid     = esc(p.id);
+    const ssz     = String(p.size).replace(/'/g, "\\'");
+    const lineAmt = (Number(p.price) || 0) * (p.qty || 1);
     return `
     <div class="cart-item">
       ${p.image && p.image.startsWith('http')
-        ? `<img class="cart-img" src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onload="this.classList.add('loaded')">`
+        ? `<img class="cart-img" src="${esc(p.image)}" alt="${esc(p.name)}" loading="lazy" onload="this.classList.add('loaded')"
+             onclick="event.stopPropagation();openImageZoom('${esc(p.image)}','${esc(p.brand)} ${esc(p.name)}')" style="cursor:zoom-in">`
         : `<div class="cart-img-ph" aria-hidden="true"></div>`}
       <div class="cart-body">
         <div class="cart-brand">${esc(p.brand)}</div>
         <div class="cart-name">${esc(p.name)}</div>
         ${p.isFreeShipping ? '<div class="cart-deal-tag">🚚 Безкоштовна доставка</div>' : ''}
         <div class="cart-size-tag">${L.sizeLabel || 'Розмір'} ${p.size}</div>
-        <div class="cart-price">${(Number(p.price) || 0) * (p.qty || 1)}₴</div>
+        <div class="cart-price">${lineAmt}₴</div>
       </div>
       <div class="cart-item-controls">
         <div class="cart-qty-row">
@@ -137,11 +143,13 @@ function renderCartSheet() {
   }).join('');
   const totalQty = S.cart.reduce((s, p) => s + (p.qty || 1), 0);
   if (sumBlock) {
+    const discountRow = promoAmt > 0 ? `<div class="cart-sum-row cart-sum-discount"><span>${_promoLabel()}</span><span>−${promoAmt}₴</span></div>` : '';
     sumBlock.innerHTML = `
       <div class="cart-summary">
         <div class="cart-sum-row"><span>${L.cartRowItems||'Товари'}</span><span>${totalQty} ${L.cartItems}</span></div>
+        ${discountRow}
         <div class="cart-sum-row"><span>${L.cartRowDelivery||'Доставка'}</span><span>${L.cartDelivery}</span></div>
-        <div class="cart-sum-total"><span>${L.cartToPay}</span><span>${total} ₴</span></div>
+        <div class="cart-sum-total"><span>${L.cartToPay}</span><span>${total}₴</span></div>
       </div>
       <button class="cart-checkout-btn" onclick="openCheckout()">${L.cartCheckout}</button>`;
     sumBlock.classList.remove('hidden');
@@ -178,6 +186,53 @@ function _saveCustomerData(name, phone, city) {
   try { localStorage.setItem('wow_customer', JSON.stringify({ name, phone, city })); } catch(_) {}
 }
 
+// ── ABANDONED CHECKOUT CAPTURE ──────────────────────── */
+let _partialTimer = null;
+let _partialSent  = false;
+
+function _capturePartial() {
+  if (_partialSent) return;
+  clearTimeout(_partialTimer);
+  _partialTimer = setTimeout(() => {
+    const phone  = document.getElementById('f-phone')?.value.trim() || '';
+    const name   = document.getElementById('f-name')?.value.trim()  || '';
+    if (phone.replace(/\D/g,'').length < 9 || name.length < 3) return;
+    _partialSent = true;
+    const total = S.cart.reduce((s, p) => s + (Number(p.price)||0)*(p.qty||1), 0);
+    postData({
+      action:  'partial_order',
+      name, phone, total,
+      items: S.cart.map(c => `${c.brand} ${c.name}, розмір ${c.size} — ${c.price}₴`).join('; '),
+      cart: S.cart.map(c => ({ id: c.id, brand: c.brand||'', name: c.name||'', price: Number(c.price)||0, size: String(c.size), qty: c.qty||1 })),
+      utm: S.utm || null,
+    }).catch(() => {});
+  }, 4000);
+}
+
+// ── POST-PURCHASE UPSELL ─────────────────────────────── */
+function _renderSuccessUpsell() {
+  const el = document.getElementById('success-upsell');
+  if (!el) return;
+  const ordered = S.cart.map(c => c.id);
+  const brands  = [...new Set(S.cart.map(c => c.brand))];
+  const all     = S.catalog.all || [];
+  const pool    = all.filter(p => !ordered.includes(p.id) && brands.includes(p.brand) && p.image);
+  const items   = shuffleSeeded(pool, hashStr(ordered.join(','))).slice(0, 6);
+  if (!items.length) { el.style.display = 'none'; return; }
+  el.innerHTML = `
+    <div class="success-upsell-title">Може сподобатись</div>
+    <div class="success-upsell-row">
+      ${items.map(p => `
+        <div class="success-upsell-card" onclick="openProductDetail(findProd('${esc(p.id)}'))">
+          ${p.image
+            ? `<img src="${esc(p.image)}" alt="${esc(p.brand)} ${esc(p.name)}" loading="lazy" onload="this.classList.add('loaded')">`
+            : `<div class="success-upsell-card-ph">🌸</div>`}
+          <div class="success-upsell-name">${esc(p.brand)} ${esc(p.name)}</div>
+          <div class="success-upsell-price">${p.price}₴</div>
+        </div>`).join('')}
+    </div>`;
+}
+
 function _prefillCheckout() {
   let saved;
   try { saved = JSON.parse(localStorage.getItem('wow_customer') || 'null'); } catch(_) { return; }
@@ -200,13 +255,16 @@ function _renderCheckoutSummary() {
         : `<div class="co-img-ph">🌸</div>`}
       <div class="co-body">
         <div class="co-name">${esc(c.brand)} ${esc(c.name)}</div>
-        <div class="co-meta">Розмір ${c.size}${(c.qty||1) > 1 ? ` · ${c.qty} пари` : ''} · ${(Number(c.price)||0) * (c.qty||1)}₴${c.isFreeShipping ? ' · <span style="color:var(--green);font-weight:700">🚚 Безкоштовна доставка</span>' : ''}</div>
+        <div class="co-meta">Розмір ${c.size}${(c.qty||1) > 1 ? ` · ${c.qty} шт.` : ''} · ${(Number(c.price)||0) * (c.qty||1)}₴${c.isFreeShipping ? ' · <span style="color:var(--green);font-weight:700">🚚 Безкоштовна доставка</span>' : ''}</div>
       </div>
     </div>`).join('');
 }
 
 function openCheckout() {
-  const total    = S.cart.reduce((s, p) => s + (Number(p.price) || 0) * (p.qty || 1), 0);
+  _partialSent = false;
+  const subtotal = S.cart.reduce((s, p) => s + (Number(p.price) || 0) * (p.qty || 1), 0);
+  const promoAmt = _calcPromoAmt(subtotal);
+  const total    = Math.max(0, subtotal - promoAmt);
   const contents = S.cart.map(c => ({ content_id: c.id, content_name: `${c.brand} ${c.name}`, price: Number(c.price) || 0, quantity: c.qty || 1 }));
   if (window.fbq)  fbq('track', 'InitiateCheckout', { currency: 'UAH', value: total, contents, num_items: S.cart.length, content_type: 'product' });
   if (window.gtag) gtag('event', 'begin_checkout', { currency: 'UAH', value: total, items: S.cart.map(c => ({ item_id: c.id, item_name: `${c.brand} ${c.name}`, price: Number(c.price) || 0, quantity: c.qty || 1 })) });
@@ -237,6 +295,7 @@ function setDelivTab(t) {
 }
 
 function formatPhone(inp) {
+  _capturePartial();
   let v = inp.value.replace(/\D/g,'');
   if (v.startsWith('380')) v = v.slice(3);
   if (v.startsWith('0'))   v = v.slice(1);
@@ -253,6 +312,7 @@ function formatPhone(inp) {
 }
 
 function validateField(inp, type) {
+  if (type === 'name') _capturePartial();
   const v     = inp.value.trim();
   let valid;
   if (type === 'depot') valid = v.length >= 1;
@@ -270,13 +330,35 @@ function _setFieldState(inp, type, valid, touched) {
   if (err) err.classList.toggle('vis', !valid && touched);
 }
 
+function _calcPromoAmt(subtotal) {
+  if (S.promoFixed  > 0) return Math.min(S.promoFixed, subtotal);
+  if (S.promoDiscount > 0) return Math.round(subtotal * S.promoDiscount / 100);
+  return 0;
+}
+
+function _promoLabel() {
+  if (S.promoFixed   > 0) return `🎉 Промокод ${S.promoCode} −${S.promoFixed}₴`;
+  if (S.promoDiscount > 0) return `🎉 Промокод ${S.promoCode} −${S.promoDiscount}%`;
+  return '';
+}
+
 function applyPromo() {
-  const code     = document.getElementById('f-promo')?.value.trim().toUpperCase();
+  const code = document.getElementById('f-promo')?.value.trim().toUpperCase();
   if (!code) return;
-  const discount = S.promoCodes[code];
-  if (discount) {
-    S.promoDiscount = discount;
-    toast(`🎉 Промокод активовано! -${discount}%`);
+
+  const fixedAmt = CFG.PROMO_FIXED?.[code];
+  const pctAmt   = S.promoCodes[code];
+
+  if (fixedAmt) {
+    S.promoFixed    = fixedAmt;
+    S.promoDiscount = 0;
+    S.promoCode     = code;
+    toast(`🎉 Промокод ${code} активовано! −${fixedAmt}₴`);
+  } else if (pctAmt) {
+    S.promoDiscount = pctAmt;
+    S.promoFixed    = 0;
+    S.promoCode     = code;
+    toast(`🎉 Промокод ${code} активовано! −${pctAmt}%`);
   } else {
     toast('❌ Промокод не знайдено');
   }
@@ -321,7 +403,9 @@ async function submitOrder() {
     const dealMark = c.isFreeShipping ? ' 🚚 (Безкоштовна доставка)' : '';
     return `${c.brand} ${c.name}${dealMark}, розмір ${c.size}${(c.qty||1)>1?` × ${c.qty}`:''} — ${(Number(c.price)||0)*(c.qty||1)}₴`;
   }).join('\n');
-  const total = S.cart.reduce((s, p) => s + (Number(p.price) || 0) * (p.qty || 1), 0);
+  const subtotal = S.cart.reduce((s, p) => s + (Number(p.price) || 0) * (p.qty || 1), 0);
+  const promoAmt = _calcPromoAmt(subtotal);
+  const total    = Math.max(0, subtotal - promoAmt);
   const delivLabel = `${S.delivType === 'dept' ? 'Відділення' : 'Поштомат'} №${depot}`;
 
   const payload = {
@@ -332,10 +416,11 @@ async function submitOrder() {
     delivery: `${city}, ${delivLabel}`,
     items:    itemsStr,
     total,
-    promo:    document.getElementById('f-promo')?.value.trim() || '',
+    promo:    S.promoCode || document.getElementById('f-promo')?.value.trim() || '',
+    promo_amt: _calcPromoAmt(subtotal),
     cart:     S.cart.map(c => ({ id: c.id, brand: c.brand || '', name: c.name || '', price: Number(c.price) || 0, size: String(c.size), qty: c.qty || 1, supplier: c.supplier || 0 })),
     utm:      S.utm || null,
-    ref:      (typeof REF !== 'undefined' ? REF.getReferrerLabel() : null),
+    ref:      (typeof REF !== 'undefined' ? REF.getReferrerLabel() : ''),
   };
 
   // Зберігаємо замовлення локально ДО відправки — страховка
@@ -372,7 +457,7 @@ async function submitOrder() {
     try {
       ttq.track('PlaceAnOrder', {
         currency: 'UAH', value: total,
-        contents: S.cart.map(c => ({ content_id: c.id, content_name: `${c.brand} ${c.name}`, price: c.price, quantity: 1 })),
+        contents: S.cart.map(c => ({ content_id: c.id, content_name: `${c.brand} ${c.name}`, price: c.price, quantity: c.qty || 1 })),
       });
     } catch(e) {}
   }
@@ -392,8 +477,12 @@ async function submitOrder() {
   }
   closeAllSheets();
   document.getElementById('view-success')?.classList.add('on');
+  _renderSuccessUpsell();
 
-  S.cart = [];
+  S.cart          = [];
+  S.promoFixed    = 0;
+  S.promoDiscount = 0;
+  S.promoCode     = '';
   saveCart();
   updateBadges();
   if (btn) { btn.disabled = false; btn.textContent = L.submitOrder; }
@@ -411,14 +500,17 @@ function goHome() {
 // ── SIZE MEMORY (localStorage) ────────────────────── */
 function getRememberedSize() {
   try {
-    return localStorage.getItem('wow_my_size') || null;
+    const raw = localStorage.getItem('wow_my_size');
+    if (!raw) return null;
+    const n = parseInt(raw, 10);
+    return (Number.isFinite(n) && n >= 30 && n <= 55) ? n : null;
   } catch(e) { return null; }
 }
 
 function rememberSize(sz) {
   try {
-    const s = String(sz).trim();
-    if (s && s !== 'undefined' && s !== 'null') localStorage.setItem('wow_my_size', s);
+    const n = Number(sz);
+    if (Number.isFinite(n) && n >= 30 && n <= 55) localStorage.setItem('wow_my_size', String(n));
   } catch(e) {}
 }
 
@@ -443,13 +535,12 @@ async function submitReview() {
   if (!text) { toast('⚠️ Напишіть текст відгуку'); return; }
   const btn = document.querySelector('.rev-submit-btn');
   if (btn) { btn.disabled = true; btn.textContent = 'Надсилаємо…'; }
-  try {
-    await postData({ action: 'review', author: author || 'Анонім', stars, text });
-  } catch(e) {}
+  const ok = await postData({ action: 'review', author: author || 'Анонім', stars, text }).catch(() => false);
+  if (btn) { btn.disabled = false; btn.textContent = L.sendReview; }
+  if (ok === false) { toast('⚠️ Помилка відправки. Спробуйте ще раз.'); return; }
   S.reviews.unshift({ emoji: '😊', author: author || 'Анонім', stars, text, location: '' });
   renderReviews();
   closeAllSheets();
   resetReviewForm();
-  if (btn) { btn.disabled = false; btn.textContent = L.sendReview; }
   toast(`⭐ Дякуємо за відгук! <a href="${CFG.TG_URL}" target="_blank" rel="noopener">Написати у Telegram →</a>`);
 }

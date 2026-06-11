@@ -62,6 +62,13 @@ function normalizeProduct(p) {
     if (!str || str.toUpperCase() === 'ONE SIZE') {
       sizes = str ? ['ONE SIZE'] : [];
     } else {
+      // ── Спроба 0: обʼєм парфуму "100 мл" / "50ml" ────────
+      const ml = str.match(/^(\d{2,3})\s*(мл|ml)$/i);
+      if (ml) {
+        const lbl = ml[1] + ' мл';
+        sizes = [lbl]; sizeQty[lbl] = 1;
+        return _afterSizes();
+      }
       // ── Спроба 1: формат з к-вом ─────────────────────────
       // Babylon:       "36(є) 37(0) 42(є)"  — є = є в наяв., 0 = нема
       // General Stores:"40(2) 41(3) 42(0)"  — число = к-сть пар

@@ -26,7 +26,9 @@ function openSizePicker(product) {
   // Product info row
   document.getElementById('sp-product-info').innerHTML = `
     ${product.image && product.image.startsWith('http')
-      ? `<img class="sp-img" src="${esc(product.image)}" alt="${esc(product.name)}" loading="lazy" onload="this.classList.add('loaded')">`
+      ? `<img class="sp-img" src="${esc(product.image)}" alt="${esc(product.name)}" loading="lazy"
+            onclick="event.stopPropagation();openImageZoom('${esc(product.image)}','${esc(product.brand)} ${esc(product.name)}')"
+            onload="this.classList.add('loaded')">`
       : `<div class="sp-img-ph" aria-hidden="true"></div>`}
     <div class="sp-info">
       <div class="sp-brand">${esc(product.brand)}</div>
@@ -86,6 +88,21 @@ function openSizePicker(product) {
     confirmBtn.style.boxShadow  = isLastSize ? 'var(--shadow-red)' : '';
   }
 
+  // Notify me panel
+  const notifyWrap = document.getElementById('sp-notify-wrap');
+  if (notifyWrap) {
+    notifyWrap.innerHTML = `
+      <button class="sp-notify-trigger" onclick="toggleNotifyPanel()">🔔 Немає мого розміру? Повідомити</button>
+      <div class="sp-notify-panel" id="sp-notify-panel">
+        <div class="sp-notify-label">Вкажіть бажаний розмір і телефон — ми повідомимо, коли з'явиться:</div>
+        <div class="sp-notify-row">
+          <input class="sp-notify-sz" id="sp-notify-sz" type="number" placeholder="Розмір" min="35" max="48">
+          <input class="sp-notify-phone" id="sp-notify-phone" type="tel" placeholder="+380...">
+        </div>
+        <button class="sp-notify-send" onclick="submitNotifyMe()">🔔 Повідомити мене</button>
+      </div>`;
+  }
+
   // Open sheet
   closeAllSheets();
   document.getElementById('sheet-size')?.classList.add('on');
@@ -107,12 +124,12 @@ function selectSize(sz) {
 function requestPhoto() {
   if (!S.spProduct) return;
   const p = S.spProduct;
+  // Якщо в товара є посилання на пост в каналі — там вже альбом фото, кидаємо туди
   if (p.tgLink) { openTgLink(p.tgLink); return; }
-  const szText = S.spSelectedSize ? `Об'єм: ${S.spSelectedSize}` : '';
+  const szText = S.spSelectedSize ? `Розмір: ${S.spSelectedSize}` : 'Розмір: уточнимо';
   const productUrl = `${location.origin}${location.pathname}?product=${p.id}`;
-  const msg = `Привіт! 👋 Хочу замовити парфум 🌸\n${p.brand} ${p.name}\n${szText}\n💰 ${p.price}₴\n🔗 ${productUrl}`;
-  postData({ action: 'photo_request', product: p, size: S.spSelectedSize });
-  openTgLink(`${CFG.TG_URL}?text=${encodeURIComponent(msg)}`);
+  const msg = `Привіт! 👋 Хочу побачити більше фото 📸\n🌸 ${p.brand} ${p.name}\n${szText}\n💰 ${p.price}₴\n🔗 ${productUrl}`;
+  openTgLink(`https://t.me/znahidkawow?text=${encodeURIComponent(msg)}`);
 }
 
 function confirmSize() {
@@ -150,11 +167,11 @@ function confirmSize() {
 function _pdPhotoTg() {
   const p = S.pdProduct;
   if (!p) return;
+  // Якщо в товара є пост в каналі — там альбом, відкриваємо напряму
   if (p.tgLink) { openTgLink(p.tgLink); return; }
   const productUrl = `${location.origin}${location.pathname}?product=${p.id}`;
-  const msg = `Привіт! 👋 Хочу замовити парфум 🌸\n${p.brand} ${p.name}\n💰 ${p.price}₴\n🔗 ${productUrl}`;
-  postData({ action: 'photo_request', product: p, size: null });
-  openTgLink(`${CFG.TG_URL}?text=${encodeURIComponent(msg)}`);
+  const msg = `Привіт! 👋 Хочу побачити більше фото 📸\n🌸 ${p.brand} ${p.name}\n💰 ${p.price}₴\n🔗 ${productUrl}`;
+  openTgLink(`https://t.me/znahidkawow?text=${encodeURIComponent(msg)}`);
 }
 
 function openProductDetail(product) {
@@ -176,9 +193,9 @@ function openProductDetail(product) {
     : product.sizes.length;
   const hasRealSizes = product.sizes.length > 0 && product.sizes[0] !== 'ONE SIZE';
   const scarcHtml = hasRealSizes && total === 1
-    ? `<div class="pd-scarc-hero sc-last">🔥 Остання пара!</div>`
+    ? `<div class="pd-scarc-hero sc-last">🔥 Останній флакон!</div>`
     : hasRealSizes && total === 2
-      ? `<div class="pd-scarc-hero sc-low">⚡ Залишилось 2 пари</div>`
+      ? `<div class="pd-scarc-hero sc-low">⚡ Залишилось 2 флакони</div>`
       : '';
 
   // Price row
@@ -206,7 +223,10 @@ function openProductDetail(product) {
   document.getElementById('product-detail-content').innerHTML = `
     <div class="pd-hero">
       ${product.image && product.image.startsWith('http')
-        ? `<img class="pd-img" src="${esc(product.image)}" alt="${esc(product.brand)} ${esc(product.name)}" loading="lazy" decoding="async" onload="this.classList.add('loaded')">`
+        ? `<img class="pd-img" src="${esc(product.image)}" alt="${esc(product.brand)} ${esc(product.name)}" loading="lazy" decoding="async"
+             onclick="openImageZoom('${esc(product.image)}','${esc(product.brand)} ${esc(product.name)}')"
+             onload="this.classList.add('loaded')">
+           <div class="pd-zoom-hint" aria-hidden="true">🔍 Тап для збільшення</div>`
         : `<div class="pd-img-ph" aria-hidden="true">🌸</div>`}
       <div class="pd-hero-vignette" aria-hidden="true"></div>
       <button class="pd-fav-float ${faved ? 'on' : ''}" id="pd-fav-btn"
@@ -220,8 +240,12 @@ function openProductDetail(product) {
       <div class="pd-brand">${esc(product.brand)}</div>
       <h2 class="pd-name">${esc(product.name)}</h2>
       <div class="pd-price-row">${priceHtml}</div>
+      <p class="pd-lead">
+        ${product.isFreeShipping
+          ? `<b>Безкоштовна доставка</b> по Україні. Оплата після примірки на відділенні Нової Пошти — без передоплати, без ризику.`
+          : `Замовляй <b>без передоплати</b> — оплата після примірки на відділенні Нової Пошти. Не підійшло — відмов без зайвих питань.`}
+      </p>
       ${sizeChips}
-      ${product.description ? `<p class="pd-desc">${esc(product.description)}</p>` : ''}
       <div class="pd-trust">
         <span class="pd-trust-item">✅ Без передоплати</span>
         <span class="pd-trust-sep">·</span>
@@ -245,6 +269,27 @@ function openProductDetail(product) {
     </div>`;
 
   openSheet('sheet-product');
+}
+
+// ── NOTIFY ME ─────────────────────────────────────────── */
+function toggleNotifyPanel() {
+  document.getElementById('sp-notify-panel')?.classList.toggle('open');
+}
+
+function submitNotifyMe() {
+  const sz    = document.getElementById('sp-notify-sz')?.value.trim()    || '';
+  const phone = document.getElementById('sp-notify-phone')?.value.trim() || '';
+  if (!sz || phone.replace(/\D/g,'').length < 9) {
+    toast('⚠️ Вкажіть розмір і номер телефону');
+    return;
+  }
+  const p = S.spProduct;
+  if (!p) return;
+  postData({ action: 'notify_me', product_id: p.id, brand: p.brand, name: p.name, size: sz, phone }).catch(() => {});
+  toast(`🔔 Збережено! Повідомимо, коли з'явиться розмір ${sz}`);
+  document.getElementById('sp-notify-panel')?.classList.remove('open');
+  const szEl = document.getElementById('sp-notify-sz'); if (szEl) szEl.value = '';
+  const phEl = document.getElementById('sp-notify-phone'); if (phEl) phEl.value = '';
 }
 
 function togglePdFav() {

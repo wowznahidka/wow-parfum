@@ -53,12 +53,25 @@ window.addEventListener('DOMContentLoaded', () => {
   else if (_gParam === 'mix') setGender('mixed',  true);
   else                        setGender(S.gender, true);
 
+  // ── TAB / SHEET FROM URL PARAM (?tab=match|catalog|contacts|cart) ─ */
+  const _tabParam = new URLSearchParams(location.search).get('tab');
+  if (['match','catalog','contacts'].includes(_tabParam)) changeTab(_tabParam);
+  else if (_tabParam === 'cart') fetchCatalog().then(() => openSheet('sheet-cart'));
+
   // ── INIT ─────────────────────────────────────── */
   updateBadges();
   fetchCatalog().then(() => {
-    renderHome();
+    if (!_tabParam || _tabParam === 'home') renderHome();
     checkDeepLink();
     updateCartBar();
+    // Auto-apply promo from UTM campaign (e.g. ?utm_campaign=WOW150)
+    (function() {
+      const camp = (S.utm?.campaign || '').toUpperCase();
+      if (camp && CFG.PROMO_FIXED?.[camp] && !S.promoCode) {
+        S.promoFixed = CFG.PROMO_FIXED[camp];
+        S.promoCode  = camp;
+      }
+    })();
   });
   initPWA();
   initKeyboardHandler();

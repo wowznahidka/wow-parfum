@@ -11,6 +11,31 @@ function esc(str) {
     .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
+function fmtPrice(n) {
+  return (Math.round(Number(n) || 0)) + '₴';
+}
+
+function _fomoViewers(id) {
+  const slot = Math.floor(Date.now() / 30000);
+  const h    = Math.abs(hashStr(id + slot));
+  return 2 + (h % 5);
+}
+
+function quickGridSize(productId, size) {
+  const p = findProd(productId);
+  if (!p) return;
+  if (p.sizes.length === 1 || String(size).toUpperCase() === 'ONE SIZE') {
+    S.cart.push({ ...p, size: String(size).toUpperCase() === 'ONE SIZE' ? 'ONE SIZE' : Number(size), qty: 1 });
+    saveCart();
+    updateBadges();
+    _haptic(20);
+    toast(`✅ ${esc(p.brand)} ${esc(p.name)} — в кошику! <a onclick="openSheet('sheet-cart')">Кошик →</a>`);
+  } else {
+    S.spProduct = p;
+    openSizePicker(p);
+  }
+}
+
 function hashStr(s) {
   let h = 0;
   for (const c of String(s)) h = (h * 31 + c.charCodeAt(0)) | 0;
@@ -49,30 +74,27 @@ function prodCardHtml(p, opts = {}) {
          loading="${eager ? 'eager' : 'lazy'}" decoding="async" onload="this.classList.add('loaded')">`
     : `<div class="card-img-placeholder" aria-hidden="true">🌸</div>`;
 
-  const NICHE_BRANDS = ['Orto Parisi','Initio','Kilian','BDK','Amouage','Clive Christian',
-    'Roja','Xerjoff','Nishane','Memo','Mancera','Tiziana Terenzi','Boadicea','Parfums de Marly'];
-  const isNiche  = NICHE_BRANDS.some(b => (p.brand || '').toLowerCase().startsWith(b.toLowerCase())
-                                       || (p.name  || '').toLowerCase().includes(b.toLowerCase()));
-  const hasSale  = p.oldPrice && p.oldPrice > p.price && pct >= 10;
   const badgePart = p.isNew
-    ? `<div class="prod-badge badge-new">✨ НОВЕ</div>`
-    : hasSale
-      ? `<div class="prod-badge badge-sale">🔥 -${pct}%</div>`
-      : isNiche
-        ? `<div class="prod-badge badge-hot">💎 НІШЕВА</div>`
-        : low
-          ? `<div class="prod-badge badge-low">⚡ LAST</div>`
-          : '';
+    ? `<div class="prod-badge badge-new">NEW</div>`
+    : low
+      ? `<div class="prod-badge badge-low">LAST</div>`
+      : '';
 
   const pricePart = p.oldPrice && p.oldPrice > p.price
-    ? `${p.price}₴<span class="prod-card-old">${p.oldPrice}₴</span>${pct > 0 ? `<span class="prod-card-disc">-${pct}%</span>` : ''}`
-    : `${p.price}₴`;
+    ? `${fmtPrice(p.price)}<span class="prod-card-old">${fmtPrice(p.oldPrice)}</span>${pct > 0 ? `<span class="prod-card-disc">-${pct}%</span>` : ''}`
+    : `${fmtPrice(p.price)}`;
 
-  const maxSz  = 5;
+  const maxSz  = grid ? 4 : 5;
   const szList = p.sizes[0] === 'ONE SIZE'
-    ? `<span>ONE SIZE</span>`
-    : p.sizes.slice(0, maxSz).map(s => `<span>${s}</span>`).join('') +
+    ? (grid
+        ? `<button class="sz-quick-btn" onclick="event.stopPropagation();quickGridSize('${p.id}','ONE SIZE')" aria-label="ONE SIZE">ONE SIZE</button>`
+        : `<span>ONE SIZE</span>`)
+    : p.sizes.slice(0, maxSz).map(s => grid
+        ? `<button class="sz-quick-btn" data-sz="${s}" onclick="event.stopPropagation();quickGridSize('${p.id}',${s})" aria-label="${s}">${s}</button>`
+        : `<span>${s}</span>`).join('') +
       (p.sizes.length > maxSz ? `<span class="sz-more">+${p.sizes.length - maxSz}</span>` : '');
+
+  const fomoHtml  = '';
 
   return `<article class="product-card${gridCls}"
     onclick="openProductDetail(findProd('${p.id}'))"
@@ -80,14 +102,14 @@ function prodCardHtml(p, opts = {}) {
     <div class="card-img-wrap">
       ${imgPart}
       ${badgePart}
-      <button class="prod-share" onclick="shareProduct(findProd('${p.id}'),event)" aria-label="Поділитись" title="Share">🔗</button>
     </div>
     <div class="card-body">
       <div class="card-brand">${esc(p.brand)}</div>
       <div class="card-name">${esc(p.name)}</div>
       <div class="card-price">${pricePart}</div>
-      <div class="card-sizes-preview">${szList}</div>
+      <div class="card-sizes-preview${grid ? ' sz-quick-row' : ''}">${szList}</div>
       ${_scarcityText(p)}
+      ${fomoHtml}
     </div>
   </article>`;
 }
@@ -175,15 +197,26 @@ function setHomeGreeting() {
 function animateCounter(total) {
   const el = document.getElementById('models-counter');
   if (!el) return;
+  // Якщо вкладка прихована — ставимо фінальне значення зразу (rAF паузується)
+  if (document.hidden) { el.textContent = total; return; }
   let cur = 0;
-  const step = total / 60;
+  const step = Math.max(1, total / 60);
   const tick = () => {
     cur = Math.min(cur + step, total);
     el.textContent = Math.round(cur);
-    if (cur < total) requestAnimationFrame(tick);
+    if (cur < total) setTimeout(tick, 16); // setTimeout працює і у фоні
   };
-  requestAnimationFrame(tick);
+  tick();
 }
+// При поверненні до вкладки — заповнюємо counter якщо він застряг на 0
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) return;
+  const el = document.getElementById('models-counter');
+  const total = (typeof S !== 'undefined' && S.catalog && S.catalog.all && S.catalog.all.length) || 0;
+  if (el && total && (el.textContent === '0' || el.textContent === '')) {
+    animateCounter(total);
+  }
+});
 
 // Summer months (May–Aug): push fur/winter products to the back
 function _isWinter(p) {
@@ -254,6 +287,16 @@ function renderRecentlyViewed(data) {
   if (!items.length) { sec.classList.add('hidden'); return; }
   sec.classList.remove('hidden');
   row.innerHTML = items.map((p, i) => prodCardHtml(p, { eager: i < 4 })).join('');
+  const cnt = document.getElementById('rv-count');
+  if (cnt) cnt.textContent = `· ${items.length}`;
+}
+
+function clearRecentlyViewed() {
+  S.recent = [];
+  try { localStorage.setItem('wow_recent', '[]'); } catch (_) {}
+  const sec = document.getElementById('recently-viewed-section');
+  if (sec) sec.classList.add('hidden');
+  if (typeof toast === 'function') toast('🧹 Історію очищено');
 }
 
 function renderReviews() {
@@ -336,7 +379,7 @@ function _setupScrollNudge(total) {
     const nudge = document.createElement('div');
     nudge.className = 'scroll-nudge';
     nudge.onclick = () => { nudge.remove(); changeTab('match'); };
-    nudge.innerHTML = `<p>🌸 Ти переглянув ${total} ароматів</p><small>Свайпай у Match — знайди свій аромат 🌸</small>`;
+    nudge.innerHTML = `<p>🌸 Ти переглянув ${total} ароматів</p><small>Свайпай у Match — знайди ідеальну 🔥</small>`;
     sentinel.parentNode?.insertBefore(nudge, sentinel);
   }, { rootMargin: '0px', threshold: 0.5 });
   _scrollNudgeObserver.observe(sentinel);

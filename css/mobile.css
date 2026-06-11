@@ -19,11 +19,10 @@
 /* ── SAFE AREA INSETS ───────────────────────────── */
 /* Already applied via CSS vars in layout.css; this reinforces for older WebKit */
 @supports (padding-bottom: env(safe-area-inset-bottom)) {
-  #gender-toggle { padding-bottom: env(safe-area-inset-bottom); }
-  #pages { padding-bottom: calc(var(--nav-h) + var(--gender-h) + env(safe-area-inset-bottom) + 8px); }
-  #bottom-nav { bottom: calc(var(--gender-h) + env(safe-area-inset-bottom)); }
-  #cart-sticky-bar { bottom: calc(var(--gender-h) + var(--nav-h) + env(safe-area-inset-bottom) + 8px); }
-  #pwa-android, #pwa-ios { bottom: calc(var(--gender-h) + var(--nav-h) + env(safe-area-inset-bottom) + 10px); }
+  #pages { padding-bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 8px); }
+  #bottom-nav { bottom: env(safe-area-inset-bottom); }
+  #cart-sticky-bar { bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 8px); }
+  #pwa-android, #pwa-ios { bottom: calc(var(--nav-h) + env(safe-area-inset-bottom) + 10px); }
 }
 
 /* ── SMALL PHONES (< 375px) ─────────────────────── */
@@ -42,7 +41,8 @@
 /* ── TABLET (768px+) ────────────────────────────── */
 @media (min-width: 768px) and (max-width: 1023px) {
   .prods-grid { grid-template-columns: repeat(3,1fr); }
-  .hb-card { width: 168px; height: 86px; }
+  .hb-card { width: 168px; height: 94px; }
+  .hb-card:nth-child(1) { width: 210px; }
   .brd-card { width: 200px; }
 }
 

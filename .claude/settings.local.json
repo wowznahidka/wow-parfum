@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//c/Users/vitro/Downloads/Desktop/**)",
+      "Bash(head -5 __TRACKED_VAR__/js/app.js)",
+      "Bash(python3 -)",
+      "PowerShell(C:\\\\Users\\\\vitro\\\\AppData\\\\Local\\\\Python\\\\pythoncore-3.14-64\\\\python.exe -c \"import edge_tts; print\\('OK'\\)\" 2>&1)",
+      "Bash(python -c ' *)"
+    ]
+  }
+}

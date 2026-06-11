@@ -32,6 +32,8 @@ const S = {
   catView:      'brands',  // 'brands' | 'products'
   catBrand:     null,
   catScrollTop: 0,
+  quickFilter:  'all',     // 'all' | 'discount' | 'new' | 'free'
+  sortMode:     'popular', // 'popular' | 'new' | 'price_asc' | 'price_desc' | 'discount'
 
   // ── Match engine ──
   matchPool: [],
@@ -46,6 +48,8 @@ const S = {
   starRating:    0,
   delivType:     'dept',
   promoDiscount: 0,
+  promoFixed:    0,
+  promoCode:     '',
 
   // ── UTM attribution ──
   utm: _loadUtm(),
@@ -85,8 +89,11 @@ function findProd(id) {
 function getCatalog() {
   const all = S.catalog.all || [];
   if (S.gender === 'mixed') return all;
-  const gLabel = S.gender === 'female' ? 'Жінка' : 'Чоловік';
-  return all.filter(p => p.gender === gLabel);
+  const accept = S.gender === 'female'
+    ? ['Жінка','female','ж','Ж','Жіночий']
+    : ['Чоловік','male','ч','Ч','Чоловічий'];
+  // mixed/унісекс товари показуємо в обох каталогах
+  return all.filter(p => accept.includes(p.gender) || p.gender === 'mixed' || p.gender === '');
 }
 
 function isFav(id)   { return S.favs.some(f => f.id === id); }

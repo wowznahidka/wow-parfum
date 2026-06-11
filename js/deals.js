@@ -130,18 +130,125 @@ function openDealDetail(productId) {
 // ── RENDER SECTION ───────────────────────────────── */
 let _ddTimerID = null;
 
+function _isGiftOpenedToday() {
+  try { return !!localStorage.getItem('wow_gift_opened_' + _getDateSeed()); }
+  catch (_) { return false; }
+}
+function _markGiftOpened() {
+  try {
+    localStorage.setItem('wow_gift_opened_' + _getDateSeed(), '1');
+    // прибираємо застарілі ключі
+    Object.keys(localStorage).forEach(k => {
+      if (k.startsWith('wow_gift_opened_') && k !== 'wow_gift_opened_' + _getDateSeed()) {
+        localStorage.removeItem(k);
+      }
+    });
+  } catch (_) {}
+}
+
+function _giftBoxHtml() {
+  return `<div class="dd-gift-wrap"
+       onclick="return openDailyGift(event)"
+       onmousedown="event.stopPropagation()"
+       ontouchstart="event.stopPropagation()"
+       role="button" tabindex="0"
+       aria-label="Відкрити подарунок дня"
+       onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();return openDailyGift(event);}">
+    <div class="dd-gift" style="pointer-events:none">
+      <div class="dd-gift-brand">
+        <span class="dd-gift-brand-logo">WOW<span class="dd-gift-brand-dot">.</span>PARFUM</span>
+        <span class="dd-gift-brand-tag">
+          <svg width="11" height="11" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M2 11.5V5.5C2 4.67 2.67 4 3.5 4H10V11.5C10 12.33 9.33 13 8.5 13H3.5C2.67 13 2 12.33 2 11.5Z" stroke="currentColor" stroke-width="1.4"/>
+            <path d="M10 6.5H12.59C12.85 6.5 13.1 6.6 13.29 6.79L14.71 8.21C14.9 8.4 15 8.65 15 8.91V11.5C15 12.33 14.33 13 13.5 13H10V6.5Z" stroke="currentColor" stroke-width="1.4"/>
+            <circle cx="5" cy="13" r="1.4" fill="currentColor"/>
+            <circle cx="12" cy="13" r="1.4" fill="currentColor"/>
+          </svg>
+          Безкоштовна доставка
+        </span>
+      </div>
+      <div class="dd-gift-box">
+        <div class="dd-gift-lid">
+          <div class="dd-shoe-lid-label" aria-hidden="true">ЗНАХІДКА ДНЯ</div>
+          <div class="dd-gift-bow" aria-hidden="true"></div>
+        </div>
+        <div class="dd-gift-base">
+          <svg class="dd-shoe-swoosh" viewBox="0 0 110 42" fill="rgba(255,255,255,0.22)" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M110 2.5L26 40c-3.8 2.1-7.8 3.2-12.1 3.2-4.3 0-7.7-1.4-10.1-4.1C1.4 36.4 0 32.9 0 28.6c0-4.4 1.7-8.5 5.1-12.3.2-.3.5-.3.7-.1.1.1.1.2 0 .4C4 20 3.3 22.8 3.3 25.8c0 9.8 7.2 16.2 21.5 19.1L110 2.5z"/>
+          </svg>
+          <div class="dd-shoe-base-label" aria-hidden="true">WOW.PARFUM</div>
+        </div>
+        <div class="dd-gift-shine" aria-hidden="true"></div>
+        <div class="dd-confetti" aria-hidden="true">
+          ${Array.from({length:14}).map((_,i)=>`<span style="--i:${i}"></span>`).join('')}
+        </div>
+      </div>
+      <div class="dd-gift-cta">
+        <strong>🌸 Відкрий знахідку дня</strong>
+        <span>3 аромати з <b>безкоштовною доставкою</b> · лише сьогодні</span>
+      </div>
+    </div>
+  </div>`;
+}
+
+function openDailyGift(evt) {
+  if (evt) {
+    try { evt.preventDefault(); } catch(_) {}
+    try { evt.stopPropagation(); } catch(_) {}
+    try { evt.stopImmediatePropagation && evt.stopImmediatePropagation(); } catch(_) {}
+  }
+  const sec  = document.getElementById('daily-deals-section');
+  if (!sec) return false;
+  const wrap = sec.querySelector('.dd-gift-wrap');
+  const row  = sec.querySelector('.dd-row');
+  if (!wrap || wrap.classList.contains('dd-opening')) return false;
+
+  wrap.classList.add('dd-opening');
+  try { if (navigator.vibrate) navigator.vibrate([18, 22, 30]); } catch (_) {}
+
+  setTimeout(() => {
+    row && row.classList.add('dd-revealed');
+    wrap.style.display = 'none';
+    _markGiftOpened();
+    try {
+      if (typeof gtag === 'function') gtag('event', 'gift_opened', { event_category: 'engagement' });
+      if (typeof fbq  === 'function') fbq('trackCustom', 'GiftOpened');
+    } catch (_) {}
+  }, 1100);
+
+  return false; // запобігає default навігації
+}
+
 function renderDailyDeals(catalog) {
   const sec = document.getElementById('daily-deals-section');
   if (!sec) return;
 
   if (_ddTimerID) { clearInterval(_ddTimerID); _ddTimerID = null; }
 
-  const deals = getDailyDeals(catalog);
+  const deals = getDailyDeals(catalog, 3);
   if (!deals.length) { sec.hidden = true; return; }
   sec.hidden = false;
 
   const row = sec.querySelector('.dd-row');
-  if (row) row.innerHTML = deals.map(_dealCardHtml).join('');
+  if (row) {
+    row.classList.remove('dd-single');
+    row.innerHTML = deals.map(_dealCardHtml).join('');
+  }
+
+  // Gift-box: розпаковка раз на день (per seed дати).
+  // Опен → mark у localStorage → реveal cards. Новий день = новий gift.
+  const opened = _isGiftOpenedToday();
+  let existingGift = sec.querySelector('.dd-gift-wrap');
+  if (!opened) {
+    if (!existingGift) {
+      const header = sec.querySelector('.dd-header');
+      header && header.insertAdjacentHTML('afterend', _giftBoxHtml());
+    }
+    row && row.classList.remove('dd-revealed');
+  } else {
+    if (existingGift) existingGift.remove();
+    row && row.classList.add('dd-revealed');
+  }
 
   const timerEl = sec.querySelector('.dd-timer');
 

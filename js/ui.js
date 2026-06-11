@@ -100,9 +100,48 @@ function changeTab(tab) {
   document.getElementById(tabMap[tab])?.classList.add('active');
   document.getElementById('pages').scrollTop = 0;
   window.scrollTo(0, 0);
-  if (tab === 'home')    renderHome();
-  if (tab === 'match')   initMatch();
-  if (tab === 'catalog') renderCatalog();
+  document.body.classList.toggle('show-sidebar', tab === 'catalog');
+  document.body.classList.toggle('on-match', tab === 'match');
+  if (tab === 'home')     renderHome();
+  if (tab === 'match')    initMatch();
+  if (tab === 'catalog')  renderCatalog();
+  if (tab === 'contacts') _renderContactsHeroShoe();
+}
+
+// ── CONTACTS HERO — рандомна фотка крос з каталогу ──
+function _renderContactsHeroShoe() {
+  const imgEl   = document.getElementById('contacts-hero-shoe-img');
+  const brandEl = document.getElementById('contacts-hero-shoe-brand');
+  const fallback = document.getElementById('contacts-hero-fallback');
+  if (!imgEl) return;
+
+  const cat = S.catalog && S.catalog.all;
+  if (!cat || !cat.length) {
+    // Каталог ще не вантажиться — спробуємо за 1.5с
+    setTimeout(_renderContactsHeroShoe, 1500);
+    return;
+  }
+
+  // Беремо популярні бренди з фото
+  const TOP_BRANDS = [];
+  const candidates = cat.filter(p =>
+    p.image && p.image.startsWith('http') &&
+    TOP_BRANDS.some(b => p.brand && p.brand.toLowerCase().includes(b.toLowerCase()))
+  );
+  const pool = candidates.length ? candidates : cat.filter(p => p.image && p.image.startsWith('http'));
+  if (!pool.length) return;
+
+  // Стабільна рандомізація на годину — щоб не миготіло при перемиканні
+  const hour = new Date().getHours();
+  const seed = (hour * 31 + new Date().getDate()) | 0;
+  const idx  = ((seed % pool.length) + pool.length) % pool.length;
+  const pick = pool[idx];
+
+  imgEl.src = pick.image;
+  imgEl.alt = `${pick.brand} ${pick.name}`;
+  imgEl.onload = () => imgEl.classList.add('loaded');
+  if (brandEl) brandEl.textContent = (pick.brand || 'PREMIUM').toUpperCase();
+  if (fallback) fallback.style.display = 'none';
 }
 
 function refreshCurrentTab() {
@@ -117,7 +156,7 @@ function setGender(g, skipFade) {
   S.gender = g;
   localStorage.setItem('wow_gender', g);
   _scrollNudgeFired = false;
-  document.querySelectorAll('.g-btn').forEach(b => {
+  document.querySelectorAll('.g-btn, .g-chip').forEach(b => {
     b.classList.toggle('active', b.dataset.gender === g);
     b.setAttribute('aria-pressed', b.dataset.gender === g ? 'true' : 'false');
   });
@@ -168,22 +207,40 @@ function toggleFaq(el) {
 // ── IDLE NUDGE ────────────────────────────────────── */
 let _idleTimer     = null;
 let _idleNudgeDone = false;
+let _partnerNudgeDone = false;
 
 function resetIdleTimer() {
   clearTimeout(_idleTimer);
   if (_idleNudgeDone) return;
-  _idleTimer = setTimeout(_fireIdleNudge, 9000);
+  _idleTimer = setTimeout(_fireIdleNudge, 11000);
 }
 
 function _fireIdleNudge() {
   if (_idleNudgeDone || S.activeTab !== 'home') return;
   _idleNudgeDone = true;
-  const icon = document.querySelector('.nav-item[data-tab="match"] .nav-icon');
-  if (icon) {
-    icon.style.display = 'inline-block';
-    icon.style.animation = 'nudgePulse .55s cubic-bezier(.34,1.56,.64,1) 3';
-    setTimeout(() => { icon.style.animation = ''; }, 2200);
-  }
+
+  const nudge = document.createElement('div');
+  nudge.id = 'match-nudge';
+  nudge.innerHTML = `
+    <div class="mn-ico">🔥</div>
+    <div class="mn-body">
+      <div class="mn-title">Спробуй Match</div>
+      <div class="mn-sub">Свайпай аромати — як Tinder, але для парфумів</div>
+    </div>
+    <button class="mn-btn" onclick="changeTab('match');document.getElementById('match-nudge')?.remove()">Спробувати</button>
+    <button class="mn-close" onclick="this.closest('#match-nudge').remove()" aria-label="Закрити">✕</button>`;
+  document.body.appendChild(nudge);
+  requestAnimationFrame(() => nudge.classList.add('mn-in'));
+  setTimeout(() => { nudge.classList.remove('mn-in'); setTimeout(() => nudge.remove(), 400); }, 7000);
+
+  _maybeShowPartnerNudge();
+}
+
+function _maybeShowPartnerNudge() {
+  // Partner-nudge popup прибраний — реферальна програма тепер у Контактах.
+  // Залишаємо лічильник відвідувань для майбутньої аналітики.
+  const visits = Number(localStorage.getItem('wow_visit_count') || 0) + 1;
+  localStorage.setItem('wow_visit_count', visits);
 }
 
 // ── PWA ───────────────────────────────────────────── */
@@ -327,3 +384,201 @@ function initKeyboardHandler() {
     }, 100);
   });
 }
+
+// ── TAP-TO-ZOOM ─────────────────────────────────── */
+// Натиснути на будь-яке зображення товару → fullscreen overlay
+// Підтримує: product cards, daily-find, match, product-detail, brand cards
+function openImageZoom(src, alt) {
+  if (!src) return;
+  closeImageZoom();
+  const ov = document.createElement('div');
+  ov.className = 'img-zoom-overlay';
+  ov.id = 'img-zoom-overlay';
+  ov.innerHTML = `<img src="${src}" alt="${(alt||'').replace(/"/g,'&quot;')}" draggable="false">
+    <button class="img-zoom-close" aria-label="Закрити">✕</button>`;
+  document.body.appendChild(ov);
+  document.body.style.overflow = 'hidden';
+  ov.addEventListener('click', (e) => {
+    // тап на бекграунд або ✕ → закриваємо; тап на img — не закриваємо (даємо pinch-zoom)
+    if (e.target.tagName !== 'IMG') closeImageZoom();
+  });
+  document.addEventListener('keydown', _zoomKeyHandler);
+}
+function closeImageZoom() {
+  const ov = document.getElementById('img-zoom-overlay');
+  if (ov) ov.remove();
+  document.body.style.overflow = '';
+  document.removeEventListener('keydown', _zoomKeyHandler);
+}
+function _zoomKeyHandler(e) {
+  if (e.key === 'Escape') closeImageZoom();
+}
+
+// Делегований клік: спрацьовує на всі продуктові/Match/бренд зображення.
+// НЕ перехоплює клік усередині .product-card (карта має свій onclick → відкриває деталі).
+// Працює: 1) у деталях товару — на головне фото; 2) на фото в TG-промо постах; 3) у Match лише lazy.
+// Для лонг-тапу 350ms по картці теж відкриваємо zoom (mobile).
+(function _bindZoomDelegation() {
+  let pressTimer = null;
+  let pressedImg = null;
+
+  function startPress(e) {
+    const img = e.target.closest('img.card-img, img.m-card-img, img.pd-hero-img, img.pd-photo, img.pd-thumb-img');
+    if (!img || !img.src || !img.src.startsWith('http')) return;
+    pressedImg = img;
+    pressTimer = setTimeout(() => {
+      if (pressedImg && pressedImg.src) {
+        openImageZoom(pressedImg.src, pressedImg.alt);
+        // Заблокувати наступний click щоб карта не відкрилась
+        const block = ev => { ev.stopPropagation(); ev.preventDefault(); document.removeEventListener('click', block, true); };
+        document.addEventListener('click', block, true);
+      }
+      pressTimer = null;
+    }, 400);
+  }
+  function cancelPress() {
+    if (pressTimer) { clearTimeout(pressTimer); pressTimer = null; }
+    pressedImg = null;
+  }
+  document.addEventListener('pointerdown', startPress, { passive: true });
+  document.addEventListener('pointerup', cancelPress, { passive: true });
+  document.addEventListener('pointercancel', cancelPress, { passive: true });
+  document.addEventListener('pointermove', (e) => {
+    // Якщо рух > 10px — це свайп/скрол, не довгий тап
+    if (pressTimer) cancelPress();
+  }, { passive: true });
+})();
+
+// ── ANTI-EXIT (3 mechanisms) ───────────────────────── */
+// 1. beforeunload — браузер питає "Залишити?" якщо кошик не порожній
+// 2. history pushState trap — mobile back-кнопка показує модал (не виходить)
+// 3. exit-intent — desktop мишка догори → модал
+let _exitModalShown = false;
+let _backTrapInstalled = false;
+
+function _shouldGuard() {
+  return (S?.cart?.length || 0) > 0 || (S?.favs?.length || 0) > 0;
+}
+
+function _stayOnSiteModal(reason) {
+  if (_exitModalShown) return;
+  if (document.getElementById('exit-modal')) return;
+  _exitModalShown = true;
+
+  const cartLen = S?.cart?.length || 0;
+  const favsLen = S?.favs?.length || 0;
+
+  // Show promo only when cart is empty — never discount people who already added to cart
+  const showPromo = cartLen === 0;
+
+  const title = cartLen
+    ? 'Твій кошик чекає оформлення 🛒'
+    : 'Не йди з порожніми руками';
+  const lead =
+    cartLen ? `У кошику <b>${cartLen}</b> пар${cartLen===1?'а':cartLen<5?'и':''} — ще пів кроку до замовлення 🔥` :
+    favsLen ? `У Улюблених — <b>${favsLen}</b> пар${favsLen===1?'а':''} ❤️` :
+    `Знайди свою пару — <b>1300+ моделей</b> ✨`;
+  const bonusHtml = showPromo
+    ? `<p class="exit-bonus">Промокод <b>WOW100</b> — <b>−100₴</b> на твоє перше замовлення. Дійсний 24 години.</p>`
+    : '';
+  const tgText = showPromo
+    ? encodeURIComponent('Привіт! Хочу знижку WOW100')
+    : encodeURIComponent('Привіт! Хочу уточнити замовлення');
+
+  const html = `
+    <div id="exit-modal" class="exit-modal" role="dialog" aria-modal="true" aria-labelledby="exit-modal-title">
+      <div class="exit-card">
+        <button class="exit-close" aria-label="Закрити" onclick="closeExitModal()">✕</button>
+        <div class="exit-eyebrow">🎁 ЗАЧЕКАЙ-НО</div>
+        <h3 id="exit-modal-title" class="exit-title">${title}</h3>
+        <p class="exit-lead">${lead}</p>
+        ${bonusHtml}
+        <div class="exit-actions">
+          <button class="exit-cta" onclick="(${cartLen?`openSheet('sheet-cart');`:`openSheet('sheet-fav');`})closeExitModal();">
+            ${cartLen ? '🛒 Оформити кошик' : favsLen ? '❤️ Переглянути улюблені' : '🌸 До каталогу'}
+          </button>
+          <a class="exit-tg" href="https://t.me/znahidkawow?text=${tgText}" target="_blank" rel="noopener" onclick="closeExitModal()">
+            ✉️ Написати в Telegram
+          </a>
+        </div>
+        <button class="exit-leave" onclick="closeExitModal();_userChoseLeave=true;">Все одно піду</button>
+      </div>
+    </div>`;
+  document.body.insertAdjacentHTML('beforeend', html);
+  document.body.style.overflow = 'hidden';
+  try { if (window.gtag) gtag('event','exit_modal_shown', { event_category:'engagement', reason }); } catch(_){}
+  try { if (window.fbq) fbq('trackCustom','ExitIntent', { reason }); } catch(_){}
+}
+
+function closeExitModal() {
+  const m = document.getElementById('exit-modal');
+  if (m) m.remove();
+  document.body.style.overflow = '';
+}
+
+let _userChoseLeave = false;
+
+function _installAntiExit() {
+  // (1) beforeunload — короткий
+  window.addEventListener('beforeunload', (e) => {
+    if (_userChoseLeave) return;
+    if (!_shouldGuard()) return;
+    e.preventDefault();
+    e.returnValue = 'У кошику ще є товари. Точно йдеш?';
+    return e.returnValue;
+  });
+
+  // (2) Back-button trap (mobile)
+  if (!_backTrapInstalled) {
+    _backTrapInstalled = true;
+    try {
+      history.pushState({_antiExit: true}, '', location.href);
+      window.addEventListener('popstate', (e) => {
+        // Якщо повертається до нашого pushState → показуємо модал і додаємо ще один
+        if (!_userChoseLeave && _shouldGuard()) {
+          history.pushState({_antiExit: true}, '', location.href);
+          _stayOnSiteModal('back_button');
+        }
+      });
+    } catch(_){}
+  }
+
+  // (3) Exit-intent (desktop, mouse leave top)
+  //   Guard'и щоб НЕ спрацьовувало одразу на вході:
+  //   • grace period 20с після завантаження
+  //   • engagement: користувач має скролити АБО рухнути миша нижче Y=120
+  //   • debounce: не зразу — після 2 швидких leave'ів у вікні 800мс
+  if (matchMedia('(pointer:fine)').matches) {
+    const GRACE_MS = 20000;
+    const loadedAt = Date.now();
+    let engaged = false;
+    let leaveTimer = null;
+
+    function _markEngaged() { engaged = true; }
+    window.addEventListener('scroll', _markEngaged, { passive: true, once: true });
+    document.addEventListener('mousemove', (e) => {
+      if (e.clientY > 120) _markEngaged();
+    }, { passive: true });
+
+    document.addEventListener('mouseleave', (e) => {
+      if (e.clientY > 8) return;
+      if (_userChoseLeave) return;
+      if (!_shouldGuard()) return;
+      if (Date.now() - loadedAt < GRACE_MS) return;
+      if (!engaged) return;
+      if (sessionStorage.getItem('wow_exit_shown')) return;
+
+      // debounce: чекаємо 600мс, якщо миша повернулася — скасовуємо
+      clearTimeout(leaveTimer);
+      leaveTimer = setTimeout(() => {
+        if (sessionStorage.getItem('wow_exit_shown')) return;
+        sessionStorage.setItem('wow_exit_shown', '1');
+        _stayOnSiteModal('mouse_exit');
+      }, 600);
+    });
+    document.addEventListener('mouseenter', () => { clearTimeout(leaveTimer); });
+  }
+}
+window.addEventListener('DOMContentLoaded', _installAntiExit);
+
+

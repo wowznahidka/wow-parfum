@@ -12,6 +12,7 @@ async function initMatch() {
   clearTimeout(_swipeRenderTimer);
   _swipeRenderTimer = null;
   _swipeLocked = false;
+  _attachMatchKeyboard();
 
   const data = await fetchCatalog();
   if (!data || !data.length) return;
@@ -77,20 +78,20 @@ function _renderMatchDone(stage, counter) {
     <div class="match-empty-ico" style="animation:bounceY .9s ease-in-out infinite alternate">🏆</div>
     <h3 style="font-size:22px;font-weight:900;margin-top:4px">Ти переглянув усе!</h3>
     <p style="font-size:14px;color:var(--text-dim);line-height:1.6;max-width:260px;text-align:center">
-      ${S.matchPool.length} пар переглянуто.<br>
-      ${favCount > 0 ? `<strong style="color:var(--text)">${favCount} пари</strong> чекають у Улюблених.` : 'Лайкни пари, які сподобались — ми підберемо розмір.'}
+      ${S.matchPool.length} ароматів переглянуто.<br>
+      ${favCount > 0 ? `<strong style="color:var(--text)">${favCount}</strong> чекають у Улюблених.` : 'Лайкни аромати, які сподобались.'}
     </p>
     ${favCount > 0 ? `
     <button class="match-restart-btn"
       style="background:var(--red);box-shadow:var(--shadow-red);margin-top:4px"
       onclick="openSheet('sheet-fav')">
-      ❤️ Улюблені · ${favCount} пари
+      ❤️ Улюблені · ${favCount}
     </button>` : ''}
     ${cartCount > 0 ? `
     <button class="match-restart-btn"
       style="background:var(--text);color:var(--accent-inv);margin-top:${favCount ? '8px' : '4px'}"
       onclick="openSheet('sheet-cart')">
-      🛒 Кошик · ${cartCount} пари
+      🛒 Кошик · ${cartCount}
     </button>` : ''}
     <button class="match-go-favs-btn" style="margin-top:${favCount || cartCount ? '8px' : '4px'}"
       onclick="initMatch()">
@@ -99,13 +100,33 @@ function _renderMatchDone(stage, counter) {
   </div>`;
 }
 
+// ── KEYBOARD SHORTCUTS (PC) ──────────────────────── */
+let _matchKbBound = false;
+function _attachMatchKeyboard() {
+  if (_matchKbBound) return;
+  _matchKbBound = true;
+  document.addEventListener('keydown', e => {
+    if (S.activeTab !== 'match') return;
+    if (_swipeLocked) return;
+    const t = e.target;
+    if (t && (t.tagName === 'INPUT' || t.tagName === 'TEXTAREA' || t.isContentEditable)) return;
+    if (e.key === 'ArrowRight' || e.key === 'l' || e.key === 'L') {
+      e.preventDefault(); swipeCard('right');
+    } else if (e.key === 'ArrowLeft' || e.key === 'h' || e.key === 'H') {
+      e.preventDefault(); swipeCard('left');
+    } else if (e.code === 'Space' || e.key === 'Enter') {
+      e.preventDefault(); swipeCard('right');
+    }
+  });
+}
+
 // ── SWIPE LISTENER ───────────────────────────────── */
 function attachSwipeListeners(card, product) {
   cleanupSwipe();
   let startX = 0, deltaX = 0, startTime = 0, dragging = false;
-  const DIST_THRESHOLD = 80;
-  const FLING_DIST     = 36;
-  const FLING_VEL      = 0.42;
+  const DIST_THRESHOLD = Math.min(60, window.innerWidth * 0.14);
+  const FLING_DIST     = 24;
+  const FLING_VEL      = 0.30;
 
   const onDown = e => {
     if (e.pointerType === 'mouse' && e.button !== 0) return;
@@ -120,12 +141,14 @@ function attachSwipeListeners(card, product) {
   _moveHandler = e => {
     if (!dragging) return;
     deltaX = e.clientX - startX;
-    const rot = deltaX / 14;
-    card.style.transform = `translateX(${deltaX}px) rotate(${rot}deg)`;
+    const _swipeBase = Math.min(window.innerWidth, 480);
+    const rot   = (deltaX / _swipeBase) * 22;
+    const scale = 1 - Math.min(0.04, Math.abs(deltaX) / (_swipeBase * 8));
+    card.style.transform = `translateX(${deltaX}px) rotate(${rot}deg) scale(${scale})`;
     const likeEl = document.getElementById('sw-like');
     const nopeEl = document.getElementById('sw-nope');
-    const lr = Math.min(1, Math.max(0, (deltaX  - 16) / 72));
-    const nr = Math.min(1, Math.max(0, (-deltaX - 16) / 72));
+    const lr = Math.min(1, Math.max(0, (deltaX  - 10) / 55));
+    const nr = Math.min(1, Math.max(0, (-deltaX - 10) / 55));
     if (likeEl) likeEl.style.opacity = lr;
     if (nopeEl) nopeEl.style.opacity = nr;
     if (likeEl) likeEl.classList.toggle('visible', lr > 0.12);
@@ -170,9 +193,9 @@ function swipeCard(dir) {
   card.style.pointerEvents = 'none';
   cleanupSwipe();
 
-  const flyX  = (dir === 'right' ? 1 : -1) * (window.innerWidth * 1.3);
-  card.style.transition = 'transform .38s cubic-bezier(.4,0,1,1), opacity .28s ease';
-  card.style.transform  = `translateX(${flyX}px) rotate(${dir === 'right' ? 24 : -24}deg)`;
+  const flyX  = (dir === 'right' ? 1 : -1) * (Math.min(window.innerWidth, 800) + 200);
+  card.style.transition = 'transform .32s cubic-bezier(.55,0,.7,.4), opacity .22s ease';
+  card.style.transform  = `translateX(${flyX}px) rotate(${dir === 'right' ? 30 : -30}deg) scale(0.9)`;
   card.style.opacity    = '0';
 
   if (dir === 'right') {
