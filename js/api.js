@@ -140,7 +140,35 @@ async function fetchCatalog() {
   return bgRefreshCatalog();
 }
 
+// ── FLAGSHIP: статичний каталог (data/products.json з адмінки) ──
+// READ без GAS-лімітів і 502. GAS лишається фолбеком + для замовлень.
+async function _fetchStaticCatalog() {
+  try {
+    const res = await fetch('data/products.json?v=' + Math.floor(Date.now() / 300000), { cache: 'no-store' });
+    if (!res.ok) return null;
+    const json = await res.json();
+    if (!json || !Array.isArray(json.products) || !json.products.length) return null;
+    return json;
+  } catch (e) { return null; }
+}
+
 async function bgRefreshCatalog() {
+  // Спроба 1: статичний products.json (миттєво, без лімітів)
+  const staticJson = await _fetchStaticCatalog();
+  if (staticJson) {
+    const normalized = staticJson.products.map(normalizeProduct);
+    if (normalized.length >= CFG.MIN_PRODUCTS) {
+      S.catalog.all = normalized;
+      S.catalog.loadedFromServer = true;
+      _saveToCache(normalized);
+      S.lastFetchTime = new Date();
+      updateTimestamp();
+      if (S.activeTab === 'home')    renderHome();
+      if (S.activeTab === 'catalog') renderCatalog();
+      return getCatalog();
+    }
+  }
+  // Спроба 2 (фолбек): GAS як раніше
   try {
     const res  = await fetch(CFG.GAS_URL);
     const json = await res.json();
