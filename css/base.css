@@ -21,9 +21,9 @@
   /* ── Accents ── */
   --accent:      #1d1d1f;
   --accent-inv:  #ffffff;
-  --red:         #ff3e3e;
-  --red-dim:     rgba(255,62,62,0.08);
-  --red-glow:    rgba(255,62,62,0.22);
+  --red:         #b07a1e;
+  --red-dim:     rgba(176,122,30,0.08);
+  --red-glow:    rgba(176,122,30,0.22);
   --orange:      #ff4500;
   --orange-dim:  rgba(255,69,0,0.08);
   --green:       #00a86b;
@@ -41,7 +41,7 @@
   --shadow-sm:  0 1px 4px  rgba(0,0,0,0.08);
   --shadow:     0 2px 16px rgba(0,0,0,0.10);
   --shadow-lg:  0 8px 40px rgba(0,0,0,0.16);
-  --shadow-red: 0 6px 24px rgba(255,62,62,0.22);
+  --shadow-red: 0 6px 24px rgba(176,122,30,0.22);
   --shadow-glow:0 0 0 1px rgba(0,0,0,0.05);
 
   /* ── Radius ── */
@@ -283,12 +283,12 @@ a     { text-decoration: none; color: inherit; }
 /* ── FOCUS-VISIBLE (тільки клавіатура) ─────────── */
 :focus { outline: none; }
 :focus-visible {
-  outline: 2px solid var(--accent, #ff3e3e);
+  outline: 2px solid var(--accent, #b07a1e);
   outline-offset: 2px;
   border-radius: 4px;
 }
 button:focus-visible, a:focus-visible {
-  outline: 2px solid var(--accent, #ff3e3e);
+  outline: 2px solid var(--accent, #b07a1e);
   outline-offset: 3px;
 }
 
