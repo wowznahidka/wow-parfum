@@ -50,7 +50,7 @@
   "@type": "Store",
   "name": "WOW.PARFUM",
   "description": "Преміум парфуми без передоплати. Оплата при отриманні на Новій Пошті.",
-  "sameAs": ["https://t.me/znahidkawow", "https://www.instagram.com/wow.znahidka"],
+  "sameAs": ["https://t.me/+8xhWEOzGMW5jNjJi", "https://www.instagram.com/wow.znahidka"],
   "priceRange": "₴₴",
   "areaServed": "UA",
   "paymentAccepted": "Cash",
@@ -569,7 +569,7 @@
 
     <!-- Social action buttons -->
     <nav class="social-actions" aria-label="Соціальні мережі">
-      <a class="social-btn tg" href="https://t.me/znahidkawow" onclick="return openLink(this.href)" rel="noopener noreferrer" aria-label="Telegram">
+      <a class="social-btn tg" href="https://t.me/+8xhWEOzGMW5jNjJi" onclick="return openLink(this.href)" rel="noopener noreferrer" aria-label="Telegram">
         <span class="social-btn-ico" aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
         </span>
@@ -590,7 +590,7 @@
     </nav>
 
     <!-- TG CHANNEL — main CTA для трафіку з YT/TT/IG -->
-    <a class="tg-channel-cta" href="https://t.me/znahidkawow" onclick="return openLink(this.href)" rel="noopener noreferrer">
+    <a class="tg-channel-cta" href="https://t.me/+8xhWEOzGMW5jNjJi" onclick="return openLink(this.href)" rel="noopener noreferrer">
       <div class="tg-cta-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
       </div>
@@ -923,7 +923,7 @@
   <h1 class="success-title">Замовлення прийнято!</h1>
   <p class="success-sub">Ми зв'яжемося з вами найближчим часом. Слідкуйте за статусом у Telegram.</p>
   <div class="success-order" id="success-order-info" aria-live="polite"></div>
-  <a class="success-tg-btn" href="https://t.me/znahidkawow" onclick="return openTgLink(this.href)" rel="noopener noreferrer">
+  <a class="success-tg-btn" href="https://t.me/+8xhWEOzGMW5jNjJi" onclick="return openTgLink(this.href)" rel="noopener noreferrer">
     ✈️ Telegram WOW.PARFUM
   </a>
   <button class="success-home-btn" onclick="goHome()"><span class="i-arr-back" aria-hidden="true"></span> На головну</button>
@@ -994,28 +994,9 @@
 <script src="js/app.js?v=41"                defer></script>
 <script src="shared/js/motion.js?v=41" defer></script>
 <script>
-/* Scent family filter — client-side tag match */
-window._scentFamily = 'all';
-function setScentFamily(el, family) {
-  window._scentFamily = family;
-  document.querySelectorAll('.scent-chip').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-  _applyScentFilter();
-}
-function _applyScentFilter() {
-  const f = window._scentFamily;
-  if (f === 'all') { document.querySelectorAll('.prod-card,.product-card').forEach(c => c.style.display = ''); return; }
-  const MAP = { floral:['квіт','rose','jasmin','peony','lily','iris','bloom','жасмин','троянд','іри','піон'],
-    woody:['де','кедр','sand','oud','мускус','мus','wood','amber','амбр','cedar','vetiv'],
-    fresh:['свіж','clean','water','sea','marine','mint','м\'ят','океан','аква'],
-    oriental:['схід','oud','spice','spicy','amber','амбр','ванл','vanilla','vanill','tobacco','тютюн','ладан'],
-    citrus:['цитр','лимон','бергам','mandarin','orange','грейп','bergam','lemon','lime'] };
-  const keys = MAP[f] || [];
-  document.querySelectorAll('.prod-card,.product-card').forEach(c => {
-    const txt = (c.textContent || '').toLowerCase();
-    c.style.display = keys.some(k => txt.includes(k)) ? '' : 'none';
-  });
-}
+window._scentFamily='all';
+function setScentFamily(el,family){window._scentFamily=family;document.querySelectorAll('.scent-chip').forEach(c=>c.classList.remove('active'));el.classList.add('active');_applyScentFilter();}
+function _applyScentFilter(){const f=window._scentFamily;if(f==='all'){document.querySelectorAll('.prod-card,.product-card').forEach(c=>c.style.display='');return;}const MAP={floral:['квіт','rose','jasmin','peony','lily','iris','bloom','жасмин','троянд'],woody:['кедр','cedar','oud','мускус','wood','amber','амбр','vetiv','санд'],fresh:['свіж','clean','water','sea','marine','mint','м\'ят','океан','аква'],oriental:['схід','oud','spice','amber','амбр','vanilla','vanill','tobacco','ладан'],citrus:['цитр','лимон','бергам','mandarin','orange','грейп','bergam','lemon','lime']};const keys=MAP[f]||[];document.querySelectorAll('.prod-card,.product-card').forEach(c=>{const txt=(c.textContent||'').toLowerCase();c.style.display=keys.some(k=>txt.includes(k))?'':'none';});}
 </script>
 
 </body>
