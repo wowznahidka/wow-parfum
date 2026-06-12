@@ -1,20 +1,20 @@
 /* Шрифти підключені у <head> index.html (preconnect + link rel=stylesheet) — НЕ через @import */
 
 :root {
-  --accent:     #ff3e3e;
-  --red:        #ff3e3e;
-  --red-dim:    rgba(255,62,62,0.10);
-  --red-glow:   rgba(255,62,62,0.28);
-  --orange:     #ff7a1a;
+  --accent:     #b07a1e;
+  --red:        #b07a1e;
+  --red-dim:    rgba(176,122,30,0.10);
+  --red-glow:   rgba(176,122,30,0.28);
+  --orange:     #c98a2e;
   --green:      #18c75a;
   --gold:       #f5a623;
-  --border-accent: rgba(255,62,62,0.22);
-  --shadow-red:    0 6px 28px rgba(255,62,62,0.22);
-  --shadow-card-hover: 0 12px 40px rgba(0,0,0,0.14), 0 0 0 1px rgba(255,62,62,0.12);
-  --niche-font:      'Sora', sans-serif;
+  --border-accent: rgba(176,122,30,0.22);
+  --shadow-red:    0 6px 28px rgba(176,122,30,0.22);
+  --shadow-card-hover: 0 12px 40px rgba(0,0,0,0.14), 0 0 0 1px rgba(176,122,30,0.12);
+  --niche-font:      'Cormorant Garamond', 'Jost', serif;
   --niche-font-body: 'Inter', sans-serif;
   --grain-opacity:   0.018;
-  --accent-rgb: 255,62,62;
+  --accent-rgb: 176,122,30;
 }
 
 body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
@@ -28,8 +28,8 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 
 @keyframes pulseGlow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(255,62,62,0); }
-  50%       { box-shadow: 0 0 0 8px rgba(255,62,62,0.08); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(176,122,30,0); }
+  50%       { box-shadow: 0 0 0 8px rgba(176,122,30,0.08); }
 }
 
 @keyframes floatBadge {
@@ -42,10 +42,10 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   overflow: hidden;
   padding: 32px 16px 24px !important;
   background: linear-gradient(135deg,
-    #fff9f9 0%,
-    #fff5f0 25%,
+    #fdfaf2 0%,
+    #faf3e6 25%,
     #fff 50%,
-    #fff5f5 75%,
+    #fbf6ea 75%,
     #fff 100%) !important;
   background-size: 400% 400% !important;
   animation: heroFlow 8s ease infinite !important;
@@ -58,7 +58,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   right: -10%;
   width: 300px;
   height: 300px;
-  background: radial-gradient(circle, rgba(255,62,62,0.10) 0%, transparent 65%);
+  background: radial-gradient(circle, rgba(176,122,30,0.10) 0%, transparent 65%);
   pointer-events: none;
 }
 
@@ -69,12 +69,12 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   left: -5%;
   width: 200px;
   height: 200px;
-  background: radial-gradient(circle, rgba(255,122,26,0.06) 0%, transparent 60%);
+  background: radial-gradient(circle, rgba(201,138,46,0.06) 0%, transparent 60%);
   pointer-events: none;
 }
 
 .home-greeting {
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-size: 11px !important;
   font-weight: 900 !important;
   letter-spacing: 5px !important;
@@ -84,7 +84,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 
 .home-title {
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 900 !important;
   font-size: clamp(34px, 9vw, 56px) !important;
   letter-spacing: -0.01em !important;
@@ -100,7 +100,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 
 .home-title br + span,
 .home-title > span {
-  background: linear-gradient(135deg, #ff3e3e 0%, #ff7a1a 100%);
+  background: linear-gradient(135deg, #b07a1e 0%, #c98a2e 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -115,8 +115,8 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   gap: 6px !important;
   margin-top: 14px !important;
   padding: 6px 14px !important;
-  background: rgba(255,62,62,0.07) !important;
-  border: 1.5px solid rgba(255,62,62,0.18) !important;
+  background: rgba(176,122,30,0.07) !important;
+  border: 1.5px solid rgba(176,122,30,0.18) !important;
   border-radius: 100px !important;
   font-family: 'Inter', sans-serif !important;
   font-weight: 800 !important;
@@ -186,7 +186,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 
 .live-dot {
   background: var(--accent) !important;
-  box-shadow: 0 0 0 3px rgba(255,62,62,0.2) !important;
+  box-shadow: 0 0 0 3px rgba(176,122,30,0.2) !important;
 }
 
 #gender-toggle {
@@ -207,7 +207,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   background: transparent !important;
   border: none !important;
   color: rgba(0,0,0,0.4) !important;
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-size: 14px !important;
   font-weight: 800 !important;
   letter-spacing: 0.03em !important;
@@ -226,7 +226,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 .g-cnt { display: none !important; }
 
 .sec-title {
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 900 !important;
   font-size: 24px !important;
   letter-spacing: 0.02em !important;
@@ -240,7 +240,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   box-shadow: 0 1px 0 rgba(0,0,0,0.04) !important;
 }
 .header-logo {
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 900 !important;
   font-size: 22px !important;
   letter-spacing: 0.06em !important;
@@ -282,7 +282,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 
 .card-brand {
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 900 !important;
   font-size: 10px !important;
   letter-spacing: 3px !important;
@@ -294,28 +294,28 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 .badge-hot {
   background: var(--accent) !important;
   color: #fff !important;
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 900 !important;
   animation: floatBadge 2.5s ease-in-out infinite !important;
 }
 .badge-new  { background: rgba(24,199,90,0.14) !important; color: #18c75a !important; font-weight: 800 !important; }
-.badge-sale { background: rgba(255,122,26,0.14) !important; color: #ff7a1a !important; font-weight: 800 !important; }
+.badge-sale { background: rgba(201,138,46,0.14) !important; color: #c98a2e !important; font-weight: 800 !important; }
 
 .cart-checkout-btn {
-  background: linear-gradient(135deg, #ff3e3e 0%, #cc1a1a 100%) !important;
+  background: linear-gradient(135deg, #b07a1e 0%, #8a5d12 100%) !important;
   color: #fff !important;
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 900 !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
   font-size: 17px !important;
-  box-shadow: 0 4px 20px rgba(255,62,62,0.30) !important;
+  box-shadow: 0 4px 20px rgba(176,122,30,0.30) !important;
 }
 
 #cart-sticky-bar {
-  background: linear-gradient(135deg, #ff3e3e 0%, #cc1a1a 100%) !important;
+  background: linear-gradient(135deg, #b07a1e 0%, #8a5d12 100%) !important;
   color: #fff !important;
-  box-shadow: 0 -4px 24px rgba(255,62,62,0.18) !important;
+  box-shadow: 0 -4px 24px rgba(176,122,30,0.18) !important;
 }
 
 .cod-banner {
@@ -328,7 +328,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   background: var(--accent) !important;
   border-color: var(--accent) !important;
   color: #fff !important;
-  box-shadow: 0 2px 12px rgba(255,62,62,0.28) !important;
+  box-shadow: 0 2px 12px rgba(176,122,30,0.28) !important;
 }
 .range-track-fill  { background: var(--accent) !important; }
 .price-range-thumb { background: var(--accent) !important; }
@@ -336,7 +336,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   background: var(--accent) !important;
   border-color: var(--accent) !important;
   color: #fff !important;
-  box-shadow: 0 2px 12px rgba(255,62,62,0.28) !important;
+  box-shadow: 0 2px 12px rgba(176,122,30,0.28) !important;
 }
 
 .sheet {
@@ -355,13 +355,13 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 .form-inp:focus, .checkout-input:focus {
   border-color: var(--accent) !important;
-  box-shadow: 0 0 0 3px rgba(255,62,62,0.10) !important;
+  box-shadow: 0 0 0 3px rgba(176,122,30,0.10) !important;
 }
 
 .brand-chip {
   background: #f5f5f7 !important;
   border-color: rgba(0,0,0,0.07) !important;
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 800 !important;
   letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
@@ -369,22 +369,22 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 
 .wow-marquee-item {
-  color: rgba(255,62,62,0.20) !important;
-  font-family: 'Sora', sans-serif !important;
+  color: rgba(176,122,30,0.20) !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 900 !important;
   letter-spacing: 3px !important;
 }
 
 .niche-fam-chip {
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 800 !important;
   font-size: 11px !important;
   letter-spacing: 0.06em !important;
   text-transform: uppercase !important;
 }
 .niche-fam-chip.active {
-  background: rgba(255,62,62,0.09) !important;
-  border-color: rgba(255,62,62,0.30) !important;
+  background: rgba(176,122,30,0.09) !important;
+  border-color: rgba(176,122,30,0.30) !important;
   color: var(--accent) !important;
 }
 
@@ -403,7 +403,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   font-weight: 800;
   letter-spacing: 0.03em;
   text-transform: uppercase;
-  font-family: 'Sora', sans-serif;
+  font-family: 'Jost', sans-serif;
   background: transparent;
   border: none;
   color: rgba(0,0,0,0.4);
@@ -422,7 +422,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 
 .match-page-title {
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 900 !important;
   font-size: 28px !important;
   letter-spacing: 0.04em !important;
@@ -430,11 +430,11 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 
 .m-action {
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
 }
 
 .contacts-banner-title {
-  font-family: 'Sora', sans-serif !important;
+  font-family: 'Jost', sans-serif !important;
   font-weight: 900 !important;
   font-size: 32px !important;
   letter-spacing: 0.06em !important;
@@ -466,11 +466,11 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
     position: fixed !important;
     left: max(16px, calc(50% - var(--half-max) - 120px)) !important;
     top: 38vh !important;
-    font-family: 'Sora', sans-serif !important;
+    font-family: 'Jost', sans-serif !important;
     font-weight: 900 !important;
     font-size: clamp(48px, 5vw, 88px) !important;
     letter-spacing: .12em !important;
-    color: rgba(255,62,62,.12) !important;
+    color: rgba(176,122,30,.12) !important;
     writing-mode: vertical-rl !important;
     text-orientation: mixed !important;
     text-transform: uppercase !important;
@@ -489,7 +489,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
     right: max(16px, calc(50% - var(--half-max) - 100px));
     top: 25vh;
     width: 80px; height: 80px;
-    border: 3px solid rgba(255,62,62,.14);
+    border: 3px solid rgba(176,122,30,.14);
     border-radius: 50%;
     animation: sideFloatR 9s ease-in-out infinite;
     pointer-events: none;
@@ -501,7 +501,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
     right: max(24px, calc(50% - var(--half-max) - 80px));
     top: calc(25vh + 110px);
     width: 40px; height: 40px;
-    background: rgba(255,62,62,.10);
+    background: rgba(176,122,30,.10);
     border-radius: 50%;
     animation: sideFloat 11s ease-in-out infinite reverse;
     pointer-events: none;
@@ -559,7 +559,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   flex-shrink: 0;
   padding: 8px 14px;
   border-radius: 10px;
-  background: #ff3e3e;
+  background: #b07a1e;
   color: #fff;
   font-size: 12px;
   font-weight: 700;
@@ -660,7 +660,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   .dsk-nav-btn.active {
     opacity: 1 !important;
     color: var(--accent) !important;
-    background: rgba(255,62,62,0.09) !important;
+    background: rgba(176,122,30,0.09) !important;
     font-weight: 700 !important;
   }
 
@@ -695,10 +695,10 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
     transform: translateY(-1px);
     box-shadow: 0 6px 16px rgba(0,0,0,0.18);
   }
-  .hdr-btn:hover .badge { background: #ff3e3e !important; }
+  .hdr-btn:hover .badge { background: #b07a1e !important; }
   .hdr-btn .badge {
     border: 2px solid #fff;
-    font-family: 'Sora', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-weight: 800;
   }
 
@@ -726,7 +726,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   }
   .dsf-section + .dsf-section { margin-top: 24px; }
   .dsf-title {
-    font-family: 'Sora', sans-serif;
+    font-family: 'Jost', sans-serif;
     font-size: 11px; font-weight: 900; letter-spacing: .14em;
     text-transform: uppercase; color: var(--text-muted);
     margin-bottom: 10px;
@@ -746,7 +746,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   }
   .dsf-chip.active {
     background: var(--accent); color: #fff; border-color: var(--accent);
-    box-shadow: 0 2px 10px rgba(255,62,62,0.25);
+    box-shadow: 0 2px 10px rgba(176,122,30,0.25);
   }
 
   /* sidebar показуємо ТІЛЬКИ на каталозі */
@@ -1020,7 +1020,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   cursor: pointer; padding: 6px 14px; border-radius: 8px;
   transition: all .15s; color: inherit; opacity: .65;
 }
-.dsk-nav-btn.active, .dsk-nav-btn:hover { opacity: 1; background: rgba(255,62,62,0.08); color: var(--accent); }
+.dsk-nav-btn.active, .dsk-nav-btn:hover { opacity: 1; background: rgba(176,122,30,0.08); color: var(--accent); }
 
 /* ── ЗНАХІДКА ДНЯ — NIKE SHOEBOX ─────────────────────── */
 @keyframes ddNikeGlow {
@@ -1043,7 +1043,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 
 /* Base — Nike orange */
 .dd-gift-base {
-  background: linear-gradient(170deg, #F26322 0%, #C94E10 100%) !important;
+  background: linear-gradient(170deg, #BE9028 0%, #96690F 100%) !important;
   box-shadow: 0 5px 18px rgba(194,78,16,0.5), inset 0 1px 0 rgba(255,255,255,0.18) !important;
   border-radius: 4px 4px 10px 10px !important;
   overflow: hidden !important;
@@ -1071,7 +1071,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 
 /* "ЗНАХІДКА ДНЯ" on lid */
 .dd-shoe-lid-label {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 8px;
   font-weight: 900;
   letter-spacing: 0.18em;
@@ -1090,7 +1090,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 /* "WOW.ZNAHIDKA" at bottom of box */
 .dd-shoe-base-label {
-  font-family: 'Sora', sans-serif;
+  font-family: 'Jost', sans-serif;
   font-size: 7px;
   font-weight: 900;
   letter-spacing: 0.20em;
@@ -1100,14 +1100,14 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   align-self: flex-end;
 }
 /* Confetti colors — Nike palette */
-.dd-confetti span:nth-child(3n+1) { background: #F26322 !important; }
+.dd-confetti span:nth-child(3n+1) { background: #BE9028 !important; }
 .dd-confetti span:nth-child(3n+2) { background: #ffffff !important; }
 .dd-confetti span:nth-child(3n)   { background: #222222 !important; }
 
 /* CTA text */
 .dd-gift-cta strong { color: #0d0d0d !important; }
 .dd-gift-cta span   { color: rgba(0,0,0,0.45) !important; }
-.dd-gift-cta b      { color: #F26322 !important; }
+.dd-gift-cta b      { color: #BE9028 !important; }
 /* Brand row */
 .dd-gift-brand-logo { color: #0d0d0d !important; }
 .dd-gift-brand-tag  { color: rgba(0,0,0,0.45) !important; border-color: rgba(0,0,0,0.14) !important; }
@@ -1138,7 +1138,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 .proof-toast-ico {
   width: 40px; height: 40px; border-radius: 8px;
-  background: rgba(255,62,62,0.07);
+  background: rgba(176,122,30,0.07);
   display: flex; align-items: center; justify-content: center;
   font-size: 20px; flex-shrink: 0;
 }
@@ -1152,14 +1152,14 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 .sp-notify-trigger {
   width: 100%; padding: 10px 16px;
   border-radius: 12px;
-  border: 1.5px dashed rgba(255,62,62,0.22);
-  background: rgba(255,62,62,0.025);
+  border: 1.5px dashed rgba(176,122,30,0.22);
+  background: rgba(176,122,30,0.025);
   color: var(--accent); font-size: 13px; font-weight: 600;
   font-family: 'Inter', sans-serif; text-align: center;
   cursor: pointer; -webkit-tap-highlight-color: transparent;
   transition: background .18s;
 }
-.sp-notify-trigger:active { background: rgba(255,62,62,0.07); }
+.sp-notify-trigger:active { background: rgba(176,122,30,0.07); }
 .sp-notify-panel { display: none; flex-direction: column; gap: 8px; padding: 10px 0 2px; }
 .sp-notify-panel.open { display: flex; }
 .sp-notify-label { font-size: 12px; color: rgba(0,0,0,0.45); line-height: 1.4; }
@@ -1177,11 +1177,11 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   background: #f5f5f7; font-size: 14px; font-family: 'Inter', sans-serif;
   color: #0d0d0d; outline: none;
 }
-.sp-notify-phone:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(255,62,62,0.08); }
+.sp-notify-phone:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(176,122,30,0.08); }
 .sp-notify-send {
   width: 100%; padding: 11px; border-radius: 12px;
   background: var(--accent); color: #fff;
-  font-size: 14px; font-weight: 700; font-family: 'Sora', sans-serif;
+  font-size: 14px; font-weight: 700; font-family: 'Jost', sans-serif;
   cursor: pointer; -webkit-tap-highlight-color: transparent; transition: opacity .15s;
 }
 .sp-notify-send:active { opacity: .85; }
@@ -1191,7 +1191,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 .success-upsell-title {
   font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
   text-transform: uppercase; color: rgba(0,0,0,0.38);
-  font-family: 'Sora', sans-serif; margin-bottom: 10px; text-align: left;
+  font-family: 'Jost', sans-serif; margin-bottom: 10px; text-align: left;
 }
 .success-upsell-row {
   display: flex; gap: 8px;
@@ -1206,7 +1206,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 .success-upsell-card-ph {
   width: 100px; height: 128px; border-radius: 10px;
-  background: rgba(255,62,62,0.06);
+  background: rgba(176,122,30,0.06);
   display: flex; align-items: center; justify-content: center; font-size: 28px;
 }
 .success-upsell-name {
@@ -1221,8 +1221,8 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
   100% { transform: translateX(220%)  skewX(-18deg); }
 }
 @keyframes cabPulseOrder {
-  0%,100% { box-shadow: 0 6px 28px rgba(255,62,62,0.38), 0 2px 8px rgba(255,62,62,0.22); }
-  50%     { box-shadow: 0 8px 40px rgba(255,62,62,0.60), 0 2px 12px rgba(255,62,62,0.30); }
+  0%,100% { box-shadow: 0 6px 28px rgba(176,122,30,0.38), 0 2px 8px rgba(176,122,30,0.22); }
+  50%     { box-shadow: 0 8px 40px rgba(176,122,30,0.60), 0 2px 12px rgba(176,122,30,0.30); }
 }
 @keyframes cabPulseCollab {
   0%,100% { box-shadow: 0 6px 28px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.14); }
@@ -1244,7 +1244,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 }
 .cab:active { transform: scale(.95); opacity: .88; }
 .cab-order {
-  background: linear-gradient(145deg, #ff3e3e 0%, #b01212 100%);
+  background: linear-gradient(145deg, #b07a1e 0%, #6f4a0d 100%);
   animation: cabPulseOrder 2.6s ease-in-out infinite;
 }
 .cab-collab {
@@ -1265,7 +1265,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 .cab-icon { font-size: 30px; line-height: 1; }
 .cab-label {
   font-size: 14px; font-weight: 900; letter-spacing: 0.04em;
-  font-family: 'Sora', sans-serif; color: #fff;
+  font-family: 'Jost', sans-serif; color: #fff;
   text-transform: uppercase; text-align: center; line-height: 1.2;
 }
 .cab-sub {
@@ -1280,7 +1280,7 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 .wow-eco-label {
   font-size: 11px; font-weight: 800; letter-spacing: 0.08em;
   text-transform: uppercase; color: rgba(0,0,0,0.35);
-  font-family: 'Sora', sans-serif; margin-bottom: 10px;
+  font-family: 'Jost', sans-serif; margin-bottom: 10px;
 }
 .wow-eco-row {
   display: flex; gap: 10px;
@@ -1299,10 +1299,110 @@ body { font-family: 'Inter', var(--niche-font-body), sans-serif; }
 .wow-eco-icon { font-size: 24px; line-height: 1; }
 .wow-eco-name {
   font-size: 14px; font-weight: 900; letter-spacing: 0.04em;
-  font-family: 'Sora', sans-serif; color: #fff;
+  font-family: 'Jost', sans-serif; color: #fff;
   margin-top: 6px;
 }
 .wow-eco-desc {
   font-size: 11px; color: rgba(255,255,255,0.48); line-height: 1.3;
 }
 .success-upsell-price { font-size: 12px; color: var(--accent); font-weight: 700; margin-top: 1px; }
+
+
+/* ============================================================
+   WOW.PARFUM — IDENTITY LAYER · Champagne & Amber Luxury
+   Mood: Niche Parfumerie · Ref: Le Labo, Byredo, Jo Malone
+   ============================================================ */
+:root {
+  --accent:      #b07a1e;
+  --accent-rgb:  176,122,30;
+  --gold:        #c9a227;
+  --bg2:         #f8f4ea;
+  --bg3:         #efe8d8;
+  --border-accent: rgba(176,122,30,0.26);
+  --shadow-red:  0 6px 28px rgba(176,122,30,0.24);
+}
+
+/* Serif display для великих заголовків — характер ніші */
+.home-title,
+.sec-title,
+.match-page-title,
+.success-title {
+  font-family: 'Cormorant Garamond', 'Jost', serif !important;
+  letter-spacing: 0.005em;
+}
+.home-title { font-weight: 700; }
+.home-title span { font-style: italic; }
+
+/* Champagne hero wash замість спортивного градієнта */
+.home-hero {
+  background:
+    radial-gradient(120% 90% at 85% -10%, rgba(201,162,39,0.14), transparent 55%),
+    radial-gradient(90% 70% at 0% 100%, rgba(176,122,30,0.08), transparent 60%),
+    linear-gradient(180deg, #fffdf8 0%, #f8f4ea 100%);
+}
+
+/* М'якша, дорожча тінь карток */
+.card, .m-card {
+  box-shadow: 0 1px 2px rgba(60,44,12,0.05), 0 6px 22px rgba(60,44,12,0.07);
+}
+
+/* Кнопки — глибокий амбер-градієнт */
+.cart-checkout-btn, .exit-cta {
+  background: linear-gradient(135deg, #c08a28 0%, #8a5d12 100%);
+}
+
+/* ============================================================
+   WOW.PARFUM — DARK LUXURY HERO UPGRADE
+   Ref: Tom Ford, Creed, Frederic Malle
+   ============================================================ */
+
+/* --- Hero: dark dramatic canvas with golden atmospheric glow --- */
+.home-hero {
+  background:
+    radial-gradient(ellipse 80% 60% at 70% -5%, rgba(201,162,39,0.22), transparent 55%),
+    radial-gradient(ellipse 60% 50% at -10% 110%, rgba(176,122,30,0.16), transparent 55%),
+    linear-gradient(160deg, #0e0c07 0%, #1a150a 40%, #110e06 100%) !important;
+  min-height: 340px !important;
+}
+
+/* Cream/ivory text on dark hero */
+.home-hero .home-greeting { color: rgba(245,235,200,0.55) !important; }
+.home-hero .home-title    { color: #f5e9c8 !important; }
+.home-hero .home-title span { color: #c9a227 !important; font-style: italic; }
+.home-hero .home-subtitle  { color: rgba(245,235,200,0.62) !important; }
+.home-hero .hero-badge     { background: rgba(201,162,39,0.18) !important; color: #c9a227 !important; border-color: rgba(201,162,39,0.3) !important; }
+.home-hero .home-btns      { --btn-bg: rgba(201,162,39,0.12); }
+
+/* Subtle grain overlay for texture */
+.home-hero::after {
+  content: '';
+  position: absolute; inset: 0; pointer-events: none; z-index: 0;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.6; mix-blend-mode: overlay;
+}
+
+/* Scent family filter chips */
+.scent-chips {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 14px 16px 2px; overflow-x: auto;
+  scrollbar-width: none;
+}
+.scent-chips::-webkit-scrollbar { display: none; }
+.scent-chip {
+  flex-shrink: 0;
+  display: inline-flex; align-items: center; gap: 5px;
+  font-family: 'Jost', sans-serif; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 7px 14px; border-radius: 99px;
+  border: 1.5px solid rgba(176,122,30,0.28);
+  background: rgba(176,122,30,0.06); color: #8a6215;
+  cursor: pointer; transition: all .2s; white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+.scent-chip.active,
+.scent-chip:hover {
+  background: linear-gradient(135deg, rgba(201,162,39,0.2), rgba(176,122,30,0.15));
+  border-color: rgba(201,162,39,0.6); color: #b07a1e;
+  box-shadow: 0 2px 12px rgba(176,122,30,0.18);
+}
+

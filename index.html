@@ -50,7 +50,7 @@
   "@type": "Store",
   "name": "WOW.PARFUM",
   "description": "Преміум парфуми без передоплати. Оплата при отриманні на Новій Пошті.",
-  "sameAs": ["https://t.me/+8xhWEOzGMW5jNjJi", "https://www.instagram.com/wow.znahidka"],
+  "sameAs": ["https://t.me/znahidkawow", "https://www.instagram.com/wow.znahidka"],
   "priceRange": "₴₴",
   "areaServed": "UA",
   "paymentAccepted": "Cash",
@@ -73,9 +73,9 @@
 <link rel="stylesheet" href="css/mobile.css?v=41">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
-<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;600;700&display=swap"></noscript>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Jost:wght@600;700;800&family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;600;700&display=swap"></noscript>
 <link rel="stylesheet" href="shared/css/premium.css?v=41">
 <link rel="stylesheet" href="css/niche.css?v=41">
 </head>
@@ -149,8 +149,8 @@
   <!-- ── HOME ── -->
   <section id="page-home" class="page active" aria-labelledby="home-title">
     <div class="home-hero">
-      <div class="home-greeting" id="home-greeting">Привіт! 👋</div>
-      <h1 class="home-title" id="home-title">Твій ідеальний<br><span>аромат тут <span class="fire-anim">🔥</span></span></h1>
+      <div class="home-greeting" id="home-greeting">WOW.PARFUM</div>
+      <h1 class="home-title" id="home-title">Твій підпис-<br><span>аромат <span class="fire-anim">✨</span></span></h1>
       <div class="home-counter-chip" aria-live="polite">
         <span class="live-dot" aria-hidden="true"></span>
         <span id="models-counter">0</span> моделей в наявності
@@ -168,6 +168,16 @@
       <button class="g-btn active" data-gender="mixed"  onclick="setGender('mixed')"  aria-pressed="true" ><span class="g-lbl">Всі</span></button>
       <button class="g-btn"        data-gender="male"   onclick="setGender('male')"   aria-pressed="false"><span class="g-lbl">Чоловіки</span></button>
       <button class="g-btn"        data-gender="female" onclick="setGender('female')" aria-pressed="false"><span class="g-lbl">Жінки</span></button>
+    </div>
+
+    <!-- Scent Family Chips -->
+    <div class="scent-chips" id="scent-chips" role="group" aria-label="Родина ароматів">
+      <button class="scent-chip active" data-scent="all"      onclick="setScentFamily(this,'all')">🌟 Всі</button>
+      <button class="scent-chip"        data-scent="floral"   onclick="setScentFamily(this,'floral')">🌸 Квіткові</button>
+      <button class="scent-chip"        data-scent="woody"    onclick="setScentFamily(this,'woody')">🌲 Деревні</button>
+      <button class="scent-chip"        data-scent="fresh"    onclick="setScentFamily(this,'fresh')">💧 Свіжі</button>
+      <button class="scent-chip"        data-scent="oriental" onclick="setScentFamily(this,'oriental')">🧡 Східні</button>
+      <button class="scent-chip"        data-scent="citrus"   onclick="setScentFamily(this,'citrus')">🍋 Цитрусові</button>
     </div>
 
     <!-- Daily Deals -->
@@ -377,8 +387,8 @@
               <stop offset="100%" stop-color="#c2c2c2"/>
             </linearGradient>
             <linearGradient id="hero-accent" x1="0%" y1="0%" x2="100%" y2="0%">
-              <stop offset="0%" stop-color="#ff3e3e"/>
-              <stop offset="100%" stop-color="#ff7a1a"/>
+              <stop offset="0%" stop-color="#b07a1e"/>
+              <stop offset="100%" stop-color="#c98a2e"/>
             </linearGradient>
             <linearGradient id="hero-shine" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stop-color="rgba(255,255,255,0.16)"/>
@@ -392,9 +402,9 @@
           </defs>
 
           <!-- Ambient orbs (light) -->
-          <circle class="hero-orb hero-orb-1" cx="60" cy="60" r="48" fill="#ff3e3e" opacity="0.10"/>
-          <circle class="hero-orb hero-orb-2" cx="420" cy="200" r="60" fill="#ff7a1a" opacity="0.10"/>
-          <circle class="hero-orb hero-orb-3" cx="380" cy="50" r="28" fill="#ff3e3e" opacity="0.06"/>
+          <circle class="hero-orb hero-orb-1" cx="60" cy="60" r="48" fill="#b07a1e" opacity="0.10"/>
+          <circle class="hero-orb hero-orb-2" cx="420" cy="200" r="60" fill="#c98a2e" opacity="0.10"/>
+          <circle class="hero-orb hero-orb-3" cx="380" cy="50" r="28" fill="#b07a1e" opacity="0.06"/>
 
           <!-- Decorative dotted grid -->
           <g fill="rgba(0,0,0,0.06)">
@@ -480,8 +490,8 @@
                   fill="rgba(0,0,0,0.25)"/>
 
             <!-- Tongue label -->
-            <rect x="200" y="116" width="30" height="14" rx="3" fill="#1a1a1a" stroke="#ff3e3e" stroke-width="0.8"/>
-            <text x="215" y="126" font-family="Sora,sans-serif" font-weight="900" font-size="8" fill="#ff3e3e" text-anchor="middle">WOW</text>
+            <rect x="200" y="116" width="30" height="14" rx="3" fill="#1a1a1a" stroke="#b07a1e" stroke-width="0.8"/>
+            <text x="215" y="126" font-family="Sora,sans-serif" font-weight="900" font-size="8" fill="#b07a1e" text-anchor="middle">WOW</text>
 
             <!-- Laces -->
             <g stroke="#fafafa" stroke-width="2.8" stroke-linecap="round" fill="none">
@@ -516,7 +526,7 @@
           </g>
 
           <!-- Speed lines (left side, motion feel) -->
-          <g stroke="#ff3e3e" stroke-width="2.2" stroke-linecap="round" opacity="0.22">
+          <g stroke="#b07a1e" stroke-width="2.2" stroke-linecap="round" opacity="0.22">
             <line class="hero-speed hero-speed-1" x1="15" y1="100" x2="55"  y2="100"/>
             <line class="hero-speed hero-speed-2" x1="6"  y1="118" x2="42"  y2="118"/>
             <line class="hero-speed hero-speed-3" x1="20" y1="136" x2="50"  y2="136"/>
@@ -524,7 +534,7 @@
 
           <!-- Year + premium mark (top-right) -->
           <g>
-            <text x="455" y="30" font-family="Sora,sans-serif" font-weight="900" font-size="13" fill="#ff3e3e" text-anchor="end" letter-spacing="3">2026</text>
+            <text x="455" y="30" font-family="Sora,sans-serif" font-weight="900" font-size="13" fill="#b07a1e" text-anchor="end" letter-spacing="3">2026</text>
             <line x1="380" y1="36" x2="455" y2="36" stroke="rgba(0,0,0,0.12)" stroke-width="1"/>
             <text x="455" y="50" font-family="Inter,sans-serif" font-weight="700" font-size="9" fill="rgba(0,0,0,0.45)" text-anchor="end" letter-spacing="3.5">EDITION</text>
           </g>
@@ -559,7 +569,7 @@
 
     <!-- Social action buttons -->
     <nav class="social-actions" aria-label="Соціальні мережі">
-      <a class="social-btn tg" href="https://t.me/+8xhWEOzGMW5jNjJi" onclick="return openLink(this.href)" rel="noopener noreferrer" aria-label="Telegram">
+      <a class="social-btn tg" href="https://t.me/znahidkawow" onclick="return openLink(this.href)" rel="noopener noreferrer" aria-label="Telegram">
         <span class="social-btn-ico" aria-hidden="true">
           <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
         </span>
@@ -580,7 +590,7 @@
     </nav>
 
     <!-- TG CHANNEL — main CTA для трафіку з YT/TT/IG -->
-    <a class="tg-channel-cta" href="https://t.me/+8xhWEOzGMW5jNjJi" onclick="return openLink(this.href)" rel="noopener noreferrer">
+    <a class="tg-channel-cta" href="https://t.me/znahidkawow" onclick="return openLink(this.href)" rel="noopener noreferrer">
       <div class="tg-cta-icon" aria-hidden="true">
         <svg viewBox="0 0 24 24" fill="currentColor"><path d="M11.944 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0a12 12 0 0 0-.056 0zm4.962 7.224c.1-.002.321.023.465.14a.506.506 0 0 1 .171.325c.016.093.036.306.02.472-.18 1.898-.96 6.502-1.36 8.627-.168.9-.499 1.201-.82 1.23-.696.065-1.225-.46-1.9-.902-1.056-.693-1.653-1.124-2.678-1.8-1.185-.78-.417-1.21.258-1.91.177-.184 3.247-2.977 3.307-3.23.007-.032.014-.15-.056-.212s-.174-.041-.249-.024c-.106.024-1.793 1.14-5.061 3.345-.48.33-.913.49-1.302.48-.428-.008-1.252-.241-1.865-.44-.752-.245-1.349-.374-1.297-.789.027-.216.325-.437.893-.663 3.498-1.524 5.83-2.529 6.998-3.014 3.332-1.386 4.025-1.627 4.476-1.635z"/></svg>
       </div>
@@ -913,7 +923,7 @@
   <h1 class="success-title">Замовлення прийнято!</h1>
   <p class="success-sub">Ми зв'яжемося з вами найближчим часом. Слідкуйте за статусом у Telegram.</p>
   <div class="success-order" id="success-order-info" aria-live="polite"></div>
-  <a class="success-tg-btn" href="https://t.me/+8xhWEOzGMW5jNjJi" onclick="return openTgLink(this.href)" rel="noopener noreferrer">
+  <a class="success-tg-btn" href="https://t.me/znahidkawow" onclick="return openTgLink(this.href)" rel="noopener noreferrer">
     ✈️ Telegram WOW.PARFUM
   </a>
   <button class="success-home-btn" onclick="goHome()"><span class="i-arr-back" aria-hidden="true"></span> На головну</button>
@@ -983,6 +993,30 @@
 <script src="shared/js/referral.js?v=41" defer></script>
 <script src="js/app.js?v=41"                defer></script>
 <script src="shared/js/motion.js?v=41" defer></script>
+<script>
+/* Scent family filter — client-side tag match */
+window._scentFamily = 'all';
+function setScentFamily(el, family) {
+  window._scentFamily = family;
+  document.querySelectorAll('.scent-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  _applyScentFilter();
+}
+function _applyScentFilter() {
+  const f = window._scentFamily;
+  if (f === 'all') { document.querySelectorAll('.prod-card,.product-card').forEach(c => c.style.display = ''); return; }
+  const MAP = { floral:['квіт','rose','jasmin','peony','lily','iris','bloom','жасмин','троянд','іри','піон'],
+    woody:['де','кедр','sand','oud','мускус','мus','wood','amber','амбр','cedar','vetiv'],
+    fresh:['свіж','clean','water','sea','marine','mint','м\'ят','океан','аква'],
+    oriental:['схід','oud','spice','spicy','amber','амбр','ванл','vanilla','vanill','tobacco','тютюн','ладан'],
+    citrus:['цитр','лимон','бергам','mandarin','orange','грейп','bergam','lemon','lime'] };
+  const keys = MAP[f] || [];
+  document.querySelectorAll('.prod-card,.product-card').forEach(c => {
+    const txt = (c.textContent || '').toLowerCase();
+    c.style.display = keys.some(k => txt.includes(k)) ? '' : 'none';
+  });
+}
+</script>
 
 </body>
 </html>
