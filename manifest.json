@@ -1,1 +1,43 @@
-{"name":"WOW.PARFUM — Преміум парфуми","short_name":"WOW.PARFUM","description":"Преміум парфуми без передоплати. Dior, Tom Ford, Byredo. Оплата після отримання.","start_url":"./","display":"standalone","background_color":"#f5f5f7","theme_color":"#f5f5f7","orientation":"portrait-primary","icons":[{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},{"src":"icon-192.png","sizes":"192x192","type":"image/png","purpose":"maskable"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},{"src":"icon-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}],"shortcuts":[{"name":"Каталог","short_name":"Каталог","description":"Переглянути всі аромати","url":"./?tab=catalog","icons":[{"src":"icon-192.png","sizes":"192x192"}]},{"name":"Match","short_name":"Match","description":"Знайди свій аромат","url":"./?tab=match","icons":[{"src":"icon-192.png","sizes":"192x192"}]}]}
+{
+  "name": "WOW.PARFUM — Преміум парфуми",
+  "short_name": "WOW.PARFUM",
+  "description": "Преміум парфуми без передоплати. Dior, Tom Ford, Byredo. Оплата після отримання.",
+  "lang": "uk",
+  "start_url": "./index.html?source=pwa",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone"],
+  "orientation": "portrait-primary",
+  "background_color": "#0e0c07",
+  "theme_color": "#b07a1e",
+  "categories": ["shopping", "lifestyle"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    {
+      "name": "Match — знайди свій аромат",
+      "short_name": "Match",
+      "description": "Свайп вправо — в Улюблені, вліво — пропустити",
+      "url": "./index.html?tab=match&source=shortcut",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Каталог ароматів",
+      "short_name": "Каталог",
+      "description": "Пошук, фільтри, всі бренди",
+      "url": "./index.html?tab=catalog&source=shortcut",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Мій кошик",
+      "short_name": "Кошик",
+      "description": "Перейти до кошика",
+      "url": "./index.html?tab=cart&source=shortcut",
+      "icons": [{ "src": "icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
