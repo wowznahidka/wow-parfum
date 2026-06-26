@@ -295,6 +295,7 @@ function setDelivTab(t) {
 }
 
 function formatPhone(inp) {
+  if (!inp) return;
   _capturePartial();
   let v = inp.value.replace(/\D/g,'');
   if (v.startsWith('380')) v = v.slice(3);
@@ -312,6 +313,7 @@ function formatPhone(inp) {
 }
 
 function validateField(inp, type) {
+  if (!inp) return;
   if (type === 'name') _capturePartial();
   const v     = inp.value.trim();
   let valid;
@@ -379,8 +381,9 @@ async function submitOrder() {
   validateField(document.getElementById('f-city'),  'city');
   validateField(document.getElementById('f-depot'), 'depot');
 
+  const phoneFormatted = document.getElementById('f-phone')?.value.trim() || phone;
   const nameValid  = name.length >= 3 && /[а-яёіїєa-z]/i.test(name);
-  const phoneValid = phone.replace(/\D/g,'').length >= 9;
+  const phoneValid = phoneFormatted.replace(/\D/g,'').length >= 9;
   const cityValid  = city.length >= 2;
   const depotValid = depot.length >= 1;
 
